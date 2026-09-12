@@ -103,7 +103,7 @@ static void drawResult(Widget &w, coords_t pos) {
 		// Show component values
 		char val[22];
 		Unit::SIStringFromFloat(val, 7, real(lastMeasurement.Z));
-		strcat(val, "Ohm");
+		strcat(val, "Ω");
 		display_SetForeground(LCR::MeasurmentValueColor);
 		display_AutoCenterString(val, pos + COORDS(0, 3), COORDS(pos.x + w.getSize().x, pos.y + 19));
 		if (ImpType == LCR::ImpedanceType::CAPACITANCE) {
