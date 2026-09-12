@@ -325,16 +325,16 @@ bool LCR::Init() {
 	Menu *systemmenu = new Menu("系统", mainmenu->getSize());
 	mainmenu->AddEntry(systemmenu);
 	systemmenu->AddEntry(
-			new MenuAction("Calibrate\nFrontend",
+			new MenuAction("前端电路\n校准了",
 					[](void*, Widget*) {
-						Dialog::MessageBox("Start Calibration?", Font_Big, "Short all inputs", Dialog::MsgBox::ABORT_OK,
+						Dialog::MessageBox("是否开始校准?", Font_Big, "短路所有输入端口", Dialog::MsgBox::ABORT_OK,
 								[](Dialog::Result r) {
 									if (r == Dialog::Result::OK) {
 										Frontend::Calibrate();
 									}
 								}, 0);
 					}, nullptr));
-	systemmenu->AddEntry(new MenuAction("Calibrate\nTouch", [](void*, Widget*) {
+	systemmenu->AddEntry(new MenuAction("校准\n触摸", [](void*, Widget*) {
 		touch_Calibrate();
 	}, nullptr));
 	systemmenu->AddEntry(new MenuBack());
@@ -381,12 +381,12 @@ void LCR::Run() {
 				leadCompensation = false;
 				lastLeadCompensation = false;
 				Dialog::MessageBox("警告", Font_Big,
-						"Measurement frequency\nchanged. Lead\ncompensation has\nbeen disabled.", Dialog::MsgBox::OK,
+						"测量频率\n已修改. 引线\n补偿功能\n已被禁用.", Dialog::MsgBox::OK,
 						nullptr, false);
 			}
 		}
 		if (newMeasurement) {
-			LOG(Log_LCR, LevelDebug, "Got new measurement");
+			LOG(Log_LCR, LevelDebug, "获得新的测量数据");
 			switch (state) {
 			case State::Measuring: {
 				lastMeasurement = CalculateComponentValues(measurementResult);
@@ -400,7 +400,7 @@ void LCR::Run() {
 				}
 
 				if (sweepActive) {
-					// Only add a result when the correct range has been reached
+					// 仅当达到正确量程时，才输出测量结果。
 					if (lastMeasurement.frontend.type != Frontend::ResultType::Ranging) {
 						sweep->AddResult(lastMeasurement);
 						Frontend::Start(sweep->GetAcquisitionSettings());
@@ -429,7 +429,7 @@ void LCR::Run() {
 //					break;
 //				}
 				if(abs(measurementResult.Z) < 100000) {
-					Dialog::MessageBox("错误", Font_Big, "\"Open\" 测量\n失败了.",
+					Dialog::MessageBox("错误", Font_Big, "\"开路\" 测量\n失败了.",
 											Dialog::MsgBox::OK, nullptr, false);
 					leadCompensation = false;
 					lastLeadCompensation = false;
@@ -467,7 +467,7 @@ void LCR::Run() {
 //				}
 				Zshort = measurementResult.Z;
 				if (abs(Zshort) > 15) {
-					Dialog::MessageBox("错误", Font_Big, "\"短\" 测量\n失败了.", Dialog::MsgBox::OK, nullptr,
+					Dialog::MessageBox("错误", Font_Big, "\"短路\" 测量\n失败了.", Dialog::MsgBox::OK, nullptr,
 							false);
 					leadCompensation = false;
 					lastLeadCompensation = false;
