@@ -1,20 +1,20 @@
 # LCR Meter
 
-![Inductance Measurement](pictures/Inductor.jpg)
+![阻抗测量](pictures/Inductor.jpg)
 
-### Key specifications
-* Measurement frequency: 100Hz-200kHz
-* Usable impedance range: 20mOhm-1MOhm (measurements above and below this range are possible but due to very low ADC values, the reported phase will be quite noisy)
-### Some useful features
-* Optionally apply DC bias voltage up to 10V (measure effective capacitance of MLCCs)
-* Autoranging
-* Open/Short calibration (lead compensation)
-* Fully configurable sweep, showing up to two parameters across frequency:
-  * Impedance
-  * Phase
-  * Capacitance
-  * Inductance
-  * ESR
-  * Quality factor
-##### Example of a sweep, showing the self-resonant frequency of a capacitor at approximately 5.5kHz
-![Inductance Measurement](pictures/Cap.jpg)
+### 主要规格参数
+* 频率测量: 100Hz-200kHz
+* 可用阻抗测量范围: 20mΩ-1MΩ (超出该测量范围仍可进行测量，但由于 ADC 采样数值极低，测得的相位噪声很大)
+### 一些实用功能
+* 可选择施加最高 10V 直流偏置电压 (用于测量多层陶瓷 MLCC 的有效电容)
+* 自动量程
+* 开路/短路校准 (引线补偿)
+* 完全可配置的频率扫描，最多同时显示两项参数:
+  * 阻抗
+  * 相位
+  * 电容
+  * 电感
+  * 等效串联电阻（ESR）
+  * 品质因数（Q）
+##### 扫描示例：可测得一只电容的自谐振频率约为 5.5kHz
+![阻抗测量](pictures/Cap.jpg)
