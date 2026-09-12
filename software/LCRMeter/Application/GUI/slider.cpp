@@ -1,7 +1,7 @@
 #include "slider.hpp"
 
 Slider::Slider(int32_t* value, int32_t min, int32_t max, coords_t size) {
-	this->value = value;
+    this->value = value;
 	this->min = min;
 	this->max = max;
 	this->size = size;
