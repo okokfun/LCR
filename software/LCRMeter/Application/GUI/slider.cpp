@@ -29,7 +29,7 @@ void Slider::draw(coords_t offset) {
     sliderStop.x -= halfWidth;
     sliderStop.y -= halfWidth;
 
-if (selectable) {
+    if (selectable) {
 		display_SetForeground(Border);
 	} else {
 		display_SetForeground(BorderUnselectable);
