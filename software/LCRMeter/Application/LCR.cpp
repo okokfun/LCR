@@ -322,7 +322,7 @@ bool LCR::Init() {
 
 	mainmenu->AddEntry(advancedMenu);
 
-	Menu *systemmenu = new Menu("System", mainmenu->getSize());
+	Menu *systemmenu = new Menu("系统", mainmenu->getSize());
 	mainmenu->AddEntry(systemmenu);
 	systemmenu->AddEntry(
 			new MenuAction("Calibrate\nFrontend",
@@ -380,7 +380,7 @@ void LCR::Run() {
 			if (leadCompensation && compensationFrequency != measurementFrequency) {
 				leadCompensation = false;
 				lastLeadCompensation = false;
-				Dialog::MessageBox("Warning", Font_Big,
+				Dialog::MessageBox("警告", Font_Big,
 						"Measurement frequency\nchanged. Lead\ncompensation has\nbeen disabled.", Dialog::MsgBox::OK,
 						nullptr, false);
 			}
@@ -429,7 +429,7 @@ void LCR::Run() {
 //					break;
 //				}
 				if(abs(measurementResult.Z) < 100000) {
-					Dialog::MessageBox("Error", Font_Big, "\"Open\" measurement\nfailed.",
+					Dialog::MessageBox("错误", Font_Big, "\"Open\" measurement\nfailed.",
 											Dialog::MsgBox::OK, nullptr, false);
 					leadCompensation = false;
 					lastLeadCompensation = false;
@@ -467,7 +467,7 @@ void LCR::Run() {
 //				}
 				Zshort = measurementResult.Z;
 				if (abs(Zshort) > 15) {
-					Dialog::MessageBox("Error", Font_Big, "\"Short\" measurement\nfailed.", Dialog::MsgBox::OK, nullptr,
+					Dialog::MessageBox("错误", Font_Big, "\"Short\" measurement\nfailed.", Dialog::MsgBox::OK, nullptr,
 							false);
 					leadCompensation = false;
 					lastLeadCompensation = false;
