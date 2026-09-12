@@ -429,7 +429,7 @@ void LCR::Run() {
 //					break;
 //				}
 				if(abs(measurementResult.Z) < 100000) {
-					Dialog::MessageBox("错误", Font_Big, "\"Open\" measurement\nfailed.",
+					Dialog::MessageBox("错误", Font_Big, "\"Open\" 测量\n失败了.",
 											Dialog::MsgBox::OK, nullptr, false);
 					leadCompensation = false;
 					lastLeadCompensation = false;
@@ -438,12 +438,12 @@ void LCR::Run() {
 					break;
 				}
 				Frontend::Stop();
-				if (Dialog::MessageBox("Lead compensation", Font_Big, "Compensation step 1/2:\nShort cables.",
+				if (Dialog::MessageBox("Lead compensation", Font_Big, "补偿步骤 1/2:\n短电缆.",
 						Dialog::MsgBox::ABORT_OK, nullptr, true) == Dialog::Result::OK) {
 					state = State::CompensationShort;
-					// Store result from open compensation
+					// 存储来自开发补偿的结果
 					Zopen = measurementResult.Z;
-					// Start measurement with high averaging
+					// 以高平均次数开始测量
 					Frontend::Settings s;
 					s.biasVoltage = biasVoltage;
 					s.frequency = measurementFrequency;
@@ -462,12 +462,12 @@ void LCR::Run() {
 				break;
 			case State::CompensationShort:
 //				if (measurementResult.type != Frontend::ResultType::Valid) {
-//					// ignore settling measurements
+//					// 忽略沉降测量值
 //					break;
 //				}
 				Zshort = measurementResult.Z;
 				if (abs(Zshort) > 15) {
-					Dialog::MessageBox("错误", Font_Big, "\"Short\" measurement\nfailed.", Dialog::MsgBox::OK, nullptr,
+					Dialog::MessageBox("错误", Font_Big, "\"短\" 测量\n失败了.", Dialog::MsgBox::OK, nullptr,
 							false);
 					leadCompensation = false;
 					lastLeadCompensation = false;
@@ -480,7 +480,7 @@ void LCR::Run() {
 				break;
 			}
 
-			// trigger GUI task to redraw the result
+			// 触发图形用户界面任务以重绘结果
 			GUIEvent_t ev;
 			ev.type = EVENT_NONE;
 			GUI::SendEvent(&ev);
@@ -488,11 +488,11 @@ void LCR::Run() {
 		if (leadCompensation != lastLeadCompensation) {
 			if (leadCompensation && compensationFrequency != measurementFrequency) {
 				Frontend::Stop();
-				if (Dialog::MessageBox("Lead compensation", Font_Big,
-						"Compensation step 1/2:\nDisconnect cables\nfrom device.", Dialog::MsgBox::ABORT_OK, nullptr,
+				if (Dialog::MessageBox("超前补偿", Font_Big,
+						"补偿步骤 1/2:\n断开设备上\n的线缆.", Dialog::MsgBox::ABORT_OK, nullptr,
 						true) == Dialog::Result::OK) {
 					state = State::CompensationOpen;
-					// Start measurement with high averaging
+					// 开启高平均模式，开始测量
 					Frontend::Settings s;
 					s.biasVoltage = biasVoltage;
 					s.frequency = measurementFrequency;
@@ -501,7 +501,7 @@ void LCR::Run() {
 					s.range = Frontend::Range::AUTO;
 					Frontend::Start(s);
 				} else {
-					// user aborted
+					// 用户已终止
 					leadCompensation = false;
 					mainmenu->requestRedrawChildren();
 					ConfigureFrontendMeasurement();
