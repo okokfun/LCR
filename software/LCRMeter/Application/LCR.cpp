@@ -25,7 +25,7 @@ static TaskHandle_t handle = nullptr;
 static complex<float> Zopen, Zshort;
 static bool leadCompensation = false;
 
-// GUI elements
+// GUI 元素
 Custom *cResult;
 static Menu *mainmenu;
 static Sweep *sweep;
@@ -43,7 +43,7 @@ static void drawComponent(Component c, coords_t startpos, uint16_t len) {
 	uint16_t componentSize = 0;
 	display_SetForeground(LCR::SchematicColor);
 	display_SetBackground(COLOR_BG_DEFAULT);
-	// Draw component
+	// 绘制元器件
 	switch (c) {
 	case Component::RESISTOR: {
 		componentSize = 40;
@@ -73,7 +73,7 @@ static void drawComponent(Component c, coords_t startpos, uint16_t len) {
 	}
 		break;
 	}
-	// draw leads
+	// 绘制引线
 	display_RectangleFull(startpos.x, startpos.y - 1, startpos.x + len / 2 - componentSize / 2, startpos.y + 1);
 	display_RectangleFull(startpos.x + len / 2 + componentSize / 2, startpos.y - 1, startpos.x + len, startpos.y + 1);
 }
@@ -88,7 +88,7 @@ static void drawResult(Widget &w, coords_t pos) {
 	coords_t SchematicCenter = COORDS((SchematicTopLeft.x + SchematicBottomRight.x) / 2,
 			(SchematicTopLeft.y + SchematicBottomRight.y) / 2);
 	if (mode != lastMeasurement.mode || ImpType != lastMeasurement.type || ResType != lastMeasurement.frontend.type) {
-		// Schematic changed, clear drawing area
+		// 原理图已变更，清空绘图区域。
 		display_SetForeground(COLOR_BG_DEFAULT);
 		display_RectangleFull(SchematicTopLeft.x, SchematicTopLeft.y, SchematicBottomRight.x, SchematicBottomRight.y);
 		mode = lastMeasurement.mode;
@@ -100,7 +100,7 @@ static void drawResult(Widget &w, coords_t pos) {
 	display_SetFont(Font_Big);
 	switch (lastMeasurement.frontend.type) {
 	case Frontend::ResultType::Valid: {
-		// Show component values
+		// 显示元件参数值
 		char val[22];
 		Unit::SIStringFromFloat(val, 7, real(lastMeasurement.Z));
 		strcat(val, "Ω");
@@ -113,11 +113,11 @@ static void drawResult(Widget &w, coords_t pos) {
 			Unit::SIStringFromFloat(val, 7, lastMeasurement.L.inductance);
 			strcat(val, "H Q:");
 		}
-		// add quality factor to string
+		// 在字符串中添加品质因数（Q值）
 		uint8_t start = strlen(val);
 		Unit::SIStringFromFloat(&val[start], 7, lastMeasurement.qualityFactor, ' ');
 		display_AutoCenterString(val, COORDS(pos.x, pos.y + 84), COORDS(pos.x + w.getSize().x, pos.y + 100));
-		// draw schematic
+		// 绘制原理图
 		constexpr uint16_t padLeftRight = 10;
 		Component c;
 		if (ImpType == LCR::ImpedanceType::CAPACITANCE) {
@@ -126,27 +126,27 @@ static void drawResult(Widget &w, coords_t pos) {
 			c = Component::INDUCTOR;
 		}
 		if (mode == LCR::DisplayMode::SERIES) {
-			// draw components
+			// 绘制元器件
 			drawComponent(Component::RESISTOR, COORDS(SchematicTopLeft.x + padLeftRight, SchematicCenter.y),
 					SchematicCenter.x - SchematicTopLeft.x);
 			drawComponent(c, COORDS(SchematicCenter.x, SchematicCenter.y),
 					SchematicBottomRight.x - SchematicCenter.x - padLeftRight);
 		} else {
 			constexpr uint16_t DistanceFromCenterLine = 20;
-			// draw components
+			// 绘制元器件
 			drawComponent(Component::RESISTOR,
 					COORDS((SchematicTopLeft.x + SchematicCenter.x) / 2, SchematicCenter.y - DistanceFromCenterLine),
 					SchematicCenter.x - SchematicTopLeft.x);
 			drawComponent(c,
 					COORDS((SchematicTopLeft.x + SchematicCenter.x) / 2, SchematicCenter.y + DistanceFromCenterLine),
 					SchematicBottomRight.x - SchematicCenter.x);
-			// draw connecting lines
-			// end lines
+			// 绘制连接线
+			// 结束线段绘制
 			display_RectangleFull(SchematicTopLeft.x + padLeftRight, SchematicCenter.y - 1,
 					(SchematicTopLeft.x + SchematicCenter.x) / 2, SchematicCenter.y + 1);
 			display_RectangleFull((SchematicBottomRight.x + SchematicCenter.x) / 2, SchematicCenter.y - 1,
 					SchematicBottomRight.x - padLeftRight, SchematicCenter.y + 1);
-			// parallel bars
+			// 平行条（电路绘图，常指并联符号）
 			display_RectangleFull((SchematicTopLeft.x + SchematicCenter.x) / 2 - 1,
 					SchematicCenter.y - DistanceFromCenterLine, (SchematicTopLeft.x + SchematicCenter.x) / 2 + 1,
 					SchematicCenter.y + DistanceFromCenterLine);
@@ -157,7 +157,7 @@ static void drawResult(Widget &w, coords_t pos) {
 	}
 		break;
 	case Frontend::ResultType::OpenLeads:
-		display_AutoCenterString("NO LEADS", SchematicTopLeft, SchematicBottomRight);
+		display_AutoCenterString("无引线", SchematicTopLeft, SchematicBottomRight);
 		break;
 	case Frontend::ResultType::Overrange: {
 		char val[22];
@@ -177,12 +177,12 @@ static void drawResult(Widget &w, coords_t pos) {
 		break;
 	}
 
-	// Draw ADC ranges at bottom
+	// 在底部绘制 ADC 量程
 	constexpr uint16_t xSpaceText = 75;
 	constexpr uint16_t xPadLeft = 40;
 	coords_t ADCRangeTopLeft = COORDS(0, w.getSize().y - 20) + pos;
 	coords_t ADCRangeBottomRight = pos + w.getSize();
-	// Voltage
+	// 电压
 	display_SetForeground(COLOR_BLACK);
 	display_SetFont(Font_Medium);
 	display_String(2, ADCRangeTopLeft.y + 1, "ADC U:");
@@ -206,7 +206,7 @@ static void drawResult(Widget &w, coords_t pos) {
 	}
 	display_String(ADCRangeBottomRight.x - xSpaceText + 2, ADCRangeTopLeft.y + 1, val);
 
-	// Current
+	// 电流
 	display_SetForeground(COLOR_BLACK);
 	display_String(2, ADCRangeTopLeft.y + 11, "ADC I:");
 	display_Rectangle(ADCRangeTopLeft.x + xPadLeft, ADCRangeTopLeft.y + 10, ADCRangeBottomRight.x - xSpaceText,
@@ -243,7 +243,7 @@ static LCR::Result CalculateComponentValues(Frontend::Result f) {
 	}
 	if (displayMode == LCR::DisplayMode::AUTO) {
 		if (phase < 5.0f && phase > -5.0f) {
-			// resistance dominates, always choose parallel model
+			// 电阻占主导，始终选用并联模型
 			res.mode = LCR::DisplayMode::PARALLEL;
 		} else {
 			if (abs(res.frontend.Z) < 1000.0f) {
@@ -256,18 +256,18 @@ static LCR::Result CalculateComponentValues(Frontend::Result f) {
 		res.mode = displayMode;
 	}
 	if (res.mode == LCR::DisplayMode::SERIES) {
-		// Assuming series connection of components
+		// 假定元器件为串联连接
 		res.Z = res.frontend.Z;
 	} else {
-		// Assuming parallel connection of components
+		// 假定元器件为并联连接
 		res.Z = complex<float>(norm(res.frontend.Z) / real(res.frontend.Z), norm(res.frontend.Z) / imag(res.frontend.Z));
 	}
 	if (res.type == LCR::ImpedanceType::CAPACITANCE) {
-		// Calculate capacitor values
+		// 计算电容参数
 		res.C.capacitance = -1.0f / (2 * M_PI * f.frequency * imag(res.Z));
 		res.qualityFactor = -imag(f.Z) / real(f.Z);
 	} else {
-		// Calculate inductor value
+		// 计算电感参数
 		res.L.inductance = imag(res.Z) / (2 * M_PI * f.frequency);
 		res.qualityFactor = imag(f.Z) / real(f.Z);
 	}
@@ -296,28 +296,28 @@ bool LCR::Init() {
 	Container *c = new Container(SIZE(DISPLAY_WIDTH, DISPLAY_HEIGHT));
 	mainmenu = new Menu("", SIZE(70, DISPLAY_HEIGHT));
 	mainmenu->AddEntry(
-			new MenuValue<int32_t>("Frequency", &measurementFrequency, Unit::Frequency, callback_setTrueNotify,
+			new MenuValue<int32_t>("频率", &measurementFrequency, Unit::Frequency, callback_setTrueNotify,
 					&measurementUpdated, HardwareLimits::MinFrequency, HardwareLimits::MaxFrequency));
 	mainmenu->AddEntry(
-			new MenuValue<int32_t>("Bias", &biasVoltage, Unit::Voltage, callback_setTrueNotify, &measurementUpdated,
+			new MenuValue<int32_t>("偏置", &biasVoltage, Unit::Voltage, callback_setTrueNotify, &measurementUpdated,
 					HardwareLimits::MinBiasVoltage, HardwareLimits::MaxBiasVoltage));
 	mainmenu->AddEntry(
-			new MenuValue<int32_t>("Averages", &measurementAverages, Unit::None, callback_setTrueNotify,
+			new MenuValue<int32_t>("采样平均", &measurementAverages, Unit::None, callback_setTrueNotify,
 					&measurementUpdated, 1, 100));
 
 	sweep = new Sweep(SIZE(DISPLAY_WIDTH - mainmenu->getSize().x, DISPLAY_HEIGHT - 10), *mainmenu);
 	sweep->setVisible(false);
 	c->attach(sweep, COORDS(0, 0));
 
-	auto advancedMenu = new Menu("Advanced\nSettings", mainmenu->getSize());
+	auto advancedMenu = new Menu("高级\n设置", mainmenu->getSize());
 
-	static constexpr char *mode_items[] = { "AUTO", "SERIES", "PARALLEL", nullptr };
+	static constexpr char *mode_items[] = { "自动", "串联", "并联", nullptr };
 
-	advancedMenu->AddEntry(new MenuChooser("Model", mode_items, (uint8_t*) &displayMode, nullptr, nullptr, false));
+	advancedMenu->AddEntry(new MenuChooser("模型", mode_items, (uint8_t*) &displayMode, nullptr, nullptr, false));
 	advancedMenu->AddEntry(
-			new MenuValue<int32_t>("Excitation", &excitationVoltage, Unit::Voltage, callback_setTrueNotify,
+			new MenuValue<int32_t>("激励", &excitationVoltage, Unit::Voltage, callback_setTrueNotify,
 					&measurementUpdated, HardwareLimits::MinExcitationVoltage, HardwareLimits::MaxExcitationVoltage));
-	advancedMenu->AddEntry(new MenuBool("O/S Comp.", &leadCompensation, callback_setTrueNotify, nullptr));
+	advancedMenu->AddEntry(new MenuBool("O/S 开路/短路补偿.", &leadCompensation, callback_setTrueNotify, nullptr));
 	advancedMenu->AddEntry(new MenuBack());
 
 	mainmenu->AddEntry(advancedMenu);
@@ -452,7 +452,7 @@ void LCR::Run() {
 					s.range = Frontend::Range::AUTO;
 					Frontend::Start(s);
 				} else {
-					// user aborted
+					// 用户已终止
 					leadCompensation = false;
 					lastLeadCompensation = false;
 					state = State::Measuring;
