@@ -2,11 +2,11 @@
 
 Slider::Slider(int32_t* value, int32_t min, int32_t max, coords_t size) {
     this->value = value;
-	this->min = min;
-	this->max = max;
-	this->size = size;
-	cb = nullptr;
-	cbptr = nullptr;
+    this->min = min;
+    this->max = max;
+    this->size = size;
+    cb = nullptr;
+    cbptr = nullptr;
 }
 
 Slider::~Slider() {
