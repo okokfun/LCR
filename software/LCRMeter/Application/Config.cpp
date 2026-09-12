@@ -29,7 +29,7 @@ int Config::AddParseFunctions(WriteFunc write, ReadFunc read, void *ptr) {
 	if (!first) {
 		first = add;
 	} else {
-		// find end of config entries
+		// 找到配置项的末尾
 		ConfigEntry *last = first;
 		while (last->next) {
 			last = last->next;
@@ -62,7 +62,7 @@ bool Config::RemoveParseFunctions(int index) {
 
 bool Config::Store(const char* filename) {
 	if (File::Open(filename, FA_WRITE | FA_CREATE_ALWAYS) != FR_OK) {
-		LOG(Log_Config, LevelError, "Failed to\ncreate file");
+		LOG(Log_Config, LevelError, "文件创建\n失败了");
 		return false;
 	}
 	ConfigEntry *entry = first;
@@ -70,7 +70,7 @@ bool Config::Store(const char* filename) {
 	while (entry) {
 		if (entry->write) {
 			if (!entry->write(entry->ptr)) {
-				LOG(Log_Config, LevelError, "Config write function failed");
+				LOG(Log_Config, LevelError, "配置写入函数失败");
 				success = false;
 				break;
 			}
@@ -84,7 +84,7 @@ bool Config::Store(const char* filename) {
 
 bool Config::Load(const char* filename) {
 	if (File::Open(filename, FA_READ | FA_OPEN_EXISTING) != FR_OK) {
-		LOG(Log_Config, LevelError, "Failed to\nopen file");
+		LOG(Log_Config, LevelError, "文件打开\n失败了");
 		return false;
 	}
 	ConfigEntry *entry = first;
@@ -92,7 +92,7 @@ bool Config::Load(const char* filename) {
 	while (entry) {
 		if (entry->read) {
 			if (!entry->read(entry->ptr)) {
-				LOG(Log_Config, LevelError, "Config read function failed");
+				LOG(Log_Config, LevelError, "配置读取函数失败");
 				success = false;
 				break;
 			}
