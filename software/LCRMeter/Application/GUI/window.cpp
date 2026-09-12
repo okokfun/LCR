@@ -44,7 +44,7 @@ Window::~Window() {
 void Window::setMainWidget(Widget *w) {
 	if(firstChild) {
 		/* window already has a widget in it */
-		LOG(Log_GUI, LevelCrit, "Window already has a widget");
+		LOG(Log_GUI, LevelCrit, "窗口已经有一个控件");
 	}
 	coords_t maxSize = getAvailableArea();
 	if(w->getSize().x > maxSize.x || w->getSize().y > maxSize.y) {
@@ -54,7 +54,7 @@ void Window::setMainWidget(Widget *w) {
 		 * when the window is closed.
 		 * Workaround: As an empty window is not useful at all, this will only happen during
 		 * a software error -> display error message */
-		LOG(Log_GUI, LevelCrit, "Widget too big for window");
+		LOG(Log_GUI, LevelCrit, "控件对于窗口来说太大了");
 	}
 	firstChild = w;
 	redrawChild = 1;
