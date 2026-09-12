@@ -163,7 +163,7 @@ static void drawResult(Widget &w, coords_t pos) {
 		char val[22];
 		strcpy(val, "|Z| > ");
 		Unit::SIStringFromFloat(&val[strlen(val)], 7, lastMeasurement.frontend.LimitHigh);
-		strcat(val, "Ohm");
+		strcat(val, "Ω");
 		display_AutoCenterString(val, SchematicTopLeft, SchematicBottomRight);
 	}
 		break;
@@ -171,7 +171,7 @@ static void drawResult(Widget &w, coords_t pos) {
 		char val[22];
 		strcpy(val, "|Z| < ");
 		Unit::SIStringFromFloat(&val[strlen(val)], 7, lastMeasurement.frontend.LimitLow);
-		strcat(val, "Ohm");
+		strcat(val, "Ω");
 		display_AutoCenterString(val, SchematicTopLeft, SchematicBottomRight);
 	}
 		break;
