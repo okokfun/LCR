@@ -18,7 +18,7 @@ void Sound::Beep(uint16_t freq, uint16_t duration) {
 
 void SoundTimerOvf() {
     if (!--periodCnt) {
-        // beep finished
+        // 提示音结束
         htim8.Instance->CCR2 = 0;
     }
 }

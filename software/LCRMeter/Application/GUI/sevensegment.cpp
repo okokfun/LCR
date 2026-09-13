@@ -33,14 +33,14 @@ SevenSegment::SevenSegment(int32_t* value, uint8_t sLength,
                            uint8_t sWidth,
                            uint8_t length, uint8_t dot, color_t color) {
     /* set member variables */
-    this->value = value;
-    segmentLength = sLength;
-    segmentWidth = sWidth;
-    this->length = length;
-    this->dot = dot;
-    this->color = color;
-    this->selectable = false;
-    uint16_t height = sWidth + 2 * sLength;
+    this->value         = value;
+    segmentLength       = sLength;
+    segmentWidth        = sWidth;
+    this->length        = length;
+    this->dot           = dot;
+    this->color         = color;
+    this->selectable    = false;
+    uint16_t height     = sWidth + 2 * sLength;
     uint16_t digitWidth = sWidth + sLength;
     size.y = height;
     size.x = digitWidth * length + sWidth * (length - 1);

@@ -15,7 +15,7 @@
 #include "Sound.h"
 
 extern ADC_HandleTypeDef hadc1;
-// global mutex controlling access to SPI1 (used for touch + SD card)
+// 用于控制 SPI1 访问的全局互斥锁（供触摸模块与SD卡使用）
 SemaphoreHandle_t xMutexSPI1;
 static StaticSemaphore_t xSemSPI1;
 
@@ -30,7 +30,7 @@ static bool VCCRail() {
     constexpr uint16_t ExpectedADC = ReferenceTypical * 4096 /
                                      ExpectedSupply;
     uint16_t supply = 3300 * ExpectedADC / raw;
-    LOG(Log_App, LevelInfo, "Supply voltage: %dmV", supply);
+    LOG(Log_App, LevelInfo, "供电电压: %dmV", supply);
     if (supply > 3100 && supply < 3500)
         return true;
     else
@@ -54,17 +54,17 @@ constexpr uint8_t nTests = sizeof(Selftests) / sizeof(
 
 void Start() {
     log_init();
-    LOG(Log_App, LevelInfo, "Start");
+    LOG(Log_App, LevelInfo, "开始");
     Persistence::Init();
     touch_Init();
     xMutexSPI1 = xSemaphoreCreateMutexStatic(&xSemSPI1);
-    // initialize display
+    // 初始化显示器
     //vTaskDelay(1);
     display_SetBackground(COLOR_BLACK);
     display_SetForeground(COLOR_WHITE);
     display_SetFont(Font_Big);
     display_Clear();
-    display_String(0, 0, "Running selftest...");
+    display_String(0, 0, "正在执行自检...");
     bool passed = true;
     const uint8_t fontheight = Font_Big.height;
     const uint8_t fontwidth = Font_Big.width;
@@ -75,14 +75,14 @@ void Start() {
             passed = false;
             display_SetForeground(COLOR_RED);
             display_String(DISPLAY_WIDTH - 1 - 6 * fontwidth,
-                           fontheight * (i + 1), "FAILED");
-            LOG(Log_App, LevelError, "Failed selftest: %s",
+                           fontheight * (i + 1), "失败了");
+            LOG(Log_App, LevelError, "自检失败了: %s",
                 Selftests[i].name);
         } else {
             display_SetForeground(COLOR_GREEN);
             display_String(DISPLAY_WIDTH - 1 - 6 * fontwidth,
-                           fontheight * (i + 1), "PASSED");
-            LOG(Log_App, LevelInfo, "Passed selftest: %s",
+                           fontheight * (i + 1), "通过了");
+            LOG(Log_App, LevelInfo, "自检通过了: %s",
                 Selftests[i].name);
         }
         display_SetForeground(COLOR_WHITE);
@@ -90,7 +90,7 @@ void Start() {
     Sound::Beep(2000, 150);
     if (!passed) {
         display_String(0, DISPLAY_HEIGHT - Font_Big.height - 1,
-                       "Press screen to continue");
+                       "按屏幕继续");
         {
             coords_t dummy;
             while (!touch_GetCoordinates(&dummy))

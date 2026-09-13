@@ -6,7 +6,7 @@
 MenuChooser::MenuChooser(const char* name,
                          const char* const* items,
                          uint8_t* value, Callback cb, void* ptr, bool popup) {
-    /* set member variables */
+    /* 设置成员变量 */
     this->cb = cb;
     this->ptr = ptr;
     this->items = items;
@@ -38,7 +38,7 @@ void MenuChooser::input(GUIEvent_t* ev) {
         case EVENT_TOUCH_PRESSED:
             if (popup) {
                 // Select new item with itemchooser dialog
-                new ItemChooserDialog("Select setting", items, *value,
+                new ItemChooserDialog("选择设置", items, *value,
                                       pmf_cast<void (*)(void*, bool, uint8_t), MenuChooser,
                                       &MenuChooser::ChooserCallback>::cfn, this);
             } else {

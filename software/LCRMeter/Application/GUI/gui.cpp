@@ -9,7 +9,7 @@ bool isPopup;
 TaskHandle_t GUIHandle;
 
 void guiThread(void) {
-    LOG(Log_GUI, LevelInfo, "Thread start");
+    LOG(Log_GUI, LevelInfo, "线程启动");
     GUIHandle = xTaskGetCurrentTaskHandle();
     GUIEvent_t event;
     display_SetBackground(COLOR_BLACK);

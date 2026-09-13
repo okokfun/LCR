@@ -14,7 +14,7 @@ void ProgressBar::setState(uint8_t state) {
 }
 
 void ProgressBar::draw(coords_t offset) {
-    /* calculate corners */
+    /* 计算角点 */
     coords_t upperLeft = offset;
     coords_t lowerRight = upperLeft;
     lowerRight.x += size.x - 1;
@@ -29,7 +29,7 @@ void ProgressBar::draw(coords_t offset) {
     display_SetForeground(barColor);
     display_RectangleFull(upperLeft.x + 1, upperLeft.y + 1,
                           upperLeft.x + end, lowerRight.y - 1);
-    /* draw empty space right of the bar (in case of receding progress) */
+    /* 在条形右侧绘制空白区域（用于进度回退场景） */
     if (end < size.x - 2) {
         display_SetForeground(Background);
         display_RectangleFull(upperLeft.x + end + 1, upperLeft.y + 1,

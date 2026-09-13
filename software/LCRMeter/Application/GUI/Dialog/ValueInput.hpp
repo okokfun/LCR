@@ -21,7 +21,7 @@ class ValueInput {
                Callback cb = nullptr, void* ptr = nullptr,
                char firstChar = 0) {
         LOG(Log_GUI, LevelInfo,
-            "Creating value dialog, free heap: %lu",
+            "创建值对话，空闲堆内存: %lu",
             xPortGetFreeHeapSize());
         this->cb = cb;
         this->ptr = ptr;

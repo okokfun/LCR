@@ -61,7 +61,7 @@ namespace Dialog {
         memset(&dialog, 0, sizeof(dialog));
         if (block && xTaskGetCurrentTaskHandle() == GUIHandle) {
             /* This dialog must never be called by the GUI thread (Deadlock) */
-            LOG(Log_GUI, LevelCrit, "Dialog started from GUI thread.");
+            LOG(Log_GUI, LevelCrit, "对话框从GUI线程启动。");
         }
         if (block)
             dialog.msgbox.dialogDone = xSemaphoreCreateBinary();
@@ -120,7 +120,7 @@ namespace Dialog {
                        const char* dir, const char* filetype) {
         if (xTaskGetCurrentTaskHandle() == GUIHandle) {
             /* This dialog must never be called by the GUI thread (Deadlock) */
-            LOG(Log_GUI, LevelCrit, "Dialog started from GUI thread.");
+            LOG(Log_GUI, LevelCrit, "对话框从GUI线程启动。");
         }
         /* check pointers */
         if (!title || !dir)
@@ -222,7 +222,7 @@ namespace Dialog {
             //		i->select();
         } else {
             /* got no files */
-            Label* lNoFiles = new Label("No files available", Font_Big);
+            Label* lNoFiles = new Label("无可用文件", Font_Big);
             c->attach(lNoFiles,
                       COORDS((c->getSize().x - lNoFiles->getSize().x) / 2, 40));
             //		bAbort->select();
@@ -327,7 +327,7 @@ namespace Dialog {
                             uint8_t maxLength) {
         if (xTaskGetCurrentTaskHandle() == GUIHandle) {
             /* This dialog must never be called by the GUI thread (Deadlock) */
-            LOG(Log_GUI, LevelCrit, "Dialog started from GUI thread.");
+            LOG(Log_GUI, LevelCrit, "对话框从GUI线程启动。");
         }
         using DataStruct = struct {
             SemaphoreHandle_t semphr;

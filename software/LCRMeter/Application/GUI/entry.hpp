@@ -125,7 +125,7 @@ class Entry : public Widget {
             return;
         switch (ev->type) {
             case EVENT_TOUCH_RELEASED:
-                new ValueInput<T>("New value?", value, unit,
+                new ValueInput<T>("新值?", value, unit,
                                   pmf_cast<void (*)(void*, bool), Entry,
                                   &Entry::ValueInputCallback>::cfn, this);
                 ev->type = EVENT_NONE;

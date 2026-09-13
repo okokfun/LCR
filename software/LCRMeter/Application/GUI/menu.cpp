@@ -27,7 +27,7 @@ bool Menu::AddEntry(MenuEntry* e, int8_t position) {
         do {
             if (entry == e) {
                 /* this widget has already been added, this must never happen */
-                LOG(Log_GUI, LevelCrit, "Duplicate entry in menu");
+                LOG(Log_GUI, LevelCrit, "菜单中存在重复条目");
                 return false;
             }
             if ((position > 0 && cnt >= position)
@@ -114,7 +114,7 @@ char* Menu::GetSelectedSubmenuName() {
 
 void Menu::draw(coords_t offset) {
     if (!nentries)
-        LOG(Log_GUI, LevelCrit, "Menu needs at least one entry");
+        LOG(Log_GUI, LevelCrit, "菜单至少需要一个条目");
     /* calculate corners */
     coords_t upperLeft = offset;
     coords_t lowerRight = upperLeft;

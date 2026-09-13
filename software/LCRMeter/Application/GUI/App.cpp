@@ -21,11 +21,11 @@ bool App::Start() {
                     5,
                     &handle) != pdPASS) {
         state = State::Stopped;
-        LOG(Log_GUI, LevelError, "Failed to create task for \"%s\"",
+        LOG(Log_GUI, LevelError, "创建任务 \"%s\" 失败",
             info.name);
         return false;
     } else {
-        LOG(Log_GUI, LevelInfo, "Created task for \"%s\"",
+        LOG(Log_GUI, LevelInfo, "已创建任务 \"%s\"",
             info.name);
         return true;
     }
@@ -34,7 +34,7 @@ bool App::Start() {
 void App::StartComplete(Widget* top) {
     topWidget = top;
     state = State::Running;
-    LOG(Log_GUI, LevelInfo, "\"%s\" started", info.name);
+    LOG(Log_GUI, LevelInfo, "\"%s\" 启动了", info.name);
     GUIEvent_t ev;
     ev.type = EVENT_APP_STARTED;
     ev.app = this;
@@ -43,7 +43,7 @@ void App::StartComplete(Widget* top) {
 
 void App::Exit() {
     state = State::Stopped;
-    LOG(Log_GUI, LevelInfo, "\"%s\" exited", info.name);
+    LOG(Log_GUI, LevelInfo, "\"%s\" 退出了", info.name);
     GUIEvent_t ev;
     ev.type = EVENT_APP_EXITED;
     ev.app = this;
@@ -58,7 +58,7 @@ bool App::Stop() {
     while (state != State::Stopped) {
         vTaskDelay(10);
         if (HAL_GetTick() - start > maxStopDelay) {
-            LOG(Log_GUI, LevelWarn, "App didn't close, killing it");
+            LOG(Log_GUI, LevelWarn, "应用未关闭，正在强制终止进程");
             vTaskDelete(handle);
             state = State::Stopped;
         }

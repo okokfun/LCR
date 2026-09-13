@@ -25,10 +25,10 @@ class Slider : public Widget {
         return Widget::Type::Slider;
     };
 
-    static constexpr color_t Border = COLOR_BLACK;
-    static constexpr color_t KnobColor = COLOR_ORANGE;
-    static constexpr color_t Background = COLOR_BG_DEFAULT;
-    static constexpr color_t Unselectable = COLOR_LIGHTGRAY;
+    static constexpr color_t Border             = COLOR_BLACK;
+    static constexpr color_t KnobColor          = COLOR_ORANGE;
+    static constexpr color_t Background         = COLOR_BG_DEFAULT;
+    static constexpr color_t Unselectable       = COLOR_LIGHTGRAY;
     static constexpr color_t BorderUnselectable = COLOR_GRAY;
 
     int32_t* value;

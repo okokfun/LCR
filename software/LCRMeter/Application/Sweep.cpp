@@ -20,10 +20,10 @@ Sweep::Sweep(coords_t size, Menu& menu, Config c) {
     initialSweep = true;
     pointCnt = 0;
     marker = 0;
-    // Create menu entries
+    // 创建菜单项
     mConfig = new Menu("Sweep", menu.getSize());
-    // X axis menu
-    auto mX = new Menu("Frequency\nSetup", menu.getSize());
+    // X轴菜单
+    auto mX = new Menu("频率\n设置", menu.getSize());
     auto mXmin = new MenuValue<uint32_t>("Min.Freq",
                                          &config.X.f_min, Unit::Frequency,
                                          pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MayorSettingChanged>::cfn,
@@ -47,18 +47,18 @@ Sweep::Sweep(coords_t size, Menu& menu, Config c) {
     mX->AddEntry(mPoints);
     mX->AddEntry(mXScale);
     mX->AddEntry(new MenuBack());
-    // Primary and secondary Y axis menu
+    // 主、次 Y 轴菜单
     Menu* mAxis[2];
     for (uint8_t i = 0; i < 2; i++) {
-        auto mVar = new MenuChooser("Variable", variableNames,
+        auto mVar = new MenuChooser("变量", variableNames,
                                     (uint8_t*) &config.axis[i].var,
                                     pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MayorSettingChanged>::cfn,
                                     this);
-        auto mMin = new MenuValue<float>("Y min",
+        auto mMin = new MenuValue<float>("Y 最小",
                                          &config.axis[i].min, Unit::None,
                                          pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MinorSettingChanged>::cfn,
                                          this);
-        auto mMax = new MenuValue<float>("Y max",
+        auto mMax = new MenuValue<float>("Y 最大",
                                          &config.axis[i].max, Unit::None,
                                          pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MinorSettingChanged>::cfn,
                                          this);
@@ -66,7 +66,7 @@ Sweep::Sweep(coords_t size, Menu& menu, Config c) {
                                       (uint8_t*) &config.axis[i].type,
                                       pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MinorSettingChanged>::cfn,
                                       this, false);
-        constexpr char* MenuNames[] = { "Primary\nY-axis", "Secondary\nY-axis" };
+        constexpr char* MenuNames[] = { "主\nY-轴", "次\nY-轴" };
         mAxis[i] = new Menu(MenuNames[i], menu.getSize());
         mAxis[i]->AddEntry(mVar);
         mAxis[i]->AddEntry(mMin);
@@ -74,20 +74,20 @@ Sweep::Sweep(coords_t size, Menu& menu, Config c) {
         mAxis[i]->AddEntry(mScale);
         mAxis[i]->AddEntry(new MenuBack());
     }
-    // acquisition menu
-    auto mAcq = new Menu("Acquisition\nSettings",
+    // 采集菜单
+    auto mAcq = new Menu("采集\n设置",
                          menu.getSize());
-    auto mAvg = new MenuValue<uint16_t>("Averages",
+    auto mAvg = new MenuValue<uint16_t>("平均值",
                                         &config.averages, Unit::None,
                                         pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MinorSettingChanged>::cfn,
                                         this, 1, 1000);
-    auto mExc = new MenuValue<uint32_t>("Excitation",
+    auto mExc = new MenuValue<uint32_t>("激发",
                                         &config.excitationVoltage, Unit::Voltage,
                                         pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MinorSettingChanged>::cfn,
                                         this,
                                         HardwareLimits::MinExcitationVoltage,
                                         HardwareLimits::MaxExcitationVoltage);
-    auto mBias = new MenuValue<uint32_t>("Bias",
+    auto mBias = new MenuValue<uint32_t>("偏置",
                                          &config.biasVoltage, Unit::Voltage,
                                          pmf_cast<void (*)(void*, Widget* w), Sweep, &Sweep::MinorSettingChanged>::cfn,
                                          this,
@@ -97,13 +97,13 @@ Sweep::Sweep(coords_t size, Menu& menu, Config c) {
     mAcq->AddEntry(mExc);
     mAcq->AddEntry(mBias);
     mAcq->AddEntry(new MenuBack());
-    // Add menus to main config menu
+    // 向主配置菜单添加子菜单
     mConfig->AddEntry(mX);
     mConfig->AddEntry(mAxis[0]);
     mConfig->AddEntry(mAxis[1]);
     mConfig->AddEntry(mAcq);
     mConfig->AddEntry(new MenuBack);
-    // Add config menu to main menu
+    // 在主菜单中添加配置菜单
     menu.AddEntry(mConfig);
 }
 
@@ -132,15 +132,15 @@ uint32_t Sweep::PointToFrequency(uint16_t point) {
 
 bool Sweep::AddResult(LCR::Result r) {
     if (pointCnt >= config.X.points) {
-        // wrap around to beginning
+        // 循环至开头
         pointCnt = 0;
         initialSweep = false;
     }
     if (!points) {
-        LOG(Log_Sweep, LevelWarn, "Unable to add point, no memory");
+        LOG(Log_Sweep, LevelWarn, "无法添加点位，内存不足");
         return false;
     }
-    // extract the correct variables
+    // 提取正确的变量
     for (uint8_t i = 0; i < 2; i++) {
         float var;
         switch (config.axis[i].var) {
@@ -171,7 +171,7 @@ bool Sweep::AddResult(LCR::Result r) {
         points[pointCnt].y[i] = var;
     }
     pointCnt++;
-    LOG(Log_Sweep, LevelDebug, "Added datapoint %d", pointCnt);
+    LOG(Log_Sweep, LevelDebug, "添加数据点 %d", pointCnt);
     return true;
 }
 
@@ -188,7 +188,7 @@ void Sweep::draw(coords_t offset) {
           graphBottomRight](uint8_t axis, uint16_t point) -> coords_t {
         coords_t p;
         float val = points[point].y[axis];
-        // constrain value to limits
+        // 添加数据点
         if (val < config.axis[axis].min)
             val = config.axis[axis].min;
         if (val > config.axis[axis].max)
@@ -208,16 +208,16 @@ void Sweep::draw(coords_t offset) {
         return p;
     };
     if (redrawClear) {
-        // fill background
+        // 填充背景
         display_SetForeground(ColorBackground);
         display_SetBackground(ColorBackground);
         display_RectangleFull(pos.x, pos.y, pos.x + size.x - 1,
                               pos.y + size.y - 1);
-        // draw X axis
+        // 绘制 X 轴
         display_SetForeground(ColorAxis);
         display_HorizontalLine(graphTopLeft.x, graphBottomRight.y,
                                graphBottomRight.x - graphTopLeft.x + 1);
-        // extreme ticks for X axis
+        // X 轴极值刻度
         char tick[6];
         Unit::SIStringFromFloat(tick, 5, config.X.f_min);
         display_SetFont(Font_Medium);
@@ -227,13 +227,13 @@ void Sweep::draw(coords_t offset) {
         display_String(pos.x + size.x - strlen(tick) *
                        Font_Medium.width, pos.y + size.y - 2 * Font_Medium.height,
                        tick);
-        const char* xlabel = config.X.type == ScaleType::Linear ?
-                             "Frequency (linear)" : "Frequency (log)";
+        const char* xlabel =
+            config.X.type == ScaleType::Linear ? "频率(线性)" : "频率(对数)";
         display_String((pos.x + size.x - strlen(xlabel) *
                         Font_Medium.width) / 2,
                        pos.y + size.y - 2 * Font_Medium.height,
                        xlabel);
-        // extreme ticks and label for primary Y axis
+        // 主Y轴的极值刻度与标签
         if (config.axis[0].var != Variable::None) {
             display_SetForeground(ColorPrimary);
             display_VerticalLine(graphTopLeft.x, graphTopLeft.y,
@@ -243,16 +243,16 @@ void Sweep::draw(coords_t offset) {
             Unit::SIStringFromFloat(tick, 5, config.axis[0].max);
             display_StringRotated(pos.x + 1,
                                   pos.y + strlen(tick) * Font_Medium.width, tick);
-            // Label
+            // 标签
             char label[50];
             strcpy(label, variableNames[(int) config.axis[0].var]);
             strcat(label, config.axis[0].type == ScaleType::Linear ?
-                   " (linear)" : " (log)");
+                   " (线性的)" : " (log)");
             display_StringRotated(pos.x + 1,
                                   (pos.y + graphBottomRight.y + strlen(label) *
                                    Font_Medium.width) / 2, label);
         }
-        // extreme ticks and label for secondary Y axis
+        // 次坐标轴的极值刻度与标签
         if (config.axis[1].var != Variable::None) {
             display_SetForeground(ColorSecondary);
             display_VerticalLine(graphBottomRight.x, graphTopLeft.y,
@@ -263,32 +263,32 @@ void Sweep::draw(coords_t offset) {
             Unit::SIStringFromFloat(tick, 5, config.axis[1].max);
             display_StringRotated(pos.x + size.x - Font_Medium.height,
                                   pos.y + strlen(tick) * Font_Medium.width, tick);
-            // Label
+            // 标签
             char label[50];
             strcpy(label, variableNames[(int) config.axis[1].var]);
             strcat(label, config.axis[1].type == ScaleType::Linear ?
-                   " (linear)" : " (log)");
+                   " (线性的)" : " (log)");
             display_StringRotated(pos.x + size.x - Font_Medium.height,
                                   (pos.y + graphBottomRight.y + strlen(label) *
                                    Font_Medium.width) / 2, label);
         }
-        // Show marker
+        // 显示标记
         display_SetForeground(ColorMarker);
         display_VerticalLine(markerX, graphTopLeft.y,
                              graphBottomRight.y - graphTopLeft.y);
         display_SetForeground(COLOR_BLACK);
         display_String(2, pos.y + size.y - Font_Medium.height,
-                       "Marker:");
+                       "标记:");
         char freq[10];
         Unit::StringFromValue(freq, 8, PointToFrequency(marker),
                               Unit::Frequency);
         display_SetForeground(ColorAxis);
         display_String(50, pos.y + size.y - Font_Medium.height,
                        freq);
-        // display data points
+        // 显示数据点
         for (uint8_t axis = 0; axis < 2; axis++) {
             if (config.axis[axis].var == Variable::None) {
-                // this axis is not active
+                // 此轴未激活
                 continue;
             }
             if (axis == 0)
@@ -304,12 +304,12 @@ void Sweep::draw(coords_t offset) {
             }
         }
     } else {
-        // only update latest datapoint
+        // 仅更新最新数据点
         if (pointCnt > 1) {
             bool cleared = false;
             for (uint8_t axis = 0; axis < 2; axis++) {
                 if (config.axis[axis].var == Variable::None) {
-                    // this axis is not active
+                    // 此轴未激活
                     continue;
                 }
                 coords_t from = GetPointCoordinate(axis, pointCnt - 2);
@@ -324,7 +324,7 @@ void Sweep::draw(coords_t offset) {
                     display_RectangleFull(from.x + 1, graphTopLeft.y + 1, x1,
                                           graphBottomRight.y - 1);
                     if (markerX >= from.x + 1 && markerX <= x1) {
-                        // marker has been cleared, redraw
+                        // 标记已清除，重新绘制
                         display_SetForeground(ColorMarker);
                         display_VerticalLine(markerX, graphTopLeft.y,
                                              graphBottomRight.y - graphTopLeft.y);
@@ -339,7 +339,7 @@ void Sweep::draw(coords_t offset) {
             }
         }
     }
-    // always update the marker variables
+    // 始终更新标记变量
     display_SetFont(Font_Medium);
     for (uint8_t i = 0; i < 2; i++) {
         if (i == 0)
@@ -348,7 +348,7 @@ void Sweep::draw(coords_t offset) {
             display_SetForeground(ColorSecondary);
         char buf[10];
         if (pointCnt <= marker && initialSweep) {
-            // no data available at marker position yet
+            // 标记位置暂无可用数据
             strcpy(buf, "?.???");
         } else
             Unit::SIStringFromFloat(buf, 7, points[marker].y[i]);
@@ -362,12 +362,12 @@ void Sweep::MayorSettingChanged(Widget* w) {
     pointCnt = 0;
     if (marker >= config.X.points)
         marker = config.X.points - 1;
-    // TODO check settings
+    // 待办事项：检查设置
     requestRedrawFull();
 }
 
 void Sweep::MinorSettingChanged(Widget* w) {
-    // TODO check settings
+    // 待办事项：检查设置
     requestRedrawFull();
 }
 
@@ -380,9 +380,9 @@ void Sweep::input(GUIEvent_t* ev) {
     switch (ev->type) {
         case EVENT_TOUCH_DRAGGED:
             ev->pos = ev->dragged;
-        /* no break */
+        /* 不中断 */
         case EVENT_TOUCH_PRESSED: {
-                // Calculate new marker position
+                // 计算新标记位置
                 uint16_t xLeft = Font_Medium.height + 3;
                 uint16_t xRight = size.x - (Font_Medium.height + 3);
                 int16_t marker_new = util_Map(ev->pos.x, xLeft, xRight, 0,

@@ -86,23 +86,23 @@ static void SetADCAverages(uint32_t freq) {
         >= MinPeriodsPerDFT) {
         // Averaging of 2 is enough
         avgRegVal = 0x0000;
-        LOG(Log_Frontend, LevelDebug, "ADC averaging: 2");
+        LOG(Log_Frontend, LevelDebug, "ADC平均采样: 2");
     } else if (HardwareLimits::DFTpoints / (rawSamplesPerPeriod /
                                             4)
                >= MinPeriodsPerDFT) {
         // Averaging of 4 is enough
         avgRegVal = 0x4000;
-        LOG(Log_Frontend, LevelDebug, "ADC averaging: 4");
+        LOG(Log_Frontend, LevelDebug, "ADC平均采样: 4");
     } else if (HardwareLimits::DFTpoints / (rawSamplesPerPeriod /
                                             8)
                >= MinPeriodsPerDFT) {
         // Averaging of 8 is enough
         avgRegVal = 0x8000;
-        LOG(Log_Frontend, LevelDebug, "ADC averaging: 8");
+        LOG(Log_Frontend, LevelDebug, "ADC平均采样: 8");
     } else {
         // needs maximum averaging of 16
         avgRegVal = 0xC000;
-        LOG(Log_Frontend, LevelDebug, "ADC averaging: 16");
+        LOG(Log_Frontend, LevelDebug, "ADC平均采样: 16");
     }
     ad5940_take_mutex(&ad);
     ad5940_modify_reg(&ad, AD5940_REG_ADCFILTERCON, avgRegVal,
@@ -176,7 +176,7 @@ static bool SetBias(int32_t biasVoltage,
                       0x00000FFF);
     ad5940_release_mutex(&ad);
     LOG(Log_Frontend, LevelDebug,
-        "Set bias voltage of %ld, DAC code %u", biasVoltage,
+        "设置偏置电压为 %ld，DAC 编码 %u", biasVoltage,
         code_DAC);
     return true;
 }
@@ -187,7 +187,7 @@ static void SetSwitchesForRCAL() {
                       AD5940_EXAMP_DSW_RCAL0 | AD5940_HSTSW_RCAL1, 0xF00F);
     ad5940_release_mutex(&ad);
     LOG(Log_Frontend, LevelDebug,
-        "Switches set for calibration");
+        "校准用开关已设置完毕");
 }
 
 static void SetSwitchesForMeasurement() {
@@ -196,7 +196,7 @@ static void SetSwitchesForMeasurement() {
                       AD5940_EXAMP_DSW_CE0 | AD5940_HSTSW_DE0_DIRECT, 0xF00F);
     ad5940_release_mutex(&ad);
     LOG(Log_Frontend, LevelDebug,
-        "Switches set for measurement");
+        "测量用开关已设置完毕");
 }
 
 enum class ADCMeasurement : uint8_t {
@@ -216,19 +216,19 @@ static void StartADC(ADCMeasurement m) {
             ad5940_set_ADC_mux(&ad, AD5940_ADC_MUXP_HSTIAP,
                                AD5940_ADC_MUXN_HSTIAN);
             LOG(Log_Frontend, LevelDebug,
-                "Starting ADC current measurement");
+                "开始ADC[电流]测量");
             break;
         case ADCMeasurement::Voltage:
             ad5940_set_ADC_mux(&ad, AD5940_ADC_MUXP_AIN1,
                                AD5940_ADC_MUXN_AIN0);
             LOG(Log_Frontend, LevelDebug,
-                "Starting ADC voltage measurement");
+                "开始ADC[电压]测量");
             break;
         case ADCMeasurement::VoltageCalibrationResistor:
             ad5940_set_ADC_mux(&ad, AD5940_ADC_MUXP_AIN2,
                                AD5940_ADC_MUXN_AIN3);
             LOG(Log_Frontend, LevelDebug,
-                "Starting ADC calibration measurement");
+                "开始ADC校准测量");
             break;
     }
     ad5940_ADC_start(&ad);
@@ -273,7 +273,7 @@ static void RunBiasVoltageCalibration() {
                        AD5940_ADC_MUXN_VBIAS_CAP);
     ad5940_ADC_start(&ad);
     int32_t ADCoffset = GetADCAverage(100);
-    LOG(Log_Frontend, LevelDebug, "ADC offset: %ld", ADCoffset);
+    LOG(Log_Frontend, LevelDebug, "ADC 偏移量: %ld", ADCoffset);
     // Reasonable limits for worst case bias offset calibration
     constexpr int32_t minBias = -100000;
     constexpr int32_t maxBias = 100000;
@@ -360,33 +360,33 @@ static void frontend_task(void*) {
                     break;
                 case MessageType::RunCalibration:
                     // Create calibration window
-                    cal_dialog = new ProgressDialog("Calibrating...", 200);
+                    cal_dialog = new ProgressDialog("校准中...", 200);
                     RunBiasVoltageCalibration();
                     calFreqIndex = 0;
                     rtia = AD5940_HSRTIA_200;
                     state = State::Calibrating;
-                    calFreqIndex = 0;
-                    sampleCnt = 0;
-                    sumMagCurrent = 0.0f;
-                    sumPhaseCurrent = 0.0f;
-                    sumMagVoltage = 0.0f;
-                    sumPhaseVoltage = 0.0f;
+                    calFreqIndex       = 0;
+                    sampleCnt          = 0;
+                    sumMagCurrent      = 0.0f;
+                    sumPhaseCurrent    = 0.0f;
+                    sumMagVoltage      = 0.0f;
+                    sumPhaseVoltage    = 0.0f;
                     voltageMeasurement = false;
-                    averagesBuffer = settings.averages;
-                    settings.averages = 50;
-                    // Configure the frontend
+                    averagesBuffer     = settings.averages;
+                    settings.averages  = 50;
+                    // 配置前端
                     SetCalibrationMeasurement(
                                     calibration_frequencies[calFreqIndex], rtia);
                     StartADC(ADCMeasurement::Current);
                     break;
                 case MessageType::MeasurementConfig:
-                    settings = msg.settings;
-                    state = State::Measuring;
-                    sampleCnt = 0;
-                    sumMagCurrent = 0.0f;
-                    sumPhaseCurrent = 0.0f;
-                    sumMagVoltage = 0.0f;
-                    sumPhaseVoltage = 0.0f;
+                    settings           = msg.settings;
+                    state              = State::Measuring;
+                    sampleCnt          = 0;
+                    sumMagCurrent      = 0.0f;
+                    sumPhaseCurrent    = 0.0f;
+                    sumMagVoltage      = 0.0f;
+                    sumPhaseVoltage    = 0.0f;
                     voltageMeasurement = false;
                     if (settings.range == Frontend::Range::Lowest)
                         rtia = AD5940_HSRTIA_200;
@@ -504,7 +504,7 @@ static void frontend_task(void*) {
                             float mag = sumMagVoltage / sumMagCurrent;
                             float phase = sumPhaseVoltage - sumPhaseCurrent;
                             LOG(Log_Frontend, LevelDebug,
-                                "Measurement U: %f@%f, I: %f@%f", sumMagVoltage,
+                                "测量 U: %f@%f, I: %f@%f", sumMagVoltage,
                                 sumPhaseVoltage, sumMagCurrent, sumPhaseCurrent);
                             if (state == State::Measuring) {
                                 auto cal = GetCalibration(rtia, settings.frequency);
@@ -594,7 +594,7 @@ static void frontend_task(void*) {
                                 // Store in appropriate calibration slot (calibration resistor is 1k5)
                                 float magCal = 1500.0f / mag;
                                 LOG(Log_Frontend, LevelInfo,
-                                    "Calibration at gain %lu, frequency %luHz is: %f@%f",
+                                    "增益 %lu、频率 %luHz 下校准：%f@%f",
                                     ad5940_HSTIA_gain_to_value(rtia),
                                     calibration_frequencies[calFreqIndex], magCal,
                                     phase);
@@ -632,10 +632,10 @@ static void frontend_task(void*) {
                                 SetCalibrationMeasurement(
                                                 calibration_frequencies[calFreqIndex], rtia);
                             }
-                            sumMagCurrent = 0.0f;
-                            sumPhaseCurrent = 0.0f;
-                            sumMagVoltage = 0.0f;
-                            sumPhaseVoltage = 0.0f;
+                            sumMagCurrent      = 0.0f;
+                            sumPhaseCurrent    = 0.0f;
+                            sumMagVoltage      = 0.0f;
+                            sumPhaseVoltage    = 0.0f;
                             voltageMeasurement = false;
                             StartADC(ADCMeasurement::Current);
                         } else {
@@ -679,7 +679,7 @@ bool Frontend::Init() {
     ad.spi = &hspi3;
     vTaskDelay(5);
     if (ad5940_init(&ad) != AD5940_RES_OK) {
-        LOG(Log_Frontend, LevelError, "AD5941 initalization failed");
+        LOG(Log_Frontend, LevelError, "AD5941初始化失败");
         return false;
     }
     // connect 12bit DAC to PA and PA to RE0 (sets bias voltage)
@@ -694,7 +694,7 @@ bool Frontend::Init() {
     // Set AD5941 to high power mode
     ad5940_modify_reg(&ad, AD5940_REG_PMBW, 0x000D, 0x000F);
     LOG(Log_Frontend, LevelDebug,
-        "CLKCON0 before writing to it: 0x%04x", ad5940_read_reg(&ad,
+        "写入前的 CLKCON0 寄存器值：0x%04x", ad5940_read_reg(&ad,
                 AD5940_REG_CLKCON0));
     // unlock clock con0
     ad5940_write_reg(&ad, AD5940_REG_CLKCON0KEY, 0xA815);
@@ -703,7 +703,7 @@ bool Frontend::Init() {
     // Lock clock con0
     ad5940_write_reg(&ad, AD5940_REG_CLKCON0KEY, 0);
     LOG(Log_Frontend, LevelDebug,
-        "CLKCON0 after writing to it: 0x%04x", ad5940_read_reg(&ad,
+        "写入后的 CLKCON0 寄存器值：0x%04x", ad5940_read_reg(&ad,
                 AD5940_REG_CLKCON0));
     // Enable external crystal oscillator
     // unlock osccon0
@@ -715,7 +715,7 @@ bool Frontend::Init() {
     uint16_t osccon = ad5940_read_reg(&ad, AD5940_REG_OSCCON);
     if (!(osccon & 0x0400)) {
         LOG(Log_Frontend, LevelError,
-            "External crystal failed to start");
+            "外部晶振启动失败");
         return false;
     }
     // Switch system and ADC clock to external crystal
@@ -761,7 +761,7 @@ bool Frontend::Init() {
                                             sizeof(Message),
                                             queueBuf, &msgQueue, 0);
     // Start task
-    taskHandle = xTaskCreateStatic(frontend_task, "Frontend",
+    taskHandle = xTaskCreateStatic(frontend_task, "前端",
                                    stack_size_words,
                                    nullptr, 4, task_stack, &task);
     return true;

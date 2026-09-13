@@ -498,7 +498,7 @@ void LCR::Run() {
                         break;
                     }
                     Frontend::Stop();
-                    if (Dialog::MessageBox("Lead compensation", Font_Big,
+                    if (Dialog::MessageBox("超前校正", Font_Big,
                                            "补偿步骤 1/2:\n短电缆.",
                                            Dialog::MsgBox::ABORT_OK, nullptr,
                                            true) == Dialog::Result::OK) {

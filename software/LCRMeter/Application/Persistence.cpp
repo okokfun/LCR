@@ -34,22 +34,22 @@ bool Persistence::Add(void* ptr, uint16_t size) {
             freeOffset = entries[i].offset + entries[i].size;
         else {
             if (freeOffset + size <= usableSize) {
-                // found an empty spot, add data
+                // 找到一处空位，添加数据
                 entries[i].ptr = ptr;
-                // offset should be at 16bit boundary
+                // 偏移量应当位于16比特位边界处
                 freeOffset = (freeOffset + 1) & 0xFFFFFFFE;
                 entries[i].offset = freeOffset;
                 entries[i].size = size;
                 return true;
             } else {
                 LOG(Log_Persistence, LevelCrit,
-                    "Unable to add data to persistence, exeeded size");
+                    "无法向持久化存储添加数据，超出大小限制");
                 return false;
             }
         }
     }
     LOG(Log_Persistence, LevelCrit,
-        "Unable to add data to persistence, exeeded number of entries");
+        "无法向持久化存储添加数据，条目数量已超限");
     return false;
 }
 
@@ -93,7 +93,7 @@ bool Persistence::Save() {
 bool Persistence::Load() {
     uint8_t* start = (uint8_t*)(FLASHend - maxSize);
     uint32_t crc = util_crc32(0, start, usableSize);
-    // compare with last FLASH word (should match CRC)
+    // 与上一个FLASH字进行比较（应与循环冗余校验值匹配）
     uint32_t compare = *(uint32_t*)(FLASHend - 4);
     if (crc != compare)
         return false;

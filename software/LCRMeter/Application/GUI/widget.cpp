@@ -240,7 +240,7 @@ void Widget::addChild(Widget* w, coords_t pos) {
         do {
             if (child == w) {
                 /* this widget has already been added, this must never happen */
-                LOG(Log_GUI, LevelCrit, "Duplicate child widget");
+                LOG(Log_GUI, LevelCrit, "重复的子组件");
             }
             if (child->next)
                 child = child->next;

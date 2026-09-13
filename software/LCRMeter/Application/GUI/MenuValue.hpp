@@ -58,7 +58,7 @@ class MenuValue: public MenuEntry {
             //			}
             //			/* no break */
             case EVENT_TOUCH_PRESSED:
-                new ValueInput<T>("New value:", value, unit,
+                new ValueInput<T>("新值:", value, unit,
                                   pmf_cast<void (*)(void*, bool), MenuValue,
                                   &MenuValue::ValueCallback>::cfn, this, firstChar);
         }

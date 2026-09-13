@@ -171,7 +171,7 @@ void Desktop::input(GUIEvent_t* ev) {
                         case App::State::Starting:
                             static App* AppToClose;
                             AppToClose = apps[app];
-                            Dialog::MessageBox("Close?", Font_Big, "Close this app?",
+                            Dialog::MessageBox("关闭?", Font_Big, "关闭这个app?",
                             Dialog::MsgBox::ABORT_OK, [](Dialog::Result res) {
                                 if (res == Dialog::Result::OK) {
                                     GUIEvent_t ev;
@@ -200,11 +200,11 @@ void Desktop::drawChildren(coords_t offset) {
 }
 
 bool Desktop::WriteConfig() {
-    File::Write("# Apps configuration\n");
+    File::Write("# 应用配置\n");
     for (uint8_t i = 0; i < AppCnt; i++) {
         char name[50] = "App::";
         strncat(name, apps[i]->info.name, sizeof(name) - 15);
-        strcat(name, "::Running");
+        strcat(name, "::运行中");
         bool running = apps[i]->state == App::State::Running;
         File::Entry entry = { name, &running, File::PointerType::BOOL };
         File::WriteParameters(&entry, 1);
@@ -216,7 +216,7 @@ bool Desktop::ReadConfig() {
     for (uint8_t i = 0; i < AppCnt; i++) {
         char name[50] = "App::";
         strncat(name, apps[i]->info.name, sizeof(name) - 15);
-        strcat(name, "::Running");
+        strcat(name, "::运行中");
         bool running = false;
         File::Entry entry = { name, &running, File::PointerType::BOOL };
         File::ReadParameters(&entry, 1);
@@ -235,7 +235,7 @@ bool Desktop::ReadConfig() {
             while (apps[i]->state != App::State::Running) {
                 vTaskDelay(10);
                 if (HAL_GetTick() - start > maxStartDelay)
-                    LOG(Log_Desktop, LevelWarn, "App didn't start in time");
+                    LOG(Log_Desktop, LevelWarn, "应用未能及时启动");
             }
         } else if (!running
                    && apps[i]->state == App::State::Running) {
@@ -248,7 +248,7 @@ bool Desktop::ReadConfig() {
             while (apps[i]->state != App::State::Stopped) {
                 vTaskDelay(10);
                 if (HAL_GetTick() - start > maxStopDelay)
-                    LOG(Log_Desktop, LevelWarn, "App didn't close in time");
+                    LOG(Log_Desktop, LevelWarn, "应用未能及时关闭");
             }
         }
     }
