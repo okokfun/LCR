@@ -8,8 +8,7 @@
 #define TOUCH_RESOLUTION_Y		DISPLAY_HEIGHT
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /**
@@ -23,7 +22,7 @@ void touch_Init(void);
  * \param c Pointer to coordinates struct
  * \return 1 if screen is being touched, 0 if not, -1 on error
  */
-int8_t touch_GetCoordinates(coords_t *c);
+int8_t touch_GetCoordinates(coords_t* c);
 
 void touch_Calibrate(void);
 

@@ -12,7 +12,7 @@
 #include <cstdint>
 namespace Sound {
 
-void Beep(uint16_t freq, uint16_t duration);
+    void Beep(uint16_t freq, uint16_t duration);
 
 }
 

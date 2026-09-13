@@ -65,7 +65,8 @@ extern "C" {
 /** @addtogroup SPIEx_Exported_Functions_Group1
   * @{
   */
-HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(SPI_HandleTypeDef *hspi);
+HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(SPI_HandleTypeDef*
+                                        hspi);
 /**
   * @}
   */

@@ -2,7 +2,7 @@
 /**
  ******************************************************************************
   * @file    user_diskio.h
-  * @brief   This file contains the common defines and functions prototypes for  
+  * @brief   This file contains the common defines and functions prototypes for
   *          the user_diskio driver.
   ******************************************************************************
   * @attention
@@ -17,15 +17,15 @@
   *
   ******************************************************************************
   */
- /* USER CODE END Header */
-  
+/* USER CODE END Header */
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __USER_DISKIO_H
 #define __USER_DISKIO_H
 
 #ifdef __cplusplus
- extern "C" {
-#endif 
+extern "C" {
+#endif
 
 /* USER CODE BEGIN 0 */
 
@@ -36,7 +36,7 @@
 extern Diskio_drvTypeDef  USER_Driver;
 
 /* USER CODE END 0 */
-   
+
 #ifdef __cplusplus
 }
 #endif

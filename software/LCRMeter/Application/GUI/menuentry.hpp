@@ -12,10 +12,12 @@
 #include "display.h"
 
 class MenuEntry : public Widget {
-public:
-	MenuEntry(){selectable = false;};
-	virtual ~MenuEntry(){};
-protected:
+  public:
+    MenuEntry() {
+        selectable = false;
+    };
+    virtual ~MenuEntry() {};
+  protected:
 };
 
 

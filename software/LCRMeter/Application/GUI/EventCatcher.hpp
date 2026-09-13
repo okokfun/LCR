@@ -14,22 +14,26 @@
 #include "font.h"
 
 class EventCatcher : public Widget {
-public:
-	using Callback = void(*)(void *ptr, Widget *source, GUIEvent_t *ev);
-	using FilterLambda = bool (*)(GUIEvent_t * const ev);
+  public:
+    using Callback = void(*)(void* ptr, Widget* source,
+                             GUIEvent_t* ev);
+    using FilterLambda = bool (*)(GUIEvent_t* const ev);
 
-	EventCatcher(Widget *child, FilterLambda filt, Callback cb, void *ptr);
-	~EventCatcher();
+    EventCatcher(Widget* child, FilterLambda filt, Callback cb,
+                 void* ptr);
+    ~EventCatcher();
 
-private:
-	void drawChildren(coords_t offset) override;
-	void input(GUIEvent_t *ev) override;
+  private:
+    void drawChildren(coords_t offset) override;
+    void input(GUIEvent_t* ev) override;
 
-	Widget::Type getType() override { return Widget::Type::EventCatcher; };
+    Widget::Type getType() override {
+        return Widget::Type::EventCatcher;
+    };
 
-	FilterLambda filt;
+    FilterLambda filt;
     Callback cb;
-    void *ptr;
+    void* ptr;
 };
 
 

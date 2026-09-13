@@ -38,7 +38,7 @@
 #define __STM32F3xx_HAL_PWR_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -50,13 +50,13 @@
 
 /** @addtogroup PWR PWR
   * @{
-  */ 
+  */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup PWR_Exported_Constants PWR Exported Constants
   * @{
-  */ 
+  */
 
 /** @defgroup PWR_WakeUp_Pins PWR WakeUp Pins
   * @{
@@ -147,7 +147,7 @@
 /**
   * @}
   */
-  
+
 /* Private macros --------------------------------------------------------*/
 /** @addtogroup  PWR_Private_Macros   PWR Private Macros
   * @{
@@ -156,17 +156,17 @@
 #define IS_PWR_WAKEUP_PIN(PIN) (((PIN) == PWR_WAKEUP_PIN1) || \
                                 ((PIN) == PWR_WAKEUP_PIN2) || \
                                 ((PIN) == PWR_WAKEUP_PIN3))
-                                
+
 #define IS_PWR_REGULATOR(REGULATOR) (((REGULATOR) == PWR_MAINREGULATOR_ON) || \
                                      ((REGULATOR) == PWR_LOWPOWERREGULATOR_ON))
-                                     
+
 #define IS_PWR_SLEEP_ENTRY(ENTRY) (((ENTRY) == PWR_SLEEPENTRY_WFI) || ((ENTRY) == PWR_SLEEPENTRY_WFE))
 
 #define IS_PWR_STOP_ENTRY(ENTRY) (((ENTRY) == PWR_STOPENTRY_WFI) || ((ENTRY) == PWR_STOPENTRY_WFE))
 
 /**
   * @}
-  */    
+  */
 
 /* Include PWR HAL Extended module */
 #include "stm32f3xx_hal_pwr_ex.h"
@@ -176,8 +176,8 @@
 /** @addtogroup PWR_Exported_Functions PWR Exported Functions
   * @{
   */
-  
-/** @addtogroup PWR_Exported_Functions_Group1 Initialization and de-initialization functions 
+
+/** @addtogroup PWR_Exported_Functions_Group1 Initialization and de-initialization functions
   * @{
   */
 
@@ -188,7 +188,7 @@ void HAL_PWR_DeInit(void);
   * @}
   */
 
-/** @addtogroup PWR_Exported_Functions_Group2 Peripheral Control functions 
+/** @addtogroup PWR_Exported_Functions_Group2 Peripheral Control functions
   * @{
   */
 
@@ -201,8 +201,10 @@ void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPinx);
 void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPinx);
 
 /* Low Power modes configuration functions ************************************/
-void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry);
-void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry);
+void HAL_PWR_EnterSTOPMode(uint32_t Regulator,
+                           uint8_t STOPEntry);
+void HAL_PWR_EnterSLEEPMode(uint32_t Regulator,
+                            uint8_t SLEEPEntry);
 void HAL_PWR_EnterSTANDBYMode(void);
 
 void HAL_PWR_EnableSleepOnExit(void);

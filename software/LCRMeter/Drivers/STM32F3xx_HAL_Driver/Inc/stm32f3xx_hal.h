@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    stm32f3xx_hal.h
   * @author  MCD Application Team
-  * @brief   This file contains all the functions prototypes for the HAL 
+  * @brief   This file contains all the functions prototypes for the HAL
   *          module driver.
   ******************************************************************************
   * @attention
@@ -32,14 +32,14 @@
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F3xx_HAL_H
 #define __STM32F3xx_HAL_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -51,7 +51,7 @@
 
 /** @addtogroup HAL
   * @{
-  */ 
+  */
 
 /* Private macros ------------------------------------------------------------*/
 /** @addtogroup HAL_Private_Macros
@@ -74,12 +74,11 @@
 /** @defgroup HAL_TICK_FREQ Tick Frequency
   * @{
   */
-typedef enum
-{
-  HAL_TICK_FREQ_10HZ         = 100U,
-  HAL_TICK_FREQ_100HZ        = 10U,
-  HAL_TICK_FREQ_1KHZ         = 1U,
-  HAL_TICK_FREQ_DEFAULT      = HAL_TICK_FREQ_1KHZ
+typedef enum {
+    HAL_TICK_FREQ_10HZ         = 100U,
+    HAL_TICK_FREQ_100HZ        = 10U,
+    HAL_TICK_FREQ_1KHZ         = 1U,
+    HAL_TICK_FREQ_DEFAULT      = HAL_TICK_FREQ_1KHZ
 } HAL_TickFreqTypeDef;
 /**
   * @}
@@ -130,7 +129,7 @@ typedef enum
 #define HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5 (0x00008000U) /*!< DAC2 channel1 DMA remap (STM32F303x4/6/8 devices only)
                                                                          1: Remap (DAC2_CH1 DMA requests mapped on DMA1 channel 5) */
 #if defined(SYSCFG_CFGR3_DMA_RMP)
-#if !defined(HAL_REMAP_CFGR3_MASK) 
+#if !defined(HAL_REMAP_CFGR3_MASK)
 #define HAL_REMAP_CFGR3_MASK                 (0x01000000U)
 #endif
 
@@ -167,34 +166,34 @@ typedef enum
 
 #if defined(SYSCFG_CFGR3_DMA_RMP)
 #define IS_DMA_REMAP(RMP) ((((RMP) & HAL_REMAPDMA_ADC24_DMA2_CH34)         == HAL_REMAPDMA_ADC24_DMA2_CH34)         || \
-                              (((RMP) & HAL_REMAPDMA_TIM16_DMA1_CH6)          == HAL_REMAPDMA_TIM16_DMA1_CH6)          || \
-                              (((RMP) & HAL_REMAPDMA_TIM17_DMA1_CH7)          == HAL_REMAPDMA_TIM17_DMA1_CH7)          || \
-                              (((RMP) & HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  == HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  || \
-                              (((RMP) & HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  == HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  || \
-                              (((RMP) & HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       == HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       || \
-                              (((RMP) & HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5) == HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5) || \
-                              (((RMP) & HAL_REMAPDMA_SPI1_RX_DMA1_CH2)        == HAL_REMAPDMA_SPI1_RX_DMA1_CH2)  || \
-                              (((RMP) & HAL_REMAPDMA_SPI1_RX_DMA1_CH4)        == HAL_REMAPDMA_SPI1_RX_DMA1_CH4)  || \
-                              (((RMP) & HAL_REMAPDMA_SPI1_RX_DMA1_CH6)        == HAL_REMAPDMA_SPI1_RX_DMA1_CH6)  || \
-                              (((RMP) & HAL_REMAPDMA_SPI1_TX_DMA1_CH3)        == HAL_REMAPDMA_SPI1_TX_DMA1_CH3)  || \
-                              (((RMP) & HAL_REMAPDMA_SPI1_TX_DMA1_CH5)        == HAL_REMAPDMA_SPI1_TX_DMA1_CH5)  || \
-                              (((RMP) & HAL_REMAPDMA_SPI1_TX_DMA1_CH7)        == HAL_REMAPDMA_SPI1_TX_DMA1_CH7)  || \
-                              (((RMP) & HAL_REMAPDMA_I2C1_RX_DMA1_CH7)        == HAL_REMAPDMA_I2C1_RX_DMA1_CH7)  || \
-                              (((RMP) & HAL_REMAPDMA_I2C1_RX_DMA1_CH3)        == HAL_REMAPDMA_I2C1_RX_DMA1_CH3)  || \
-                              (((RMP) & HAL_REMAPDMA_I2C1_RX_DMA1_CH5)        == HAL_REMAPDMA_I2C1_RX_DMA1_CH5)  || \
-                              (((RMP) & HAL_REMAPDMA_I2C1_TX_DMA1_CH6)        == HAL_REMAPDMA_I2C1_TX_DMA1_CH6)  || \
-                              (((RMP) & HAL_REMAPDMA_I2C1_TX_DMA1_CH2)        == HAL_REMAPDMA_I2C1_TX_DMA1_CH2)  || \
-                              (((RMP) & HAL_REMAPDMA_I2C1_TX_DMA1_CH4)        == HAL_REMAPDMA_I2C1_TX_DMA1_CH4)  || \
-                              (((RMP) & HAL_REMAPDMA_ADC2_DMA1_CH2)           == HAL_REMAPDMA_ADC2_DMA1_CH2)     || \
-                              (((RMP) & HAL_REMAPDMA_ADC2_DMA1_CH4)           == HAL_REMAPDMA_ADC2_DMA1_CH4))
+                           (((RMP) & HAL_REMAPDMA_TIM16_DMA1_CH6)          == HAL_REMAPDMA_TIM16_DMA1_CH6)          || \
+                           (((RMP) & HAL_REMAPDMA_TIM17_DMA1_CH7)          == HAL_REMAPDMA_TIM17_DMA1_CH7)          || \
+                           (((RMP) & HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  == HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  || \
+                           (((RMP) & HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  == HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  || \
+                           (((RMP) & HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       == HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       || \
+                           (((RMP) & HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5) == HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5) || \
+                           (((RMP) & HAL_REMAPDMA_SPI1_RX_DMA1_CH2)        == HAL_REMAPDMA_SPI1_RX_DMA1_CH2)  || \
+                           (((RMP) & HAL_REMAPDMA_SPI1_RX_DMA1_CH4)        == HAL_REMAPDMA_SPI1_RX_DMA1_CH4)  || \
+                           (((RMP) & HAL_REMAPDMA_SPI1_RX_DMA1_CH6)        == HAL_REMAPDMA_SPI1_RX_DMA1_CH6)  || \
+                           (((RMP) & HAL_REMAPDMA_SPI1_TX_DMA1_CH3)        == HAL_REMAPDMA_SPI1_TX_DMA1_CH3)  || \
+                           (((RMP) & HAL_REMAPDMA_SPI1_TX_DMA1_CH5)        == HAL_REMAPDMA_SPI1_TX_DMA1_CH5)  || \
+                           (((RMP) & HAL_REMAPDMA_SPI1_TX_DMA1_CH7)        == HAL_REMAPDMA_SPI1_TX_DMA1_CH7)  || \
+                           (((RMP) & HAL_REMAPDMA_I2C1_RX_DMA1_CH7)        == HAL_REMAPDMA_I2C1_RX_DMA1_CH7)  || \
+                           (((RMP) & HAL_REMAPDMA_I2C1_RX_DMA1_CH3)        == HAL_REMAPDMA_I2C1_RX_DMA1_CH3)  || \
+                           (((RMP) & HAL_REMAPDMA_I2C1_RX_DMA1_CH5)        == HAL_REMAPDMA_I2C1_RX_DMA1_CH5)  || \
+                           (((RMP) & HAL_REMAPDMA_I2C1_TX_DMA1_CH6)        == HAL_REMAPDMA_I2C1_TX_DMA1_CH6)  || \
+                           (((RMP) & HAL_REMAPDMA_I2C1_TX_DMA1_CH2)        == HAL_REMAPDMA_I2C1_TX_DMA1_CH2)  || \
+                           (((RMP) & HAL_REMAPDMA_I2C1_TX_DMA1_CH4)        == HAL_REMAPDMA_I2C1_TX_DMA1_CH4)  || \
+                           (((RMP) & HAL_REMAPDMA_ADC2_DMA1_CH2)           == HAL_REMAPDMA_ADC2_DMA1_CH2)     || \
+                           (((RMP) & HAL_REMAPDMA_ADC2_DMA1_CH4)           == HAL_REMAPDMA_ADC2_DMA1_CH4))
 #else
 #define IS_DMA_REMAP(RMP) ((((RMP) & HAL_REMAPDMA_ADC24_DMA2_CH34)         == HAL_REMAPDMA_ADC24_DMA2_CH34)         || \
-                              (((RMP) & HAL_REMAPDMA_TIM16_DMA1_CH6)          == HAL_REMAPDMA_TIM16_DMA1_CH6)          || \
-                              (((RMP) & HAL_REMAPDMA_TIM17_DMA1_CH7)          == HAL_REMAPDMA_TIM17_DMA1_CH7)          || \
-                              (((RMP) & HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  == HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  || \
-                              (((RMP) & HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  == HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  || \
-                              (((RMP) & HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       == HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       || \
-                              (((RMP) & HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5) == HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5))
+                           (((RMP) & HAL_REMAPDMA_TIM16_DMA1_CH6)          == HAL_REMAPDMA_TIM16_DMA1_CH6)          || \
+                           (((RMP) & HAL_REMAPDMA_TIM17_DMA1_CH7)          == HAL_REMAPDMA_TIM17_DMA1_CH7)          || \
+                           (((RMP) & HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  == HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3)  || \
+                           (((RMP) & HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  == HAL_REMAPDMA_TIM7_DAC1_CH2_DMA1_CH4)  || \
+                           (((RMP) & HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       == HAL_REMAPDMA_DAC2_CH1_DMA1_CH5)       || \
+                           (((RMP) & HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5) == HAL_REMAPDMA_TIM18_DAC2_CH1_DMA1_CH5))
 #endif /* SYSCFG_CFGR3_DMA_RMP && SYSCFG_CFGR1_DMA_RMP*/
 /**
   * @}
@@ -216,7 +215,7 @@ typedef enum
                                                                         0: No remap
                                                                         1: Remap (TIM1_TRG3 = TIM17_OC) */
 #if defined(SYSCFG_CFGR3_TRIGGER_RMP)
-#if !defined(HAL_REMAP_CFGR3_MASK) 
+#if !defined(HAL_REMAP_CFGR3_MASK)
 #define HAL_REMAP_CFGR3_MASK               (0x01000000U)
 #endif
 #define HAL_REMAPTRIGGER_DAC1_TRIG3        (0x01010000U)  /*!< DAC1_CH1 / DAC1_CH2 Trigger remap
@@ -350,7 +349,7 @@ typedef enum
   */
 
 /** @brief  Fast-mode Plus driving capability on a specific GPIO
-  */  
+  */
 #if defined(SYSCFG_CFGR1_I2C_PB6_FMP)
 #define SYSCFG_FASTMODEPLUS_PB6    ((uint32_t)SYSCFG_CFGR1_I2C_PB6_FMP)  /*!< Enable Fast-mode Plus on PB6  */
 #endif /* SYSCFG_CFGR1_I2C_PB6_FMP */
@@ -403,7 +402,7 @@ typedef enum
 #define IS_HAL_SYSCFG_WP_PAGE(__PAGE__)        (((__PAGE__) > 0U) && ((__PAGE__) <= 0x00FFU))
 #else
 #define IS_HAL_SYSCFG_WP_PAGE(__PAGE__)        (((__PAGE__) > 0U) && ((__PAGE__) <= 0x000FU))
-#endif /* SYSCFG_RCR_PAGE8 */      
+#endif /* SYSCFG_RCR_PAGE8 */
 /**
   * @}
   */
@@ -420,19 +419,19 @@ typedef enum
 #define HAL_SYSCFG_IT_FPU_IXC                  (SYSCFG_CFGR1_FPU_IE_5)  /*!< Floating Point Unit Inexact Interrupt */
 
 #define IS_HAL_SYSCFG_INTERRUPT(__INTERRUPT__) ((((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_0) == SYSCFG_CFGR1_FPU_IE_0) || \
-                                                (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_1) == SYSCFG_CFGR1_FPU_IE_1) || \
-                                                (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_2) == SYSCFG_CFGR1_FPU_IE_2) || \
-                                                (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_3) == SYSCFG_CFGR1_FPU_IE_3) || \
-                                                (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_4) == SYSCFG_CFGR1_FPU_IE_4) || \
-                                                (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_5) == SYSCFG_CFGR1_FPU_IE_5))
+        (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_1) == SYSCFG_CFGR1_FPU_IE_1) || \
+        (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_2) == SYSCFG_CFGR1_FPU_IE_2) || \
+        (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_3) == SYSCFG_CFGR1_FPU_IE_3) || \
+        (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_4) == SYSCFG_CFGR1_FPU_IE_4) || \
+        (((__INTERRUPT__) & SYSCFG_CFGR1_FPU_IE_5) == SYSCFG_CFGR1_FPU_IE_5))
 
 /**
   * @}
   */
-  
+
 /**
  * @}
- */ 
+ */
 
 /* Exported macros -----------------------------------------------------------*/
 /** @defgroup HAL_Exported_Macros HAL Exported Macros
@@ -529,7 +528,7 @@ typedef enum
 /**
  * @}
  */
- 
+
 /** @defgroup Debug_MCU_APB2_Freeze Freeze/Unfreeze APB2 Peripherals in Debug mode
   * @{
   */
@@ -589,27 +588,27 @@ typedef enum
 /** @brief  System Flash memory mapped at 0x00000000
   */
 #define __HAL_SYSCFG_REMAPMEMORY_SYSTEMFLASH()  do {SYSCFG->CFGR1 &= ~(SYSCFG_CFGR1_MEM_MODE); \
-                                             SYSCFG->CFGR1 |= SYSCFG_CFGR1_MEM_MODE_0;  \
-                                            }while(0U)
+        SYSCFG->CFGR1 |= SYSCFG_CFGR1_MEM_MODE_0;  \
+    }while(0U)
 #endif /* SYSCFG_CFGR1_MEM_MODE_0 */
 
 #if defined(SYSCFG_CFGR1_MEM_MODE_0) && defined(SYSCFG_CFGR1_MEM_MODE_1)
 /** @brief  Embedded SRAM mapped at 0x00000000
   */
 #define __HAL_SYSCFG_REMAPMEMORY_SRAM()         do {SYSCFG->CFGR1 &= ~(SYSCFG_CFGR1_MEM_MODE); \
-                                             SYSCFG->CFGR1 |= (SYSCFG_CFGR1_MEM_MODE_0 | SYSCFG_CFGR1_MEM_MODE_1); \
-                                            }while(0U)
+        SYSCFG->CFGR1 |= (SYSCFG_CFGR1_MEM_MODE_0 | SYSCFG_CFGR1_MEM_MODE_1); \
+    }while(0U)
 #endif /* SYSCFG_CFGR1_MEM_MODE_0 && SYSCFG_CFGR1_MEM_MODE_1 */
 
 #if defined(SYSCFG_CFGR1_MEM_MODE_2)
 #define __HAL_SYSCFG_FMC_BANK()         do {SYSCFG->CFGR1 &= ~(SYSCFG_CFGR1_MEM_MODE); \
-                                     SYSCFG->CFGR1 |= (SYSCFG_CFGR1_MEM_MODE_2); \
-                                    }while(0U)
+        SYSCFG->CFGR1 |= (SYSCFG_CFGR1_MEM_MODE_2); \
+    }while(0U)
 #endif /* SYSCFG_CFGR1_MEM_MODE_2 */
 /**
  * @}
  */
- 
+
 /** @defgroup Encoder_Mode Encoder Mode
   * @{
   */
@@ -623,29 +622,29 @@ typedef enum
 /** @brief  Encoder mode : TIM2 IC1 and TIM2 IC2 are connected to TIM15 IC1 and TIM15 IC2 respectively
   */
 #define __HAL_REMAPENCODER_TIM2()        do {SYSCFG->CFGR1 &= ~(SYSCFG_CFGR1_ENCODER_MODE); \
-                                             SYSCFG->CFGR1 |= SYSCFG_CFGR1_ENCODER_MODE_0;  \
-                                            }while(0U)
+        SYSCFG->CFGR1 |= SYSCFG_CFGR1_ENCODER_MODE_0;  \
+    }while(0U)
 #endif /* SYSCFG_CFGR1_ENCODER_MODE_0 */
 
 #if defined(SYSCFG_CFGR1_ENCODER_MODE_1)
 /** @brief  Encoder mode : TIM3 IC1 and TIM3 IC2 are connected to TIM15 IC1 and TIM15 IC2 respectively
   */
 #define __HAL_REMAPENCODER_TIM3()        do {SYSCFG->CFGR1 &= ~(SYSCFG_CFGR1_ENCODER_MODE); \
-                                             SYSCFG->CFGR1 |= SYSCFG_CFGR1_ENCODER_MODE_1;  \
-                                            }while(0U)
+        SYSCFG->CFGR1 |= SYSCFG_CFGR1_ENCODER_MODE_1;  \
+    }while(0U)
 #endif /* SYSCFG_CFGR1_ENCODER_MODE_1 */
 
 #if defined(SYSCFG_CFGR1_ENCODER_MODE_0) && defined(SYSCFG_CFGR1_ENCODER_MODE_1)
 /** @brief  Encoder mode : TIM4 IC1 and TIM4 IC2 are connected to TIM15 IC1 and TIM15 IC2 (STM32F303xB/C and STM32F358xx devices)
   */
 #define __HAL_REMAPENCODER_TIM4()        do {SYSCFG->CFGR1 &= ~(SYSCFG_CFGR1_ENCODER_MODE); \
-                                             SYSCFG->CFGR1 |= (SYSCFG_CFGR1_ENCODER_MODE_0 | SYSCFG_CFGR1_ENCODER_MODE_1);  \
-                                            }while(0U)
+        SYSCFG->CFGR1 |= (SYSCFG_CFGR1_ENCODER_MODE_0 | SYSCFG_CFGR1_ENCODER_MODE_1);  \
+    }while(0U)
 #endif /* SYSCFG_CFGR1_ENCODER_MODE_0 && SYSCFG_CFGR1_ENCODER_MODE_1 */
 /**
  * @}
  */
- 
+
 /** @defgroup DMA_Remap_Enable DMA Remap Enable
   * @{
   */
@@ -654,30 +653,30 @@ typedef enum
   * @param __DMA_REMAP__ This parameter can be a value of @ref HAL_DMA_Remapping
   */
 #define __HAL_DMA_REMAP_CHANNEL_ENABLE(__DMA_REMAP__)   do {assert_param(IS_DMA_REMAP((__DMA_REMAP__)));                  \
-                                                           (((__DMA_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                      \
-                                                             (SYSCFG->CFGR3 |= ((__DMA_REMAP__) & ~HAL_REMAP_CFGR3_MASK)) : \
-                                                             (SYSCFG->CFGR1 |= (__DMA_REMAP__)));                           \
-                                                         }while(0U)
+        (((__DMA_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                      \
+         (SYSCFG->CFGR3 |= ((__DMA_REMAP__) & ~HAL_REMAP_CFGR3_MASK)) : \
+         (SYSCFG->CFGR1 |= (__DMA_REMAP__)));                           \
+    }while(0U)
 #define __HAL_DMA_REMAP_CHANNEL_DISABLE(__DMA_REMAP__)  do {assert_param(IS_DMA_REMAP((__DMA_REMAP__)));                  \
-                                                           (((__DMA_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                      \
-                                                             (SYSCFG->CFGR3 &= (~(__DMA_REMAP__) | HAL_REMAP_CFGR3_MASK)) : \
-                                                             (SYSCFG->CFGR1 &= ~(__DMA_REMAP__)));                          \
-                                                         }while(0U)
+        (((__DMA_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                      \
+         (SYSCFG->CFGR3 &= (~(__DMA_REMAP__) | HAL_REMAP_CFGR3_MASK)) : \
+         (SYSCFG->CFGR1 &= ~(__DMA_REMAP__)));                          \
+    }while(0U)
 #elif defined(SYSCFG_CFGR1_DMA_RMP)
 /** @brief  DMA remapping enable/disable macros
   * @param __DMA_REMAP__ This parameter can be a value of @ref HAL_DMA_Remapping
   */
 #define __HAL_DMA_REMAP_CHANNEL_ENABLE(__DMA_REMAP__)   do {assert_param(IS_DMA_REMAP((__DMA_REMAP__)));                  \
-                                                           SYSCFG->CFGR1 |= (__DMA_REMAP__);                                \
-                                                         }while(0U)
+        SYSCFG->CFGR1 |= (__DMA_REMAP__);                                \
+    }while(0U)
 #define __HAL_DMA_REMAP_CHANNEL_DISABLE(__DMA_REMAP__)  do {assert_param(IS_DMA_REMAP((__DMA_REMAP__)));                  \
-                                                           SYSCFG->CFGR1 &= ~(__DMA_REMAP__);                               \
-                                                         }while(0U)
+        SYSCFG->CFGR1 &= ~(__DMA_REMAP__);                               \
+    }while(0U)
 #endif /* SYSCFG_CFGR3_DMA_RMP || SYSCFG_CFGR1_DMA_RMP */
 /**
  * @}
  */
- 
+
 /** @defgroup FastModePlus_GPIO Fast-mode Plus on GPIO
   * @{
   */
@@ -686,12 +685,12 @@ typedef enum
   *                          That you can find above these macros.
   */
 #define __HAL_SYSCFG_FASTMODEPLUS_ENABLE(__FASTMODEPLUS__)  do {assert_param(IS_SYSCFG_FASTMODEPLUS((__FASTMODEPLUS__)));\
-                                                                SET_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));\
-                                                               }while(0U)
+        SET_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));\
+    }while(0U)
 
 #define __HAL_SYSCFG_FASTMODEPLUS_DISABLE(__FASTMODEPLUS__) do {assert_param(IS_SYSCFG_FASTMODEPLUS((__FASTMODEPLUS__)));\
-                                                                CLEAR_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));\
-                                                               }while(0U)
+        CLEAR_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));\
+    }while(0U)
 /**
  * @}
  */
@@ -703,20 +702,20 @@ typedef enum
   * @param __INTERRUPT__ This parameter can be a value of @ref HAL_SYSCFG_Interrupts
   */
 #define __HAL_SYSCFG_INTERRUPT_ENABLE(__INTERRUPT__)        do {assert_param(IS_HAL_SYSCFG_INTERRUPT((__INTERRUPT__))); \
-                                                                SYSCFG->CFGR1 |= (__INTERRUPT__);                       \
-                                                               }while(0U)
+        SYSCFG->CFGR1 |= (__INTERRUPT__);                       \
+    }while(0U)
 
 #define __HAL_SYSCFG_INTERRUPT_DISABLE(__INTERRUPT__)       do {assert_param(IS_HAL_SYSCFG_INTERRUPT((__INTERRUPT__))); \
-                                                                SYSCFG->CFGR1 &= ~(__INTERRUPT__);                      \
-                                                               }while(0U)
+        SYSCFG->CFGR1 &= ~(__INTERRUPT__);                      \
+    }while(0U)
 /**
  * @}
  */
- 
+
 #if defined(SYSCFG_CFGR1_USB_IT_RMP)
 /** @defgroup USB_Interrupt_Remap USB Interrupt Remap
   * @{
-  */ 
+  */
 /** @brief  USB interrupt remapping enable/disable macros
   */
 #define __HAL_REMAPINTERRUPT_USB_ENABLE()              (SYSCFG->CFGR1 |= (SYSCFG_CFGR1_USB_IT_RMP))
@@ -725,11 +724,11 @@ typedef enum
  * @}
  */
 #endif /* SYSCFG_CFGR1_USB_IT_RMP */
- 
+
 #if defined(SYSCFG_CFGR1_VBAT)
 /** @defgroup VBAT_Monitoring_Enable VBAT Monitoring Enable
   * @{
-  */  
+  */
 /** @brief  SYSCFG interrupt enable/disable macros
   */
 #define __HAL_SYSCFG_VBAT_MONITORING_ENABLE()          (SYSCFG->CFGR1 |= (SYSCFG_CFGR1_VBAT))
@@ -738,7 +737,7 @@ typedef enum
  * @}
  */
 #endif /* SYSCFG_CFGR1_VBAT */
- 
+
 #if defined(SYSCFG_CFGR2_LOCKUP_LOCK)
 /** @defgroup Cortex_Lockup_Enable Cortex Lockup Enable
   * @{
@@ -748,13 +747,13 @@ typedef enum
   * @note   The selected configuration is locked and can be unlocked by system reset
   */
 #define __HAL_SYSCFG_BREAK_LOCKUP_LOCK()   do {SYSCFG->CFGR2 &= ~(SYSCFG_CFGR2_LOCKUP_LOCK); \
-                                               SYSCFG->CFGR2 |= SYSCFG_CFGR2_LOCKUP_LOCK;    \
-                                              }while(0U)
+        SYSCFG->CFGR2 |= SYSCFG_CFGR2_LOCKUP_LOCK;    \
+    }while(0U)
 /**
  * @}
  */
 #endif /* SYSCFG_CFGR2_LOCKUP_LOCK */
- 
+
 #if defined(SYSCFG_CFGR2_PVD_LOCK)
 /** @defgroup PVD_Lock_Enable PVD Lock
   * @{
@@ -764,8 +763,8 @@ typedef enum
   * @note   The selected configuration is locked and can be unlocked by system reset
   */
 #define __HAL_SYSCFG_BREAK_PVD_LOCK()      do {SYSCFG->CFGR2 &= ~(SYSCFG_CFGR2_PVD_LOCK); \
-                                               SYSCFG->CFGR2 |= SYSCFG_CFGR2_PVD_LOCK;    \
-                                              }while(0U)
+        SYSCFG->CFGR2 |= SYSCFG_CFGR2_PVD_LOCK;    \
+    }while(0U)
 /**
  * @}
  */
@@ -780,13 +779,13 @@ typedef enum
   * @note   The selected configuration is locked and can be unlocked by system reset
   */
 #define __HAL_SYSCFG_BREAK_SRAMPARITY_LOCK() do {SYSCFG->CFGR2 &= ~(SYSCFG_CFGR2_SRAM_PARITY_LOCK); \
-                                                 SYSCFG->CFGR2 |= SYSCFG_CFGR2_SRAM_PARITY_LOCK;    \
-                                                }while(0U)
+        SYSCFG->CFGR2 |= SYSCFG_CFGR2_SRAM_PARITY_LOCK;    \
+    }while(0U)
 /**
  * @}
  */
 #endif /* SYSCFG_CFGR2_SRAM_PARITY_LOCK */
- 
+
 /** @defgroup Trigger_Remapping_Enable Trigger Remapping Enable
   * @{
   */
@@ -795,30 +794,30 @@ typedef enum
   * @param __TRIGGER_REMAP__ This parameter can be a value of @ref HAL_Trigger_Remapping
   */
 #define __HAL_REMAPTRIGGER_ENABLE(__TRIGGER_REMAP__)   do {assert_param(IS_HAL_REMAPTRIGGER((__TRIGGER_REMAP__)));             \
-                                                           (((__TRIGGER_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                     \
-                                                             (SYSCFG->CFGR3 |= ((__TRIGGER_REMAP__) & ~HAL_REMAP_CFGR3_MASK)) : \
-                                                             (SYSCFG->CFGR1 |= (__TRIGGER_REMAP__)));                           \
-                                                         }while(0U)
+        (((__TRIGGER_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                     \
+         (SYSCFG->CFGR3 |= ((__TRIGGER_REMAP__) & ~HAL_REMAP_CFGR3_MASK)) : \
+         (SYSCFG->CFGR1 |= (__TRIGGER_REMAP__)));                           \
+    }while(0U)
 #define __HAL_REMAPTRIGGER_DISABLE(__TRIGGER_REMAP__)  do {assert_param(IS_HAL_REMAPTRIGGER((__TRIGGER_REMAP__)));             \
-                                                           (((__TRIGGER_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                     \
-                                                             (SYSCFG->CFGR3 &= (~(__TRIGGER_REMAP__) | HAL_REMAP_CFGR3_MASK)) : \
-                                                             (SYSCFG->CFGR1 &= ~(__TRIGGER_REMAP__)));                          \
-                                                         }while(0U)
+        (((__TRIGGER_REMAP__) & HAL_REMAP_CFGR3_MASK) ?                     \
+         (SYSCFG->CFGR3 &= (~(__TRIGGER_REMAP__) | HAL_REMAP_CFGR3_MASK)) : \
+         (SYSCFG->CFGR1 &= ~(__TRIGGER_REMAP__)));                          \
+    }while(0U)
 #else
 /** @brief  Trigger remapping enable/disable macros
   * @param __TRIGGER_REMAP__ This parameter can be a value of @ref HAL_Trigger_Remapping
   */
 #define __HAL_REMAPTRIGGER_ENABLE(__TRIGGER_REMAP__)   do {assert_param(IS_HAL_REMAPTRIGGER((__TRIGGER_REMAP__)));             \
-                                                           (SYSCFG->CFGR1 |= (__TRIGGER_REMAP__));                           \
-                                                         }while(0U)
+        (SYSCFG->CFGR1 |= (__TRIGGER_REMAP__));                           \
+    }while(0U)
 #define __HAL_REMAPTRIGGER_DISABLE(__TRIGGER_REMAP__)  do {assert_param(IS_HAL_REMAPTRIGGER((__TRIGGER_REMAP__)));             \
-                                                           (SYSCFG->CFGR1 &= ~(__TRIGGER_REMAP__));                          \
-                                                         }while(0U)
+        (SYSCFG->CFGR1 &= ~(__TRIGGER_REMAP__));                          \
+    }while(0U)
 #endif /* SYSCFG_CFGR3_TRIGGER_RMP */
 /**
  * @}
  */
- 
+
 #if defined (STM32F302xE) || defined (STM32F303xE) || defined (STM32F398xx)
 /** @defgroup ADC_Trigger_Remapping_Enable ADC Trigger Remapping Enable
   * @{
@@ -827,16 +826,16 @@ typedef enum
   * @param __ADCTRIGGER_REMAP__ This parameter can be a value of @ref HAL_ADC_Trigger_Remapping
   */
 #define __HAL_REMAPADCTRIGGER_ENABLE(__ADCTRIGGER_REMAP__)   do {assert_param(IS_HAL_REMAPADCTRIGGER((__ADCTRIGGER_REMAP__)));   \
-                                                             (SYSCFG->CFGR4 |= (__ADCTRIGGER_REMAP__));                          \
-                                                         }while(0U)
+        (SYSCFG->CFGR4 |= (__ADCTRIGGER_REMAP__));                          \
+    }while(0U)
 #define __HAL_REMAPADCTRIGGER_DISABLE(__ADCTRIGGER_REMAP__)  do {assert_param(IS_HAL_REMAPADCTRIGGER((__ADCTRIGGER_REMAP__)));   \
-                                                             (SYSCFG->CFGR4 &= ~(__ADCTRIGGER_REMAP__));                         \
-                                                         }while(0U)
+        (SYSCFG->CFGR4 &= ~(__ADCTRIGGER_REMAP__));                         \
+    }while(0U)
 /**
  * @}
  */
 #endif /* STM32F302xE || STM32F303xE || STM32F398xx */
-                                                           
+
 #if defined(SYSCFG_CFGR2_BYP_ADDR_PAR)
 /** @defgroup RAM_Parity_Check_Disable RAM Parity Check Disable
   * @{
@@ -851,7 +850,7 @@ typedef enum
  * @}
  */
 #endif /* SYSCFG_CFGR2_BYP_ADDR_PAR */
- 
+
 #if defined(SYSCFG_RCR_PAGE0)
 /** @defgroup CCM_RAM_Page_Write_Protection_Enable CCM RAM page write protection enable
   * @{
@@ -861,16 +860,16 @@ typedef enum
   * @note   write protection can only be disabled by a system reset
   */
 #define __HAL_SYSCFG_SRAM_WRP_ENABLE(__PAGE_WP__)      do {assert_param(IS_HAL_SYSCFG_WP_PAGE((__PAGE_WP__))); \
-                                                           SYSCFG->RCR |= (__PAGE_WP__);                       \
-                                                          }while(0U)
+        SYSCFG->RCR |= (__PAGE_WP__);                       \
+    }while(0U)
 /**
  * @}
  */
 #endif /* SYSCFG_RCR_PAGE0 */
- 
+
 /**
  * @}
- */ 
+ */
 /* Private macro -------------------------------------------------------------*/
 /** @defgroup HAL_Private_Macros HAL Private Macros
   * @{
@@ -880,13 +879,13 @@ typedef enum
                            ((FREQ) == HAL_TICK_FREQ_1KHZ))
 /**
  * @}
- */ 
+ */
 /* Exported functions --------------------------------------------------------*/
 /** @addtogroup HAL_Exported_Functions HAL Exported Functions
   * @{
   */
 
-/** @addtogroup HAL_Exported_Functions_Group1 Initialization and de-initialization Functions 
+/** @addtogroup HAL_Exported_Functions_Group1 Initialization and de-initialization Functions
  *  @brief    Initialization and de-initialization functions
  * @{
  */
@@ -895,11 +894,11 @@ HAL_StatusTypeDef HAL_Init(void);
 HAL_StatusTypeDef HAL_DeInit(void);
 void HAL_MspInit(void);
 void HAL_MspDeInit(void);
-HAL_StatusTypeDef HAL_InitTick (uint32_t TickPriority);
+HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
 /**
  * @}
  */
- 
+
 /* Exported variables ---------------------------------------------------------*/
 /** @addtogroup HAL_Exported_Variables
   * @{
@@ -910,8 +909,8 @@ extern HAL_TickFreqTypeDef uwTickFreq;
 /**
   * @}
   */
- 
-/** @addtogroup HAL_Exported_Functions_Group2 HAL Control functions 
+
+/** @addtogroup HAL_Exported_Functions_Group2 HAL Control functions
  *  @brief    HAL Control functions
  * @{
  */
@@ -946,12 +945,12 @@ void     HAL_DBGMCU_DisableDBGStandbyMode(void);
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
-  
+  */
+
 #ifdef __cplusplus
 }
 #endif

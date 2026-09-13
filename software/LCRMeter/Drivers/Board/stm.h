@@ -10,7 +10,7 @@ extern "C" {
 #include "stm32f3xx_hal.h"
 
 static inline uint8_t stm_in_interrupt() {
-	return (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0;
+    return (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0;
 }
 
 #ifdef HAL_RTC_MODULE_ENABLED

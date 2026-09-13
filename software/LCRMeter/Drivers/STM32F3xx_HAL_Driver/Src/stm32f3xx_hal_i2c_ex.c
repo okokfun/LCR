@@ -110,41 +110,28 @@
   * @param  AnalogFilter New state of the Analog filter.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter)
-{
-  /* Check the parameters */
-  assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
-  assert_param(IS_I2C_ANALOG_FILTER(AnalogFilter));
-
-  if (hi2c->State == HAL_I2C_STATE_READY)
-  {
-    /* Process Locked */
-    __HAL_LOCK(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_BUSY;
-
-    /* Disable the selected I2C peripheral */
-    __HAL_I2C_DISABLE(hi2c);
-
-    /* Reset I2Cx ANOFF bit */
-    hi2c->Instance->CR1 &= ~(I2C_CR1_ANFOFF);
-
-    /* Set analog filter bit*/
-    hi2c->Instance->CR1 |= AnalogFilter;
-
-    __HAL_I2C_ENABLE(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_READY;
-
-    /* Process Unlocked */
-    __HAL_UNLOCK(hi2c);
-
-    return HAL_OK;
-  }
-  else
-  {
-    return HAL_BUSY;
-  }
+HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(
+                I2C_HandleTypeDef* hi2c, uint32_t AnalogFilter) {
+    /* Check the parameters */
+    assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
+    assert_param(IS_I2C_ANALOG_FILTER(AnalogFilter));
+    if (hi2c->State == HAL_I2C_STATE_READY) {
+        /* Process Locked */
+        __HAL_LOCK(hi2c);
+        hi2c->State = HAL_I2C_STATE_BUSY;
+        /* Disable the selected I2C peripheral */
+        __HAL_I2C_DISABLE(hi2c);
+        /* Reset I2Cx ANOFF bit */
+        hi2c->Instance->CR1 &= ~(I2C_CR1_ANFOFF);
+        /* Set analog filter bit*/
+        hi2c->Instance->CR1 |= AnalogFilter;
+        __HAL_I2C_ENABLE(hi2c);
+        hi2c->State = HAL_I2C_STATE_READY;
+        /* Process Unlocked */
+        __HAL_UNLOCK(hi2c);
+        return HAL_OK;
+    } else
+        return HAL_BUSY;
 }
 
 /**
@@ -154,49 +141,33 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t
   * @param  DigitalFilter Coefficient of digital noise filter between Min_Data=0x00 and Max_Data=0x0F.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter)
-{
-  uint32_t tmpreg = 0U;
-
-  /* Check the parameters */
-  assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
-  assert_param(IS_I2C_DIGITAL_FILTER(DigitalFilter));
-
-  if (hi2c->State == HAL_I2C_STATE_READY)
-  {
-    /* Process Locked */
-    __HAL_LOCK(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_BUSY;
-
-    /* Disable the selected I2C peripheral */
-    __HAL_I2C_DISABLE(hi2c);
-
-    /* Get the old register value */
-    tmpreg = hi2c->Instance->CR1;
-
-    /* Reset I2Cx DNF bits [11:8] */
-    tmpreg &= ~(I2C_CR1_DNF);
-
-    /* Set I2Cx DNF coefficient */
-    tmpreg |= DigitalFilter << 8U;
-
-    /* Store the new register value */
-    hi2c->Instance->CR1 = tmpreg;
-
-    __HAL_I2C_ENABLE(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_READY;
-
-    /* Process Unlocked */
-    __HAL_UNLOCK(hi2c);
-
-    return HAL_OK;
-  }
-  else
-  {
-    return HAL_BUSY;
-  }
+HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(
+                I2C_HandleTypeDef* hi2c, uint32_t DigitalFilter) {
+    uint32_t tmpreg = 0U;
+    /* Check the parameters */
+    assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
+    assert_param(IS_I2C_DIGITAL_FILTER(DigitalFilter));
+    if (hi2c->State == HAL_I2C_STATE_READY) {
+        /* Process Locked */
+        __HAL_LOCK(hi2c);
+        hi2c->State = HAL_I2C_STATE_BUSY;
+        /* Disable the selected I2C peripheral */
+        __HAL_I2C_DISABLE(hi2c);
+        /* Get the old register value */
+        tmpreg = hi2c->Instance->CR1;
+        /* Reset I2Cx DNF bits [11:8] */
+        tmpreg &= ~(I2C_CR1_DNF);
+        /* Set I2Cx DNF coefficient */
+        tmpreg |= DigitalFilter << 8U;
+        /* Store the new register value */
+        hi2c->Instance->CR1 = tmpreg;
+        __HAL_I2C_ENABLE(hi2c);
+        hi2c->State = HAL_I2C_STATE_READY;
+        /* Process Unlocked */
+        __HAL_UNLOCK(hi2c);
+        return HAL_OK;
+    } else
+        return HAL_BUSY;
 }
 
 /**
@@ -205,37 +176,26 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_
   *                the configuration information for the specified I2Cx peripheral.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c)
-{
-  /* Check the parameters */
-  assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hi2c->Instance));
-
-  if (hi2c->State == HAL_I2C_STATE_READY)
-  {
-    /* Process Locked */
-    __HAL_LOCK(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_BUSY;
-
-    /* Disable the selected I2C peripheral */
-    __HAL_I2C_DISABLE(hi2c);
-
-    /* Enable wakeup from stop mode */
-    hi2c->Instance->CR1 |= I2C_CR1_WUPEN;
-
-    __HAL_I2C_ENABLE(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_READY;
-
-    /* Process Unlocked */
-    __HAL_UNLOCK(hi2c);
-
-    return HAL_OK;
-  }
-  else
-  {
-    return HAL_BUSY;
-  }
+HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef*
+                                         hi2c) {
+    /* Check the parameters */
+    assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(
+                                 hi2c->Instance));
+    if (hi2c->State == HAL_I2C_STATE_READY) {
+        /* Process Locked */
+        __HAL_LOCK(hi2c);
+        hi2c->State = HAL_I2C_STATE_BUSY;
+        /* Disable the selected I2C peripheral */
+        __HAL_I2C_DISABLE(hi2c);
+        /* Enable wakeup from stop mode */
+        hi2c->Instance->CR1 |= I2C_CR1_WUPEN;
+        __HAL_I2C_ENABLE(hi2c);
+        hi2c->State = HAL_I2C_STATE_READY;
+        /* Process Unlocked */
+        __HAL_UNLOCK(hi2c);
+        return HAL_OK;
+    } else
+        return HAL_BUSY;
 }
 
 /**
@@ -244,37 +204,26 @@ HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c)
   *                the configuration information for the specified I2Cx peripheral.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c)
-{
-  /* Check the parameters */
-  assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hi2c->Instance));
-
-  if (hi2c->State == HAL_I2C_STATE_READY)
-  {
-    /* Process Locked */
-    __HAL_LOCK(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_BUSY;
-
-    /* Disable the selected I2C peripheral */
-    __HAL_I2C_DISABLE(hi2c);
-
-    /* Enable wakeup from stop mode */
-    hi2c->Instance->CR1 &= ~(I2C_CR1_WUPEN);
-
-    __HAL_I2C_ENABLE(hi2c);
-
-    hi2c->State = HAL_I2C_STATE_READY;
-
-    /* Process Unlocked */
-    __HAL_UNLOCK(hi2c);
-
-    return HAL_OK;
-  }
-  else
-  {
-    return HAL_BUSY;
-  }
+HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef*
+                                          hi2c) {
+    /* Check the parameters */
+    assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(
+                                 hi2c->Instance));
+    if (hi2c->State == HAL_I2C_STATE_READY) {
+        /* Process Locked */
+        __HAL_LOCK(hi2c);
+        hi2c->State = HAL_I2C_STATE_BUSY;
+        /* Disable the selected I2C peripheral */
+        __HAL_I2C_DISABLE(hi2c);
+        /* Enable wakeup from stop mode */
+        hi2c->Instance->CR1 &= ~(I2C_CR1_WUPEN);
+        __HAL_I2C_ENABLE(hi2c);
+        hi2c->State = HAL_I2C_STATE_READY;
+        /* Process Unlocked */
+        __HAL_UNLOCK(hi2c);
+        return HAL_OK;
+    } else
+        return HAL_BUSY;
 }
 
 /**
@@ -292,16 +241,14 @@ HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c)
   *        only by using I2C_FASTMODEPLUS_I2C3 parameter.
   * @retval None
   */
-void HAL_I2CEx_EnableFastModePlus(uint32_t ConfigFastModePlus)
-{
-  /* Check the parameter */
-  assert_param(IS_I2C_FASTMODEPLUS(ConfigFastModePlus));
-
-  /* Enable SYSCFG clock */
-  __HAL_RCC_SYSCFG_CLK_ENABLE();
-
-  /* Enable fast mode plus driving capability for selected pin */
-  SET_BIT(SYSCFG->CFGR1, (uint32_t)ConfigFastModePlus);
+void HAL_I2CEx_EnableFastModePlus(uint32_t
+                                  ConfigFastModePlus) {
+    /* Check the parameter */
+    assert_param(IS_I2C_FASTMODEPLUS(ConfigFastModePlus));
+    /* Enable SYSCFG clock */
+    __HAL_RCC_SYSCFG_CLK_ENABLE();
+    /* Enable fast mode plus driving capability for selected pin */
+    SET_BIT(SYSCFG->CFGR1, (uint32_t)ConfigFastModePlus);
 }
 
 /**
@@ -319,16 +266,14 @@ void HAL_I2CEx_EnableFastModePlus(uint32_t ConfigFastModePlus)
   *        only by using I2C_FASTMODEPLUS_I2C3 parameter.
   * @retval None
   */
-void HAL_I2CEx_DisableFastModePlus(uint32_t ConfigFastModePlus)
-{
-  /* Check the parameter */
-  assert_param(IS_I2C_FASTMODEPLUS(ConfigFastModePlus));
-
-  /* Enable SYSCFG clock */
-  __HAL_RCC_SYSCFG_CLK_ENABLE();
-
-  /* Disable fast mode plus driving capability for selected pin */
-  CLEAR_BIT(SYSCFG->CFGR1, (uint32_t)ConfigFastModePlus);
+void HAL_I2CEx_DisableFastModePlus(uint32_t
+                                   ConfigFastModePlus) {
+    /* Check the parameter */
+    assert_param(IS_I2C_FASTMODEPLUS(ConfigFastModePlus));
+    /* Enable SYSCFG clock */
+    __HAL_RCC_SYSCFG_CLK_ENABLE();
+    /* Disable fast mode plus driving capability for selected pin */
+    CLEAR_BIT(SYSCFG->CFGR1, (uint32_t)ConfigFastModePlus);
 }
 
 /**

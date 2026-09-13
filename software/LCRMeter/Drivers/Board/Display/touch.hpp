@@ -10,10 +10,10 @@
 
 namespace Touch {
 
-void Init(void);
-bool GetCoordinates(coords_t &c);
-bool SetPENCallback(exti_callback_t cb, void *ptr);
-bool ClearPENCallback(void);
+    void Init(void);
+    bool GetCoordinates(coords_t& c);
+    bool SetPENCallback(exti_callback_t cb, void* ptr);
+    bool ClearPENCallback(void);
 }
 
 #endif

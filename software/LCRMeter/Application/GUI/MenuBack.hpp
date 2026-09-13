@@ -11,20 +11,24 @@
 #include "menuentry.hpp"
 
 class MenuBack : public MenuEntry {
-public:
-	MenuBack() {
-		selectable = false;
-	}
-	;
+  public:
+    MenuBack() {
+        selectable = false;
+    }
+    ;
 
-private:
-	void draw(coords_t offset) override;
-	void input(GUIEvent_t *ev) override { ev->type = EVENT_NONE; };
+  private:
+    void draw(coords_t offset) override;
+    void input(GUIEvent_t* ev) override {
+        ev->type = EVENT_NONE;
+    };
 
-	Widget::Type getType() override { return Widget::Type::MenuBack; };
+    Widget::Type getType() override {
+        return Widget::Type::MenuBack;
+    };
 
-	static constexpr color_t Background = COLOR_BG_DEFAULT;
-	static constexpr color_t Foreground = COLOR_FG_DEFAULT;
+    static constexpr color_t Background = COLOR_BG_DEFAULT;
+    static constexpr color_t Foreground = COLOR_FG_DEFAULT;
 };
 
 

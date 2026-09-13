@@ -31,9 +31,9 @@
 
 namespace GUI {
 
-bool Init(Widget& top);
+    bool Init(Widget& top);
 
-bool SendEvent(GUIEvent_t *ev);
+    bool SendEvent(GUIEvent_t* ev);
 
 }
 

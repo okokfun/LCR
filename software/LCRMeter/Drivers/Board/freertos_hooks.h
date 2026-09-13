@@ -21,7 +21,7 @@ void pd_allow_stop();
 #endif
 
 // additional memory allocation functions
-void *pvPortCalloc(size_t num, size_t xSize);
+void* pvPortCalloc(size_t num, size_t xSize);
 
 #if configUSE_TRACE_FACILITY == 1
 int freertos_print_task_overview();

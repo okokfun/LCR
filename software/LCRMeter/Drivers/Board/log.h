@@ -47,29 +47,30 @@ extern "C" {
 #define Global_Level_Mask (LevelAll)
 
 #define LOG(source, level, message, ...) do { \
-    if (source & level & Global_Level_Mask) { \
-       log_write(#source, level, message, ##__VA_ARGS__); \
-    } \
-} while (0)
+        if (source & level & Global_Level_Mask) { \
+            log_write(#source, level, message, ##__VA_ARGS__); \
+        } \
+    } while (0)
 
 #ifdef USE_ASSERT
 #define ASSERT(x) do { \
-	if(!(x)) { \
-		log_write("    ASSERT", LevelCrit, "Assertion failed: %s, line %d", __FILE__, __LINE__); \
-		log_flush(); \
-		__BKPT(); \
-	} \
-} while (0)
+        if(!(x)) { \
+            log_write("    ASSERT", LevelCrit, "Assertion failed: %s, line %d", __FILE__, __LINE__); \
+            log_flush(); \
+            __BKPT(); \
+        } \
+    } while (0)
 #else
 #define ASSERT(x)
 #endif
 
 
 void log_init();
-void log_write(const char *module, uint8_t level, const char *fmt, ...);
+void log_write(const char* module, uint8_t level,
+               const char* fmt, ...);
 void log_flush();
 
-void log_force(const char *fmt, ...);
+void log_force(const char* fmt, ...);
 
 #ifdef __cplusplus
 }

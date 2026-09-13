@@ -24,7 +24,7 @@
 #define __USBD_CONF__H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -107,14 +107,14 @@
 
 /* For footprint reasons and since only one allocation is handled in the HID class
    driver, the malloc/free is changed into a static allocation method */
-void *USBD_static_malloc(uint32_t size);
-void USBD_static_free(void *p);
+void* USBD_static_malloc(uint32_t size);
+void USBD_static_free(void* p);
 
 /* DEBUG macros */
 
 #if (USBD_DEBUG_LEVEL > 0)
 #define USBD_UsrLog(...)    printf(__VA_ARGS__);\
-                            printf("\n");
+    printf("\n");
 #else
 #define USBD_UsrLog(...)
 #endif
@@ -122,16 +122,16 @@ void USBD_static_free(void *p);
 #if (USBD_DEBUG_LEVEL > 1)
 
 #define USBD_ErrLog(...)    printf("ERROR: ") ;\
-                            printf(__VA_ARGS__);\
-                            printf("\n");
+    printf(__VA_ARGS__);\
+    printf("\n");
 #else
 #define USBD_ErrLog(...)
 #endif
 
 #if (USBD_DEBUG_LEVEL > 2)
 #define USBD_DbgLog(...)    printf("DEBUG : ") ;\
-                            printf(__VA_ARGS__);\
-                            printf("\n");
+    printf(__VA_ARGS__);\
+    printf("\n");
 #else
 #define USBD_DbgLog(...)
 #endif

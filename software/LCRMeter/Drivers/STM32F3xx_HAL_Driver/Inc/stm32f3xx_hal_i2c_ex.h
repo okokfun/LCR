@@ -108,12 +108,18 @@ extern "C" {
   */
 
 /* Peripheral Control functions  ************************************************/
-HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter);
-HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter);
-HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c);
-HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c);
-void HAL_I2CEx_EnableFastModePlus(uint32_t ConfigFastModePlus);
-void HAL_I2CEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
+HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(
+                I2C_HandleTypeDef* hi2c, uint32_t AnalogFilter);
+HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(
+                I2C_HandleTypeDef* hi2c, uint32_t DigitalFilter);
+HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef*
+                                         hi2c);
+HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef*
+                                          hi2c);
+void HAL_I2CEx_EnableFastModePlus(uint32_t
+                                  ConfigFastModePlus);
+void HAL_I2CEx_DisableFastModePlus(uint32_t
+                                   ConfigFastModePlus);
 
 /* Private constants ---------------------------------------------------------*/
 /** @defgroup I2CEx_Private_Constants I2C Extended Private Constants
@@ -129,7 +135,7 @@ void HAL_I2CEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
   * @{
   */
 #define IS_I2C_ANALOG_FILTER(FILTER)    (((FILTER) == I2C_ANALOGFILTER_ENABLE) || \
-                                          ((FILTER) == I2C_ANALOGFILTER_DISABLE))
+                                         ((FILTER) == I2C_ANALOGFILTER_DISABLE))
 
 #define IS_I2C_DIGITAL_FILTER(FILTER)   ((FILTER) <= 0x0000000FU)
 
