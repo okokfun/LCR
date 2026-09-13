@@ -29,7 +29,6 @@ int Config::AddParseFunctions(WriteFunc write, ReadFunc read,
     add->index = cnt;
     if (!first)
         first = add;
-
     else {
         // 找到配置项的末尾
         ConfigEntry* last = first;

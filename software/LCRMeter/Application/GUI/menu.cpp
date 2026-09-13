@@ -98,7 +98,6 @@ bool Menu::RemoveEntry(MenuEntry* e) {
     entriesPerPage = size.y / EntrySizeY;
     if (nentries <= entriesPerPage)
         usePages = false;
-
     else {
         // paging is still used, one less entry per page
         entriesPerPage--;
@@ -109,7 +108,6 @@ bool Menu::RemoveEntry(MenuEntry* e) {
 char* Menu::GetSelectedSubmenuName() {
     if (inSubMenu)
         return ((Menu*) firstChild->GetNth(selectedEntry))->name;
-
     else
         return nullptr;
 }
@@ -139,7 +137,6 @@ void Menu::draw(coords_t offset) {
             break;
         if (i + pageOffset == selectedEntry && selected)
             display_SetForeground(Selected);
-
         else
             display_SetForeground(Foreground);
         display_HorizontalLine(upperLeft.x + 1,
@@ -238,7 +235,6 @@ void Menu::input(GUIEvent_t* ev) {
         case EVENT_ENCODER_MOVED: {
                 if (ev->movement > 0)
                     moveDown();
-
                 else
                     moveUp();
                 ev->type = EVENT_NONE;
@@ -366,13 +362,11 @@ void Menu::moveUp() {
     uint8_t old_page = selectedEntry / entriesPerPage;
     if (selectedEntry > 0)
         selectedEntry--;
-
     else
         selectedEntry = nentries - 1;
     uint8_t new_page = selectedEntry / entriesPerPage;
     if (new_page == old_page)
         this->requestRedraw();
-
     else
         PageSwitched();
 }
@@ -381,13 +375,11 @@ void Menu::moveDown() {
     uint8_t old_page = selectedEntry / entriesPerPage;
     if (selectedEntry < nentries - 1)
         selectedEntry++;
-
     else
         selectedEntry = 0;
     uint8_t new_page = selectedEntry / entriesPerPage;
     if (new_page == old_page)
         this->requestRedraw();
-
     else
         PageSwitched();
 }

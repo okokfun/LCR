@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE targetDefinitions [
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE targetDefinitions
+[
 <!ELEMENT targetDefinitions (board)>
 <!ELEMENT board (name,dbgIF+,dbgDEV,mcuId)>
 <!ELEMENT name (#PCDATA)>

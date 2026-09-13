@@ -36,7 +36,6 @@ void prvGetRegistersFromStack(uint32_t*
     log_force("SCB->HFSR: 0x%08x", SCB->HFSR);
     if (SCB->HFSR & SCB_HFSR_VECTTBL_Msk)
         log_force("HardFault on vector table read");
-
     else if (SCB->HFSR & SCB_HFSR_FORCED_Msk) {
         log_force("Forced hardfault, SCB->CFSR: 0x%08x", SCB->CFSR);
         log_force("BFAR: 0x%08x", SCB->BFAR);
@@ -212,13 +211,11 @@ static uint16_t pd_sleep = 0;
 void pd_prevent_stop() {
     if (stm_in_interrupt())
         taskENTER_CRITICAL_FROM_ISR();
-
     else
         taskENTER_CRITICAL();
     pd_sleep++;
     if (stm_in_interrupt())
         taskEXIT_CRITICAL_FROM_ISR(0);
-
     else
         taskEXIT_CRITICAL();
 }
@@ -226,14 +223,12 @@ void pd_prevent_stop() {
 void pd_allow_stop() {
     if (stm_in_interrupt())
         taskENTER_CRITICAL_FROM_ISR();
-
     else
         taskENTER_CRITICAL();
     if (pd_sleep)
         pd_sleep--;
     if (stm_in_interrupt())
         taskEXIT_CRITICAL_FROM_ISR(0);
-
     else
         taskEXIT_CRITICAL();
 }

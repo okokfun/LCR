@@ -113,7 +113,6 @@ void ItemChooser::input(GUIEvent_t* ev) {
                 int16_t newVal = *value + ev->movement;
                 if (newVal < 0)
                     newVal = 0;
-
                 else if (newVal >= numItems)
                     newVal = numItems - 1;
                 if (*value != newVal) {
@@ -148,7 +147,6 @@ void ItemChooser::input(GUIEvent_t* ev) {
                                  + (ev->pos.y - 2) / font.height;
                 if (newVal < 0)
                     newVal = 0;
-
                 else if (newVal >= numItems)
                     newVal = numItems - 1;
                 if (*value != newVal) {

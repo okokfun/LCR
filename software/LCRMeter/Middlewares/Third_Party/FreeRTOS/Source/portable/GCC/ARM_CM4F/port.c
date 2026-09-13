@@ -217,11 +217,11 @@ static void prvTaskExitError(void);
  * a priority above configMAX_SYSCALL_INTERRUPT_PRIORITY.
  */
 #if ( configASSERT_DEFINED == 1 )
-    static uint8_t ucMaxSysCallPriority = 0;
-    static uint32_t ulMaxPRIGROUPValue = 0;
-    static const volatile uint8_t* const
-    pcInterruptPriorityRegisters = (const volatile uint8_t*
-    const) portNVIC_IP_REGISTERS_OFFSET_16;
+static uint8_t ucMaxSysCallPriority = 0;
+static uint32_t ulMaxPRIGROUPValue = 0;
+static const volatile uint8_t* const
+pcInterruptPriorityRegisters = (const volatile uint8_t*
+                                const) portNVIC_IP_REGISTERS_OFFSET_16;
 #endif /* configASSERT_DEFINED */
 
 /*-----------------------------------------------------------*/

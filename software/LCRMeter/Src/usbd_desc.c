@@ -131,8 +131,8 @@ uint8_t* USBD_FS_InterfaceStrDescriptor(USBD_SpeedTypeDef
                                         speed, uint16_t* length);
 
 #ifdef USBD_SUPPORT_USER_STRING_DESC
-    uint8_t* USBD_FS_USRStringDesc(USBD_SpeedTypeDef speed,
-    uint8_t idx, uint16_t* length);
+uint8_t* USBD_FS_USRStringDesc(USBD_SpeedTypeDef speed,
+                               uint8_t idx, uint16_t* length);
 #endif /* USBD_SUPPORT_USER_STRING_DESC */
 
 /**

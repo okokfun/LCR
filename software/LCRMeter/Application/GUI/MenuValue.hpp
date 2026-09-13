@@ -68,7 +68,6 @@ class MenuValue: public MenuEntry {
         if (updated) {
             if (*value > max)
                 *value = max;
-
             else if (*value < min)
                 *value = min;
             if (cb)

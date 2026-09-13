@@ -32,7 +32,6 @@ bool Persistence::Add(void* ptr, uint16_t size) {
     for (uint8_t i = 0; i < maxEntries; i++) {
         if (entries[i].ptr)
             freeOffset = entries[i].offset + entries[i].size;
-
         else {
             if (freeOffset + size <= usableSize) {
                 // found an empty spot, add data
@@ -98,7 +97,6 @@ bool Persistence::Load() {
     uint32_t compare = *(uint32_t*)(FLASHend - 4);
     if (crc != compare)
         return false;
-
     else {
         for (uint8_t i = 0; i < maxEntries; i++) {
             if (entries[i].ptr)

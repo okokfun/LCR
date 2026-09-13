@@ -293,7 +293,6 @@ void Sweep::draw(coords_t offset) {
             }
             if (axis == 0)
                 display_SetForeground(ColorPrimary);
-
             else
                 display_SetForeground(ColorSecondary);
             uint16_t highestPoint = initialSweep ? pointCnt :
@@ -334,7 +333,6 @@ void Sweep::draw(coords_t offset) {
                 }
                 if (axis == 0)
                     display_SetForeground(ColorPrimary);
-
                 else
                     display_SetForeground(ColorSecondary);
                 display_Line(from.x, from.y, to.x, to.y);
@@ -346,7 +344,6 @@ void Sweep::draw(coords_t offset) {
     for (uint8_t i = 0; i < 2; i++) {
         if (i == 0)
             display_SetForeground(ColorPrimary);
-
         else
             display_SetForeground(ColorSecondary);
         char buf[10];
@@ -392,7 +389,6 @@ void Sweep::input(GUIEvent_t* ev) {
                                               config.X.points - 1);
                 if (marker_new < 0)
                     marker_new = 0;
-
                 else if (marker_new >= config.X.points)
                     marker_new = config.X.points - 1;
                 if (marker_new != marker) {

@@ -362,7 +362,6 @@ void display_Circle(int16_t x0, int16_t y0,
         y += 1;
         if (err <= 0)
             err += 2 * y + 1;
-
         else {
             x -= 1;
             err += 2 * (y - x) + 1;
@@ -413,7 +412,6 @@ void display_Char(int16_t x, int16_t y, uint8_t c) {
                 uint16_t color;
                 if (charIndex[offset] & bitMask)
                     color = foreground;
-
                 else
                     color = background;
                 writeData(color);
@@ -461,7 +459,6 @@ void display_CharRotated(int16_t x, int16_t y, uint8_t c) {
                 uint8_t offset = (j + 1) * yInc - 1;
                 if (charIndex[offset + offset_i] & bitMask)
                     color = foreground;
-
                 else
                     color = background;
                 writeData(color);
@@ -517,7 +514,6 @@ void display_AutoCenterString(const char* s,
     if (lenX < maxLineLength * Font_Medium.width
         || lenY < Font_Medium.height * lines)
         font = Font_Small;
-
     else if (lenX < maxLineLength * Font_Big.width
              || lenY < Font_Big.height * lines)
         font = Font_Medium;
@@ -530,7 +526,6 @@ void display_AutoCenterString(const char* s,
         char strbuf[maxLineLength + 1];
         if (linebreak)
             len = linebreak - start;
-
         else
             len = strlen(start);
         strncpy(strbuf, start, len);

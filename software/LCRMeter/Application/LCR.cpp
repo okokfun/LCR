@@ -144,7 +144,6 @@ static void drawResult(Widget& w, coords_t pos) {
                 Component c;
                 if (ImpType == LCR::ImpedanceType::CAPACITANCE)
                     c = Component::CAPACITOR;
-
                 else
                     c = Component::INDUCTOR;
                 if (mode == LCR::DisplayMode::SERIES) {
@@ -292,7 +291,6 @@ static LCR::Result CalculateComponentValues(
     float phase = 180 * arg(res.frontend.Z) / M_PI;
     if (phase >= 0.0f)
         res.type = LCR::ImpedanceType::INDUCTANCE;
-
     else
         res.type = LCR::ImpedanceType::CAPACITANCE;
     if (displayMode == LCR::DisplayMode::AUTO) {
@@ -302,7 +300,6 @@ static LCR::Result CalculateComponentValues(
         } else {
             if (abs(res.frontend.Z) < 1000.0f)
                 res.mode = LCR::DisplayMode::SERIES;
-
             else
                 res.mode = LCR::DisplayMode::PARALLEL;
         }

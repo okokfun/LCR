@@ -43,7 +43,6 @@ namespace Dialog {
         /* find which button has been pressed */
         if (!strcmp(b->getName(), "OK"))
             dialog.msgbox.res = Result::OK;
-
         else if (!strcmp(b->getName(), "ABORT"))
             dialog.msgbox.res = Result::ABORT;
         delete dialog.window;
@@ -72,7 +71,6 @@ namespace Dialog {
         coords_t windowSize = text->getSize();
         if (windowSize.x < 132)
             windowSize.x = 136;
-
         else
             windowSize.x += 4;
         windowSize.y += 50;
@@ -246,7 +244,6 @@ namespace Dialog {
         delete w;
         if (dialog.fileChooser.OKclicked)
             return Result::OK;
-
         else
             return Result::ERR;
     }

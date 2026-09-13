@@ -73,7 +73,6 @@ class Entry : public Widget {
         }
         if (val > high)
             return high;
-
         else if (val < low)
             return low;
         return val;
@@ -109,14 +108,12 @@ class Entry : public Widget {
             CreateString();
             if (selectable)
                 display_SetForeground(color);
-
             else
                 display_SetForeground(COLOR_GRAY);
         } else
             display_SetForeground(COLOR_SELECTED);
         if (selectable)
             display_SetBackground(Background);
-
         else
             display_SetBackground(COLOR_UNSELECTABLE);
         display_SetFont(font);

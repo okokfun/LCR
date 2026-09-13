@@ -93,7 +93,6 @@ static bool touch_SampleADC(int16_t* rawX, int16_t* rawY,
     constexpr uint16_t maxDiff = 500;
     if (Xmax - Xmin > maxDiff || Ymax - Ymin > maxDiff)
         return false;
-
     else
         return true;
 }

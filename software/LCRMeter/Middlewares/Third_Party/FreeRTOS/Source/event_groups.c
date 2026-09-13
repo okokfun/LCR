@@ -195,7 +195,7 @@ EventBits_t xEventGroupSync(EventGroupHandle_t xEventGroup,
     EventGroup_t* pxEventBits = (EventGroup_t*) xEventGroup;
     BaseType_t xAlreadyYielded;
     BaseType_t xTimeoutOccurred = pdFALSE;
-    configASSERT((uxBitsToWaitFor &
+    configASSERT((uxBitsToWaitFor&
                   eventEVENT_BITS_CONTROL_BYTES) == 0);
     configASSERT(uxBitsToWaitFor != 0);
 #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
@@ -291,7 +291,7 @@ EventBits_t xEventGroupWaitBits(EventGroupHandle_t
     /* Check the user is not attempting to wait on the bits used by the kernel
     itself, and that at least one bit is being requested. */
     configASSERT(xEventGroup);
-    configASSERT((uxBitsToWaitFor &
+    configASSERT((uxBitsToWaitFor&
                   eventEVENT_BITS_CONTROL_BYTES) == 0);
     configASSERT(uxBitsToWaitFor != 0);
 #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )

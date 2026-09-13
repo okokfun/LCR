@@ -390,7 +390,6 @@ static void frontend_task(void*) {
                     voltageMeasurement = false;
                     if (settings.range == Frontend::Range::Lowest)
                         rtia = AD5940_HSRTIA_200;
-
                     else if (settings.range == Frontend::Range::Highest)
                         rtia = AD5940_HSRTIA_160K;
                     // Configure the frontend
@@ -514,7 +513,6 @@ static void frontend_task(void*) {
                                 // constrain phase to +/-PI
                                 if (phase >= M_PI)
                                     phase -= 2 * M_PI;
-
                                 else if (phase <= -M_PI)
                                     phase += 2 * M_PI;
                                 //						result.Magnitude = mag;
@@ -554,12 +552,10 @@ static void frontend_task(void*) {
                                                        * M_SQRT1_2;	// Convert from peak to RMS
                                 if (result.clippedI)
                                     result.LimitLow = smallestVoltage / highestCurrent;
-
                                 else
                                     result.LimitLow = smallestVoltage / result.RMS_I;
                                 if (result.clippedU)
                                     result.LimitHigh = highestVoltage / smallestCurrent;
-
                                 else
                                     result.LimitHigh = result.RMS_U / smallestCurrent;
                                 result.type = type;
@@ -615,12 +611,10 @@ static void frontend_task(void*) {
                                 // move on to next step
                                 if (calFreqIndex < ARRAY_SIZE(calibration_frequencies) - 1)
                                     calFreqIndex++;
-
                                 else {
                                     calFreqIndex = 0;
                                     if (rtia != AD5940_HSRTIA_160K)
                                         rtia = (ad5940_hsrtia_t)(uint8_t)(rtia + 1);
-
                                     else {
                                         // Calibration routine complete
                                         state = State::Stopped;
@@ -653,7 +647,6 @@ static void frontend_task(void*) {
                             ad5940_release_mutex(&ad);
                             if (state == State::Calibrating)
                                 StartADC(ADCMeasurement::VoltageCalibrationResistor);
-
                             else
                                 StartADC(ADCMeasurement::Voltage);
                         }

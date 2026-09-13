@@ -186,14 +186,14 @@ PRIVILEGED_DATA static TaskHandle_t xTimerTaskHandle = NULL;
 
 #if( configSUPPORT_STATIC_ALLOCATION == 1 )
 
-    /* If static allocation is supported then the application must provide the
-    following callback function - which enables the application to optionally
-    provide the memory that will be used by the timer task as the task's stack
-    and TCB. */
-    extern void vApplicationGetTimerTaskMemory(
-    StaticTask_t** ppxTimerTaskTCBBuffer,
-    StackType_t** ppxTimerTaskStackBuffer,
-    uint32_t* pulTimerTaskStackSize);
+/* If static allocation is supported then the application must provide the
+following callback function - which enables the application to optionally
+provide the memory that will be used by the timer task as the task's stack
+and TCB. */
+extern void vApplicationGetTimerTaskMemory(
+                StaticTask_t** ppxTimerTaskTCBBuffer,
+                StackType_t** ppxTimerTaskStackBuffer,
+                uint32_t* pulTimerTaskStackSize);
 
 #endif
 
@@ -676,7 +676,7 @@ static void	prvProcessReceivedCommands(void) {
             commands. */
             if (xMessage.xMessageID < (BaseType_t) 0) {
                 const CallbackParameters_t* const pxCallback = &
-                (xMessage.u.xCallbackParameters);
+                        (xMessage.u.xCallbackParameters);
                 /* The timer uses the xCallbackParameters member to request a
                 callback be executed.  Check the callback is not NULL. */
                 configASSERT(pxCallback);

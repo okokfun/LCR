@@ -460,8 +460,8 @@ uxSchedulerSuspended	= (UBaseType_t) pdFALSE;
 
 /* Callback function prototypes. --------------------------*/
 #if(  configCHECK_FOR_STACK_OVERFLOW > 0 )
-    extern void vApplicationStackOverflowHook(TaskHandle_t xTask,
-    char* pcTaskName);
+extern void vApplicationStackOverflowHook(TaskHandle_t xTask,
+                                          char* pcTaskName);
 #endif
 
 #if( configUSE_TICK_HOOK > 0 )
@@ -469,9 +469,9 @@ uxSchedulerSuspended	= (UBaseType_t) pdFALSE;
 #endif
 
 #if( configSUPPORT_STATIC_ALLOCATION == 1 )
-    extern void vApplicationGetIdleTaskMemory(StaticTask_t**
-    ppxIdleTaskTCBBuffer, StackType_t** ppxIdleTaskStackBuffer,
-    uint32_t* pulIdleTaskStackSize);
+extern void vApplicationGetIdleTaskMemory(StaticTask_t**
+                                          ppxIdleTaskTCBBuffer, StackType_t** ppxIdleTaskStackBuffer,
+                                          uint32_t* pulIdleTaskStackSize);
 #endif
 
 /* File private functions. --------------------------------*/
@@ -482,8 +482,8 @@ uxSchedulerSuspended	= (UBaseType_t) pdFALSE;
  * is in any other state.
  */
 #if ( INCLUDE_vTaskSuspend == 1 )
-    static BaseType_t prvTaskIsTaskSuspended(const TaskHandle_t
-    xTask) PRIVILEGED_FUNCTION;
+static BaseType_t prvTaskIsTaskSuspended(const TaskHandle_t
+                                         xTask) PRIVILEGED_FUNCTION;
 #endif /* INCLUDE_vTaskSuspend */
 
 /*
@@ -544,9 +544,9 @@ static void prvAddCurrentTaskToDelayedList(
  */
 #if ( configUSE_TRACE_FACILITY == 1 )
 
-    static UBaseType_t prvListTasksWithinSingleList(
-    TaskStatus_t* pxTaskStatusArray, List_t* pxList,
-    eTaskState eState) PRIVILEGED_FUNCTION;
+static UBaseType_t prvListTasksWithinSingleList(
+                TaskStatus_t* pxTaskStatusArray, List_t* pxList,
+                eTaskState eState) PRIVILEGED_FUNCTION;
 
 #endif
 
@@ -556,9 +556,9 @@ static void prvAddCurrentTaskToDelayedList(
  */
 #if ( INCLUDE_xTaskGetHandle == 1 )
 
-    static TCB_t* prvSearchForNameWithinSingleList(
-    List_t* pxList, const char pcNameToQuery[])
-    PRIVILEGED_FUNCTION;
+static TCB_t* prvSearchForNameWithinSingleList(
+                List_t* pxList, const char pcNameToQuery[])
+PRIVILEGED_FUNCTION;
 
 #endif
 
@@ -569,8 +569,8 @@ static void prvAddCurrentTaskToDelayedList(
  */
 #if ( ( configUSE_TRACE_FACILITY == 1 ) || ( INCLUDE_uxTaskGetStackHighWaterMark == 1 ) )
 
-    static uint16_t prvTaskCheckFreeStackSpace(
-    const uint8_t* pucStackByte) PRIVILEGED_FUNCTION;
+static uint16_t prvTaskCheckFreeStackSpace(
+                const uint8_t* pucStackByte) PRIVILEGED_FUNCTION;
 
 #endif
 
@@ -598,12 +598,12 @@ static void prvResetNextTaskUnblockTime(void);
 
 #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
 
-    /*
-    * Helper function used to pad task names with spaces when printing out
-    * human readable tables of task information.
-    */
-    static char* prvWriteNameToBuffer(char* pcBuffer,
-    const char* pcTaskName) PRIVILEGED_FUNCTION;
+/*
+* Helper function used to pad task names with spaces when printing out
+* human readable tables of task information.
+*/
+static char* prvWriteNameToBuffer(char* pcBuffer,
+                                  const char* pcTaskName) PRIVILEGED_FUNCTION;
 
 #endif
 

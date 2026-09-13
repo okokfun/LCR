@@ -723,17 +723,17 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(
     HAL_StatusTypeDef status = HAL_OK;
     /* Check the parameters */
     assert_param(IS_OB_IWDG_SOURCE((UserConfig & OB_IWDG_SW)));
-    assert_param(IS_OB_STOP_SOURCE((UserConfig &
+    assert_param(IS_OB_STOP_SOURCE((UserConfig&
                                     OB_STOP_NO_RST)));
-    assert_param(IS_OB_STDBY_SOURCE((UserConfig &
+    assert_param(IS_OB_STDBY_SOURCE((UserConfig&
                                      OB_STDBY_NO_RST)));
     assert_param(IS_OB_BOOT1((UserConfig & OB_BOOT1_SET)));
-    assert_param(IS_OB_VDDA_ANALOG((UserConfig &
+    assert_param(IS_OB_VDDA_ANALOG((UserConfig&
                                     OB_VDDA_ANALOG_ON)));
-    assert_param(IS_OB_SRAM_PARITY((UserConfig &
+    assert_param(IS_OB_SRAM_PARITY((UserConfig&
                                     OB_SRAM_PARITY_RESET)));
 #if defined(FLASH_OBR_SDADC12_VDD_MONITOR)
-    assert_param(IS_OB_SDACD_VDD_MONITOR((UserConfig &
+    assert_param(IS_OB_SDACD_VDD_MONITOR((UserConfig&
                                           OB_SDACD_VDD_MONITOR_SET)));
 #endif /* FLASH_OBR_SDADC12_VDD_MONITOR */
     /* Wait for last operation to be completed */

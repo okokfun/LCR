@@ -16,7 +16,6 @@ void Checkbox::draw(coords_t offset) {
     lowerRight.y += size.y - 1;
     if (selectable)
         display_SetForeground(Border);
-
     else
         display_SetForeground(Unselectable);
     display_Rectangle(upperLeft.x, upperLeft.y, lowerRight.x,
@@ -24,7 +23,6 @@ void Checkbox::draw(coords_t offset) {
     if (*value) {
         if (selectable)
             display_SetForeground(Ticked);
-
         else
             display_SetForeground(Unselectable);
         display_Line(upperLeft.x + 2, lowerRight.y - size.y / 3,
@@ -42,7 +40,6 @@ void Checkbox::draw(coords_t offset) {
     } else {
         if (selectable)
             display_SetForeground(Unticked);
-
         else
             display_SetForeground(Unselectable);
         display_Line(upperLeft.x + 3, upperLeft.y + 3,

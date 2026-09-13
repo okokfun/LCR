@@ -130,7 +130,7 @@ void Container::input(GUIEvent_t* ev) {
                         canvasOffset.y = canvasSize.y - viewingSize.y;
                     /* clear event */
                     ev->type = EVENT_NONE;
-                } else if (ev->pos.y > size.y - scrollHorizontal *
+                } else if (ev->pos.y > size.y - scrollHorizontal*
                            ScrollbarSize) {
                     /* horizontal scrollbar */
                     if (ev->type == EVENT_TOUCH_DRAGGED)

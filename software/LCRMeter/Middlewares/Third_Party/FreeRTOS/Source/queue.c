@@ -244,13 +244,13 @@ static void prvCopyDataFromQueue(Queue_t* const pxQueue,
                                  void* const pvBuffer) PRIVILEGED_FUNCTION;
 
 #if ( configUSE_QUEUE_SETS == 1 )
-    /*
-    * Checks to see if a queue is a member of a queue set, and if so, notifies
-    * the queue set that the queue contains data.
-    */
-    static BaseType_t prvNotifyQueueSetContainer(
-    const Queue_t* const pxQueue,
-    const BaseType_t xCopyPosition) PRIVILEGED_FUNCTION;
+/*
+* Checks to see if a queue is a member of a queue set, and if so, notifies
+* the queue set that the queue contains data.
+*/
+static BaseType_t prvNotifyQueueSetContainer(
+                const Queue_t* const pxQueue,
+                const BaseType_t xCopyPosition) PRIVILEGED_FUNCTION;
 #endif
 
 /*

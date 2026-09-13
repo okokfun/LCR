@@ -53,7 +53,6 @@ void SevenSegment::draw_Digit(int16_t x, int16_t y,
         /* Select color for this segment */
         if ((1 << i) & digitToSegments[digit])
             display_SetForeground(color);
-
         else
             display_SetForeground(Background);
         /* draw the segment */
@@ -100,7 +99,6 @@ void SevenSegment::draw(coords_t offset) {
             /* this is the negative sign position */
             if (neg)
                 draw_Digit(x, y, 10);
-
             else
                 draw_Digit(x, y, 11);
         } else

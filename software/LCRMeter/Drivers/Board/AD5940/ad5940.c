@@ -119,7 +119,6 @@ static void cs_high(ad5940_t* a) {
 static uint8_t get_reg_length(ad5940_reg_t reg) {
     if (reg >= 0x1000 && reg <= 0x3014)
         return 4;
-
     else
         return 2;
 }
@@ -185,7 +184,6 @@ uint32_t ad5940_read_reg(ad5940_t* a, ad5940_reg_t reg) {
                                 100);
         if (reglength == 2)
             ret = (uint32_t)(rec[2]) << 8 | (uint32_t)(rec[3]);
-
         else {
             ret = (uint32_t)(rec[2]) << 24 | (uint32_t)(rec[3]) << 16
                   | (uint32_t)(rec[4]) << 8 | (uint32_t)(rec[5]);
@@ -913,7 +911,6 @@ ad5940_result_t ad5940_set_dft(ad5940_t* a,
     if (dft->source != AD5940_DFTSRC_DISABLED) {
         if (dft->hanning)
             ad5940_set_bits(a, AD5940_REG_DFTCON, 0x0001);
-
         else
             ad5940_clear_bits(a, AD5940_REG_DFTCON, 0x0001);
         // set DFT source
@@ -1077,16 +1074,12 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
     // see datasheet page 7 "ADC input voltage ranges" for values
     if (max_voltage <= 133)
         a->impedance.gain_voltage = AD5940_PGA_GAIN_9;
-
     else if (max_voltage <= 300)
         a->impedance.gain_voltage = AD5940_PGA_GAIN_4;
-
     else if (max_voltage <= 600)
         a->impedance.gain_voltage = AD5940_PGA_GAIN_2;
-
     else if (max_voltage <= 900)
         a->impedance.gain_voltage = AD5940_PGA_GAIN_1_5;
-
     else
         a->impedance.gain_voltage = AD5940_PGA_GAIN_1;
     LOG(Log_AD5940, LevelDebug, "Selected voltage PGA gain: %f",

@@ -40,7 +40,6 @@ void Button::draw(coords_t offset) {
     //	} else
     if (selectable)
         display_SetForeground(Foreground);
-
     else
         display_SetForeground(COLOR_LIGHTGRAY);
     display_VerticalLine(upperLeft.x, upperLeft.y + 1,
@@ -82,7 +81,6 @@ void Button::draw(coords_t offset) {
     if (name) {
         if (selectable)
             display_SetForeground(Foreground);
-
         else
             display_SetForeground(COLOR_LIGHTGRAY);
         display_SetBackground(Background);

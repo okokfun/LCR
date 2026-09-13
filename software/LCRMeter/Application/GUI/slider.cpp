@@ -29,7 +29,6 @@ void Slider::draw(coords_t offset) {
     sliderStop.y -= halfWidth;
     if (selectable)
         display_SetForeground(Border);
-
     else
         display_SetForeground(BorderUnselectable);
     display_Rectangle(sliderStart.x - 3, sliderStart.y - 3,
@@ -48,13 +47,11 @@ void Slider::draw(coords_t offset) {
     }
     if (selectable)
         display_SetForeground(KnobColor);
-
     else
         display_SetForeground(Unselectable);
     display_CircleFull(knob.x, knob.y, halfWidth);
     if (selectable)
         display_SetForeground(Border);
-
     else
         display_SetForeground(BorderUnselectable);
     display_Circle(knob.x, knob.y, halfWidth);
@@ -74,7 +71,6 @@ void Slider::input(GUIEvent_t* ev) {
                 if (vertical) {
                     if (ev->pos.y < halfWidth)
                         ev->pos.y = halfWidth;
-
                     else if (ev->pos.y > size.y - halfWidth)
                         ev->pos.y = size.y - halfWidth;
                     newVal = util_Map(ev->pos.y, halfWidth, size.y - halfWidth,
@@ -83,7 +79,6 @@ void Slider::input(GUIEvent_t* ev) {
                 } else {
                     if (ev->pos.x < halfWidth)
                         ev->pos.x = halfWidth;
-
                     else if (ev->pos.x > size.x - halfWidth)
                         ev->pos.x = size.x - halfWidth;
                     newVal = util_Map(ev->pos.x, halfWidth, size.x - halfWidth,

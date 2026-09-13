@@ -28,7 +28,6 @@ static void inputThread(void) {
                     if (abs(initialTouch.x - touch.x) > 20
                         || abs(initialTouch.y - touch.y) > 20)
                         touchMoved = 1;
-
                     else if (xTaskGetTickCount() - touchStart > 1000) {
                         /* touch held event */
                         GUIEvent_t ev;

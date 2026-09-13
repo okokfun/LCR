@@ -55,10 +55,8 @@ static inline int16_t constrain_int16_t(int16_t val,
                                         int16_t min, int16_t max) {
     if (val < min)
         return min;
-
     else if (val > max)
         return max;
-
     else
         return val;
 }

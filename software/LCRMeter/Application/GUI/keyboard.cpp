@@ -134,12 +134,10 @@ void Keyboard::input(GUIEvent_t* ev) {
                 /* move to the left, ignore amount of movement */
                 if (selectedX > 0)
                     selectedX--;
-
                 else {
                     selectedX = LAYOUT_X - 1;
                     if (selectedY > 0)
                         selectedY--;
-
                     else
                         selectedY = LAYOUT_Y;
                 }

@@ -102,10 +102,8 @@ uint32_t Unit::LeastDigitValueFromString(const char* s,
     while (*s) {
         if (*s == '.')
             dotdivisor = 1;
-
         else if (*s == '-' || *s == ' ' || isdigit((uint8_t)*s))
             dotdivisor *= 10;
-
         else {
             /* end of value string */
             break;

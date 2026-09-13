@@ -260,7 +260,8 @@ FRESULT f_stat(const TCHAR* path,
 FRESULT f_chmod(const TCHAR* path, BYTE attr,
                 BYTE mask);			/* Change attribute of the file/dir */
 FRESULT f_utime(const TCHAR* path,
-                const FILINFO* fno);			/* Change times-tamp of the file/dir */
+                const FILINFO*
+                fno);			/* Change times-tamp of the file/dir */
 FRESULT f_chdir(const TCHAR*
                 path);								/* Change current directory */
 FRESULT f_chdrive(const TCHAR*

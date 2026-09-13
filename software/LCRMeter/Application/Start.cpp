@@ -33,7 +33,6 @@ static bool VCCRail() {
     LOG(Log_App, LevelInfo, "Supply voltage: %dmV", supply);
     if (supply > 3100 && supply < 3500)
         return true;
-
     else
         return false;
 }

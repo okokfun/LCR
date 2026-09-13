@@ -82,7 +82,6 @@ void File::WriteParameters(const Entry* paramList,
                 case PointerType::BOOL:
                     if (*(bool*) paramList[i].ptr)
                         strncpy(buf, "true\n", sizeof(buf));
-
                     else
                         strncpy(buf, "false\n", sizeof(buf));
                     break;
@@ -151,10 +150,8 @@ File::ParameterResult File::ReadParameters(
                             case PointerType::BOOL:
                                 if (!strncmp(start, "true", 4))
                                     *(bool*) paramList[i].ptr = true;
-
                                 else if (!strncmp(start, "false", 5))
                                     *(bool*) paramList[i].ptr = false;
-
                                 else
                                     return ParameterResult::Error;
                         }

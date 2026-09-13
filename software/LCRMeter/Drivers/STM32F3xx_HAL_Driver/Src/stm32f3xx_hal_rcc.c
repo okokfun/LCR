@@ -805,11 +805,13 @@ uint32_t HAL_RCC_GetSysClockFreq(void) {
     tmpreg = RCC->CFGR;
     /* Get SYSCLK source -------------------------------------------------------*/
     switch (tmpreg & RCC_CFGR_SWS) {
-        case RCC_SYSCLKSOURCE_STATUS_HSE: { /* HSE used as system clock */
+        case RCC_SYSCLKSOURCE_STATUS_HSE:
+            { /* HSE used as system clock */
                 sysclockfreq = HSE_VALUE;
                 break;
             }
-        case RCC_SYSCLKSOURCE_STATUS_PLLCLK: { /* PLL used as system clock */
+        case RCC_SYSCLKSOURCE_STATUS_PLLCLK:
+            { /* PLL used as system clock */
                 pllmul = aPLLMULFactorTable[(uint32_t)(tmpreg &
                                                                          RCC_CFGR_PLLMUL) >> POSITION_VAL(RCC_CFGR_PLLMUL)];
                 prediv = aPredivFactorTable[(uint32_t)(RCC->CFGR2 &

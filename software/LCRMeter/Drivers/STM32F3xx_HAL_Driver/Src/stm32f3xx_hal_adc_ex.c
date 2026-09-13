@@ -175,20 +175,20 @@
     defined(STM32F302xC) || defined(STM32F303xC) || defined(STM32F358xx) || \
     defined(STM32F303x8) || defined(STM32F334x8) || defined(STM32F328xx) || \
     defined(STM32F301x8) || defined(STM32F302x8) || defined(STM32F318xx)
-    static HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef* hadc);
-    static HAL_StatusTypeDef ADC_Disable(ADC_HandleTypeDef*
-    hadc);
-    static HAL_StatusTypeDef ADC_ConversionStop(
-    ADC_HandleTypeDef* hadc, uint32_t ConversionGroup);
+static HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef* hadc);
+static HAL_StatusTypeDef ADC_Disable(ADC_HandleTypeDef*
+                                     hadc);
+static HAL_StatusTypeDef ADC_ConversionStop(
+                ADC_HandleTypeDef* hadc, uint32_t ConversionGroup);
 #endif /* STM32F302xE || STM32F303xE || STM32F398xx || */
 /* STM32F302xC || STM32F303xC || STM32F358xx || */
 /* STM32F303x8 || STM32F334x8 || STM32F328xx || */
 /* STM32F301x8 || STM32F302x8 || STM32F318xx    */
 
 #if defined(STM32F373xC) || defined(STM32F378xx)
-    static HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef* hadc);
-    static HAL_StatusTypeDef ADC_ConversionStop_Disable(
-    ADC_HandleTypeDef* hadc);
+static HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef* hadc);
+static HAL_StatusTypeDef ADC_ConversionStop_Disable(
+                ADC_HandleTypeDef* hadc);
 #endif /* STM32F373xC || STM32F378xx */
 
 static void ADC_DMAConvCplt(DMA_HandleTypeDef* hdma);

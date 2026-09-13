@@ -58,11 +58,11 @@ static USBD_StatusTypeDef USBD_Get_USB_Status(
 
 /* USER CODE END 1 */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-    static void PCDEx_SetConnectionState(PCD_HandleTypeDef* hpcd,
-    uint8_t state);
-    else
+static void PCDEx_SetConnectionState(PCD_HandleTypeDef* hpcd,
+                                     uint8_t state);
+else
     void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef* hpcd,
-    uint8_t state);
+                                      uint8_t state);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 
 /*******************************************************************************
@@ -119,11 +119,11 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle) {
   * @retval None
   */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-    static void PCD_DataOutStageCallback(PCD_HandleTypeDef* hpcd,
-    uint8_t epnum)
+static void PCD_DataOutStageCallback(PCD_HandleTypeDef* hpcd,
+                                     uint8_t epnum)
 #else
-    void HAL_PCD_DataOutStageCallback(PCD_HandleTypeDef* hpcd,
-    uint8_t epnum)
+void HAL_PCD_DataOutStageCallback(PCD_HandleTypeDef* hpcd,
+                                  uint8_t epnum)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
     USBD_LL_DataOutStage((USBD_HandleTypeDef*)hpcd->pData, epnum,
@@ -137,11 +137,11 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle) {
   * @retval None
   */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-    static void PCD_DataInStageCallback(PCD_HandleTypeDef* hpcd,
-    uint8_t epnum)
+static void PCD_DataInStageCallback(PCD_HandleTypeDef* hpcd,
+                                    uint8_t epnum)
 #else
-    void HAL_PCD_DataInStageCallback(PCD_HandleTypeDef* hpcd,
-    uint8_t epnum)
+void HAL_PCD_DataInStageCallback(PCD_HandleTypeDef* hpcd,
+                                 uint8_t epnum)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
     USBD_LL_DataInStage((USBD_HandleTypeDef*)hpcd->pData, epnum,
@@ -230,11 +230,11 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle) {
   * @retval None
   */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-    static void PCD_ISOOUTIncompleteCallback(PCD_HandleTypeDef*
-    hpcd, uint8_t epnum)
+static void PCD_ISOOUTIncompleteCallback(PCD_HandleTypeDef*
+                                         hpcd, uint8_t epnum)
 #else
-    void HAL_PCD_ISOOUTIncompleteCallback(PCD_HandleTypeDef*
-    hpcd, uint8_t epnum)
+void HAL_PCD_ISOOUTIncompleteCallback(PCD_HandleTypeDef*
+                                      hpcd, uint8_t epnum)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
     USBD_LL_IsoOUTIncomplete((USBD_HandleTypeDef*)hpcd->pData,
@@ -248,11 +248,11 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle) {
   * @retval None
   */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-    static void PCD_ISOINIncompleteCallback(PCD_HandleTypeDef*
-    hpcd, uint8_t epnum)
+static void PCD_ISOINIncompleteCallback(PCD_HandleTypeDef*
+                                        hpcd, uint8_t epnum)
 #else
-    void HAL_PCD_ISOINIncompleteCallback(PCD_HandleTypeDef* hpcd,
-    uint8_t epnum)
+void HAL_PCD_ISOINIncompleteCallback(PCD_HandleTypeDef* hpcd,
+                                     uint8_t epnum)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
     USBD_LL_IsoINIncomplete((USBD_HandleTypeDef*)hpcd->pData,
@@ -582,11 +582,11 @@ void USBD_static_free(void* p) {
   * @retval None
   */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-    void PCDEx_SetConnectionState(PCD_HandleTypeDef* hpcd,
-    uint8_t state)
+void PCDEx_SetConnectionState(PCD_HandleTypeDef* hpcd,
+                              uint8_t state)
 #else
-    void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef* hpcd,
-    uint8_t state)
+void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef* hpcd,
+                                  uint8_t state)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
     /* USER CODE BEGIN 6 */

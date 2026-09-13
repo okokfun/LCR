@@ -151,12 +151,10 @@ void Widget::select(bool down) {
         Widget* newSel = nullptr;
         if (selectable)
             newSel = this;
-
         else {
             /* This widget is not selectable, try to find next in line */
             if (down)
                 newSel = this->IntSelectChild();
-
             else {
                 /* Select next selectable parent */
                 for (Widget* p = this->parent; p; p = p->parent) {
@@ -231,7 +229,6 @@ bool Widget::isInArea(coords_t pos) {
     if (pos.x >= position.x && pos.x < position.x + size.x
         && pos.y >= position.y && pos.y < position.y + size.y)
         return true;
-
     else
         return false;
 }
@@ -247,7 +244,6 @@ void Widget::addChild(Widget* w, coords_t pos) {
             }
             if (child->next)
                 child = child->next;
-
             else
                 break;
         } while (1);
@@ -267,7 +263,6 @@ Widget* Widget::GetNth(uint16_t n) {
     while (n--) {
         if (ret->next)
             ret = ret->next;
-
         else
             return nullptr;
     }

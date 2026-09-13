@@ -70,7 +70,6 @@ static uint16_t fifo_space() {
     uint16_t used;
     if (fifo_write >= fifo_read)
         used = fifo_write - fifo_read;
-
     else
         used = fifo_write - fifo_read + LOG_SENDBUF_LENGTH;
     return LOG_SENDBUF_LENGTH - used - 1;

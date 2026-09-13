@@ -17,7 +17,6 @@ bool Radiobutton::AddToSet(Set& set) {
     }
     if (!set.first)
         set.first = this;
-
     else {
         Radiobutton* last = set.first;
         while (last->nextInSet)
@@ -31,7 +30,6 @@ bool Radiobutton::AddToSet(Set& set) {
 bool Radiobutton::RemoveFromSet() {
     if (!set)
         return false;
-
     else {
         if (set->first == this) {
             // this is the very first entry
@@ -65,14 +63,12 @@ void Radiobutton::draw(coords_t offset) {
     if (*value == index) {
         if (selectable)
             display_SetForeground(Ticked);
-
         else
             display_SetForeground(BorderUnselectable);
         display_CircleFull(center.x, center.y, size.x / 3);
     }
     if (selectable)
         display_SetForeground(Border);
-
     else
         display_SetForeground(BorderUnselectable);
     display_Circle(center.x, center.y, size.x / 2);

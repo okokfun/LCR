@@ -216,14 +216,14 @@ static void SPI_2linesTxISR_16BIT(struct __SPI_HandleTypeDef*
 static void SPI_2linesRxISR_16BIT(struct __SPI_HandleTypeDef*
                                   hspi);
 #if (USE_SPI_CRC != 0U)
-    static void SPI_RxISR_8BITCRC(struct __SPI_HandleTypeDef*
-    hspi);
-    static void SPI_RxISR_16BITCRC(struct __SPI_HandleTypeDef*
-    hspi);
-    static void SPI_2linesRxISR_8BITCRC(struct
-    __SPI_HandleTypeDef* hspi);
-    static void SPI_2linesRxISR_16BITCRC(struct
-    __SPI_HandleTypeDef* hspi);
+static void SPI_RxISR_8BITCRC(struct __SPI_HandleTypeDef*
+                              hspi);
+static void SPI_RxISR_16BITCRC(struct __SPI_HandleTypeDef*
+                               hspi);
+static void SPI_2linesRxISR_8BITCRC(struct
+                                    __SPI_HandleTypeDef* hspi);
+static void SPI_2linesRxISR_16BITCRC(struct
+                                     __SPI_HandleTypeDef* hspi);
 #endif /* USE_SPI_CRC */
 static void SPI_AbortRx_ISR(SPI_HandleTypeDef* hspi);
 static void SPI_AbortTx_ISR(SPI_HandleTypeDef* hspi);
