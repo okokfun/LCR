@@ -5,9 +5,7 @@
  *      Author: felix
  */
 
-
 #include <util.h>
-
 
 uint32_t unixtime(int year, int month, int day,
                   int hour, int minute, int sec) {

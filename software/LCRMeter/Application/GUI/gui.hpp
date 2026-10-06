@@ -30,11 +30,9 @@
 #include "desktop.hpp"
 
 namespace GUI {
-
     bool Init(Widget& top);
 
     bool SendEvent(GUIEvent_t* ev);
-
 }
 
 #endif

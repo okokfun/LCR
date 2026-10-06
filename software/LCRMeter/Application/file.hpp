@@ -6,7 +6,6 @@
 extern SemaphoreHandle_t fileAccess;
 
 namespace File {
-
     enum class PointerType : uint8_t {
         INT8,
         INT16,

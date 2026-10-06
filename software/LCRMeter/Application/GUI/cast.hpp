@@ -6,7 +6,6 @@
 #pragma GCC diagnostic ignored "-Wpedantic"
 
 namespace {
-
     template<typename Signature>
     struct drop_first_argument;
 

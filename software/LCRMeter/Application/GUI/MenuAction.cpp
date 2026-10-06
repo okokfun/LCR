@@ -23,8 +23,6 @@ void MenuAction::draw(coords_t offset) {
     display_AutoCenterString(name, offset, offset + size);
 }
 
-
-
 void MenuAction::input(GUIEvent_t* ev) {
     switch (ev->type) {
         //	case EVENT_BUTTON_CLICKED:

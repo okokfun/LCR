@@ -73,9 +73,9 @@ class Sweep : public Widget {
         return Widget::Type::Custom;
     };
 
-    // Called whenever a setting has changed that requires the sweep to reset
+    // 每当发生需要重置扫描的设置变更时，都会调用此函数
     void MayorSettingChanged(Widget* w);
-    // Called whenever a setting has changed that only influences the sweep display (e.i. Y axis scaling)
+    // 每当发生仅影响扫描显示效果的设置变更时（例如 Y 轴缩放），都会调用此函数
     void MinorSettingChanged(Widget* w);
 
     uint32_t PointToFrequency(uint16_t point);

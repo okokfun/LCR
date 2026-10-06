@@ -48,5 +48,4 @@ static inline color_t color_Tint(color_t orig, color_t tint,
     return COLOR(r, g, b);
 }
 
-
 #endif /* COLOR_H_ */

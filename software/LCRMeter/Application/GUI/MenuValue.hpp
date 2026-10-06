@@ -16,9 +16,9 @@ class MenuValue: public MenuEntry {
                               std::numeric_limits<T>::min(), T max =
                               std::numeric_limits<T>::max()) {
         /* set member variables */
-        this->cb = cb;
-        this->ptr = ptr;
-        this->unit = unit;
+        this->cb    = cb;
+        this->ptr   = ptr;
+        this->unit  = unit;
         this->value = value;
         this->min = min;
         this->max = max;

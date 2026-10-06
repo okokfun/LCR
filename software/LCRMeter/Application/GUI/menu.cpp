@@ -3,15 +3,15 @@
 #include "Unit.hpp"
 
 Menu::Menu(const char* name, coords_t size) {
-    this->size = size;
-    selectable = true;
-    nentries = 0;
-    selectedEntry = 0;
-    usePages = false;
+    this->size     = size;
+    selectable     = true;
+    nentries       = 0;
+    selectedEntry  = 0;
+    usePages       = false;
     entriesPerPage = size.y / EntrySizeY;
-    redrawChild = true;
-    inSubMenu = false;
-    this->name = new char[strlen(name) + 1];
+    redrawChild    = true;
+    inSubMenu      = false;
+    this->name     = new char[strlen(name) + 1];
     strcpy(this->name, name);
 }
 
@@ -22,17 +22,17 @@ Menu::~Menu() {
 bool Menu::AddEntry(MenuEntry* e, int8_t position) {
     if (firstChild && position != 0 && position + nentries > 0) {
         uint8_t cnt = 1;
-        /* find end of entry list */
+        /* 找到条目列表的末尾 */
         Widget* entry = firstChild;
         do {
             if (entry == e) {
-                /* this widget has already been added, this must never happen */
+                /* 该控件已被添加，这种情况绝不应该发生 */
                 LOG(Log_GUI, LevelCrit, "菜单中存在重复条目");
                 return false;
             }
             if ((position > 0 && cnt >= position)
                 || (position < 0 && cnt >= nentries + position)) {
-                // reached requested position, insert here
+                // 已到达目标位置，在此处插入
                 break;
             }
             if (entry->next) {
@@ -383,5 +383,3 @@ void Menu::moveDown() {
     else
         PageSwitched();
 }
-
-

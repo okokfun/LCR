@@ -20,7 +20,7 @@ Container::Container(coords_t size) {
 
 void Container::attach(Widget* w, coords_t offset) {
     addChild(w, offset);
-    /* extend canvas size if necessary */
+    /* 必要时扩展画布尺寸（或：按需调整画布大小） */
     if (canvasSize.x < w->position.x + w->size.x)
         canvasSize.x = w->position.x + w->size.x;
     if (canvasSize.y < w->position.y + w->size.y)
@@ -34,14 +34,14 @@ void Container::attach(Widget* w, coords_t offset) {
         scrollVertical = true;
         viewingSize.x = size.x - ScrollbarSize;
         if (!scrollHorizontal) {
-            /* check again for horizontal scroll */
+            /* 重新检查是否需要水平滚动（或：再次检测水平滚动条） */
             if (canvasSize.x > viewingSize.x) {
                 scrollHorizontal = true;
                 viewingSize.y = size.y - ScrollbarSize;
             }
         }
     }
-    /* adjust scroll bar sizes */
+    /* 调整滚动条尺寸 */
     if (scrollHorizontal)
         scrollBarLength.x = util_Map(viewingSize.x, 0, canvasSize.x,
                                      0,
@@ -75,17 +75,17 @@ void Container::draw(coords_t offset) {
     //		}
     //		break;
     //	}
-    /* draw scroll bars if necessary */
+    /* 必要时绘制滚动条 */
     if (scrollVertical) {
         display_SetForeground(LineColor);
         display_VerticalLine(offset.x + size.x - ScrollbarSize,
                              offset.y,
                              size.y);
-        /* calculate beginning of scrollbar */
+        /* 计算滚动条的起始位置 */
         uint8_t scrollBegin = util_Map(canvasOffset.y, 0,
                                        canvasSize.y, 0,
                                        size.y - ScrollbarSize * scrollHorizontal);
-        /* display position indicator */
+        /* 显示位置指示器 */
         display_SetForeground(ScrollbarColor);
         display_RectangleFull(offset.x + size.x - ScrollbarSize + 1,
                               offset.y + scrollBegin, offset.x + size.x - 1,
@@ -96,11 +96,11 @@ void Container::draw(coords_t offset) {
         display_HorizontalLine(offset.x,
                                offset.y + size.y - ScrollbarSize,
                                size.x);
-        /* calculate beginning of scrollbar */
+        /* 计算滚动条的起始位置 */
         uint8_t scrollBegin = util_Map(canvasOffset.x, 0,
                                        canvasSize.x, 0,
                                        size.x - ScrollbarSize * scrollVertical);
-        /* display position indicator */
+        /* 显示位置指示器 */
         display_SetForeground(ScrollbarColor);
         display_RectangleFull(offset.x + scrollBegin,
                               offset.y + size.y - ScrollbarSize + 1,
@@ -113,38 +113,38 @@ void Container::input(GUIEvent_t* ev) {
     switch (ev->type) {
         case EVENT_TOUCH_PRESSED:
         case EVENT_TOUCH_DRAGGED: {
-                /* save old canvasOffset */
+                /* 保存旧的画布偏移量（记录拖动前的位置） */
                 coords_t old = canvasOffset;
                 if (ev->pos.x > viewingSize.x) {
-                    /* vertical scrollbar */
+                    /* 垂直滚动条 */
                     if (ev->type == EVENT_TOUCH_DRAGGED)
                         ev->pos.y = ev->dragged.y;
-                    /* adjust vertical canvas offset */
+                    /* 调整垂直画布偏移量（上下滚动） */
                     canvasOffset.y = util_Map(ev->pos.y, scrollBarLength.y / 2,
                                               viewingSize.y - scrollBarLength.y / 2, 0,
                                               canvasSize.y - viewingSize.y);
-                    /* constrain offset */
+                    /* 限制偏移量范围（防止把画布拖出边界） */
                     if (canvasOffset.y < 0)
                         canvasOffset.y = 0;
                     else if (canvasOffset.y > canvasSize.y - viewingSize.y)
                         canvasOffset.y = canvasSize.y - viewingSize.y;
-                    /* clear event */
+                    /* 清除事件（处理完滚动后，把事件状态重置） */
                     ev->type = EVENT_NONE;
                 } else if (ev->pos.y > size.y - scrollHorizontal*
                            ScrollbarSize) {
-                    /* horizontal scrollbar */
+                    /* 水平滚动条 */
                     if (ev->type == EVENT_TOUCH_DRAGGED)
                         ev->pos.x = ev->dragged.x;
-                    /* adjust horizontal canvas offset */
+                    /* 调整水平画布偏移量（左右滚动） */
                     canvasOffset.x = util_Map(ev->pos.x, scrollBarLength.x / 2,
                                               viewingSize.x - scrollBarLength.x / 2, 0,
                                               canvasSize.x - viewingSize.x);
-                    /* constrain offset */
+                    /* 限制偏移量范围（防止把画布拖出边界） */
                     if (canvasOffset.x < 0)
                         canvasOffset.x = 0;
                     else if (canvasOffset.x > canvasSize.x - viewingSize.x)
                         canvasOffset.x = canvasSize.x - viewingSize.x;
-                    /* clear event */
+                    /* 清除事件（处理完滚动后，把事件状态重置） */
                     ev->type = EVENT_NONE;
                 }
                 /* check if canvas moved */

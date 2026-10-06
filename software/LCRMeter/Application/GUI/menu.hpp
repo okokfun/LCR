@@ -56,5 +56,4 @@ class Menu : public MenuEntry {
     char* name;
 };
 
-
 #endif /* MENU_HPP_ */

@@ -11,7 +11,6 @@
 #include "gui.hpp"
 
 namespace Dialog {
-
     enum class MsgBox {
         ABORT_OK, OK
     };

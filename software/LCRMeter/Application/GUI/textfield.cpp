@@ -2,7 +2,7 @@
 
 Textfield::Textfield(const char* text, const font_t font) {
     this->font = font;
-    /* extract necessary size from text */
+    /* 从文本中提取所需的尺寸信息 */
     uint16_t maxWidth = 0;
     uint16_t height = font.height;
     uint16_t width = 0;

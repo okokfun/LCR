@@ -183,7 +183,7 @@ static coords_t GetCalibrationPoint(bool top,
     display_Line(cross.x - 10, cross.y + 10, cross.x + 10,
                  cross.y - 10);
     display_SetFont(Font_Big);
-    display_String(0, y, "Press and hold X");
+    display_String(0, y, "按下和hold X");
     display_Rectangle(0, y + Font_Big.height, DISPLAY_WIDTH - 1,
                       y + Font_Big.height + barHeight);
     uint16_t bar = 1;
@@ -246,8 +246,8 @@ void touch_Calibrate() {
     ev.type = EVENT_WINDOW_CLOSE;
     GUI::SendEvent(&ev);
     if (!Persistence::Save()) {
-        Dialog::MessageBox("ERROR", Font_Big,
-                           "Failed to save\ntouch calibration", Dialog::MsgBox::OK,
+        Dialog::MessageBox("错误", Font_Big,
+                           "触摸校准保\n存失败", Dialog::MsgBox::OK,
                            nullptr,
                            false);
     }

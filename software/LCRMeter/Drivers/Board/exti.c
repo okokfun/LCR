@@ -47,7 +47,7 @@ exti_result_t exti_set_callback(GPIO_TypeDef* gpio,
     ASSERT(pin < 1 << EXTI_MAX_ENTRIES);
     if (entries[index].gpio && entries[index].gpio != gpio) {
         LOG(Log_Exti, LevelError,
-            "Unable to set callback for pin %d, another GPIO already active: %p",
+            "无法为引脚 %d 设置回调，已有另一个 GPIO 处于活动状态：%p",
             pin, entries[index].gpio);
         return EXTI_RES_ERROR;
     }
@@ -79,7 +79,7 @@ exti_result_t exti_set_callback(GPIO_TypeDef* gpio,
     entries[index].gpio = gpio;
     entries[index].cb = cb;
     entries[index].ptr = ptr;
-    LOG(Log_Exti, LevelDebug, "Callback set for pin %d, GPIO %p",
+    LOG(Log_Exti, LevelDebug, "已为引脚 %d 设置回调，GPIO：%p",
         index,
         entries[index].gpio);
     return EXTI_RES_OK;
@@ -94,7 +94,7 @@ exti_result_t exti_clear_callback(GPIO_TypeDef* gpio,
     if (entries[index].gpio) {
         if (gpio != entries[index].gpio) {
             LOG(Log_Exti, LevelError,
-                "Unable to clear callback for pin %d, GPIO mismatch (expected %p, got %p)",
+                "无法清除引脚 %d 的回调，GPIO 不匹配(期望 %p，实际得到 %p)",
                 pin, entries[index].gpio, gpio);
             return EXTI_RES_ERROR;
         }
@@ -103,7 +103,7 @@ exti_result_t exti_clear_callback(GPIO_TypeDef* gpio,
     entries[index].cb = NULL;
     entries[index].ptr = NULL;
     LOG(Log_Exti, LevelDebug,
-        "Callback cleared for pin %d, GPIO %p", index,
+        "已清除引脚 %d 的回调，GPIO：%p", index,
         gpio);
     return EXTI_RES_OK;
 }
@@ -118,7 +118,7 @@ void exti_get_callback(GPIO_TypeDef* gpio, uint16_t pin,
     if (entries[index].gpio) {
         if (gpio != entries[index].gpio) {
             LOG(Log_Exti, LevelWarn,
-                "Unable to get callback for pin %d, GPIO mismatch (expected %p, got %p)",
+                "无法获取引脚 %d 的回调，GPIO 不匹配(期望 %p，实际得到 %p)",
                 pin, entries[index].gpio, gpio);
             *cb = NULL;
             *ptr = NULL;
@@ -173,5 +173,3 @@ void EXTI15_10_IRQHandler(void) {
     ExtiHandler(14);
     ExtiHandler(15);
 }
-
-

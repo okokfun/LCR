@@ -7,7 +7,7 @@
 Widget* Widget::selectedWidget = nullptr;
 
 Widget::Widget() {
-    /* Initialize all members with default values */
+    /* 使用默认值初始化所有成员（变量） */
     parent = nullptr;
     firstChild = nullptr;
     next = nullptr;
@@ -22,21 +22,21 @@ Widget::Widget() {
 }
 
 Widget::~Widget() {
-    /* Remove the widget from its parents list */
+    /* 将该控件从其父级列表中移除 */
     if (parent) {
-        /* remove widget from parent linked list */
+        /* 从父级链表中移除该控件 */
         Widget* it = parent->firstChild;
-        /* which pointer is pointing to it */
+        /* （寻找）当前指向该控件的指针 */
         Widget** pointer = &(parent->firstChild);
         while (it) {
             if (it == this) {
-                /* found this widget */
-                /* set pointer to point to next widget, removing this widget from the list */
+                /* 已找到该控件 */
+                /* 将该指针指向下一个控件，从而将该控件从链表中摘除 */
                 *pointer = it->next;
-                /* widget found, loop is done */
+                /* 已找到目标控件，循环结束 */
                 break;
             } else {
-                /* not this widget, update it and pointer to it */
+                /* （如果）不是该控件，则更新它以及指向它的指针 */
                 pointer = &(it->next);
                 it = it->next;
             }
@@ -45,7 +45,7 @@ Widget::~Widget() {
         //		/* request full redraw for parent */
         //		widget_RequestRedrawFull(w->parent);
     }
-    /* Delete all of its children */
+    /* 删除其所有子控件 */
     while (firstChild)
         delete firstChild;
 }
@@ -53,27 +53,27 @@ Widget::~Widget() {
 void Widget::draw(Widget* w, coords_t pos) {
     if (!w->visible)
         return;
-    /* calculate new position */
+    /* 计算新位置 */
     pos.x += w->position.x;
     pos.y += w->position.y;
     if (w->redraw) {
         if (w->redrawClear) {
             display_SetForeground(COLOR_BG_DEFAULT);
-            /* widget needs a full redraw, clear widget area */
+            /* 控件需要完全重绘，请清空控件区域 */
             display_RectangleFull(pos.x, pos.y, pos.x + w->size.x - 1,
                                   pos.y + w->size.y - 1);
         }
-        /* draw widget */
+        /* 绘制控件 */
         if (w->visible)
             w->draw(pos);
-        /* clear redraw request */
+        /* 清除重绘请求 */
         w->redraw = false;
         w->redrawClear = false;
     }
     if (w->visible && w->redrawChild) {
-        /* draw children of this widget */
+        /* 绘制该控件的所有子控件 */
         w->drawChildren(pos);
-        /* clear redraw request */
+        /* 清除重绘请求 */
         w->redrawChild = false;
     }
 }
@@ -84,21 +84,21 @@ void Widget::input(Widget* w, GUIEvent_t* ev) {
         case EVENT_TOUCH_RELEASED:
         case EVENT_TOUCH_HELD:
         case EVENT_TOUCH_DRAGGED:
-            /* position based event */
-            /* remove offset of own widget */
+            /* 基于位置的事件 */
+            /* 减去（扣除）自身控件的偏移量 */
             ev->pos.x -= w->position.x;
             ev->pos.y -= w->position.y;
-            /* first, try to handle it itself */
+            /* 首先尝试由自身处理该事件 */
             w->input(ev);
             if (ev->type != EVENT_NONE) {
-                /* event not handled yet */
-                /* find matching child */
+                /* 事件尚未被处理 */
+                /* 查找匹配的子控件 */
                 Widget* child = w->firstChild;
                 for (; child; child = child->next) {
                     if (child->isInArea(ev->pos) && child->visible) {
-                        /* event is in child region */
+                        /* 事件位于该子控件的区域内 */
                         input(child, ev);
-                        /* send event only to first match */
+                        /* 仅将事件发送给第一个匹配到的子控件 */
                         return;
                     }
                 }

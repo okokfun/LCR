@@ -4,7 +4,6 @@
 #include <complex>
 
 namespace Frontend {
-
     enum class Range : uint8_t {
         AUTO,
         Lowest,

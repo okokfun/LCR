@@ -29,8 +29,3 @@ void EventCatcher::input(GUIEvent_t* ev) {
         ev->type = EVENT_NONE;
     }
 }
-
-
-
-
-

@@ -38,6 +38,4 @@ class MenuChooser : public MenuEntry {
     const char* const* items;
 };
 
-
-
 #endif /* MENUCHOOSER_HPP_ */

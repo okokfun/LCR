@@ -7,7 +7,7 @@
 #include "events.hpp"
 
 class Widget {
-    /* Classes which can have children need extended access to their childrens members */
+    /* 能够包含子节点的类，需要对其子节点的成员拥有扩展的访问权限 */
     friend class Container;
     friend class Window;
     friend class Menu;
@@ -120,11 +120,11 @@ class Widget {
     bool selected : 1;
     bool selectable : 1;
     //	bool focus :1;
-    /* this widget needs to be redrawn */
+    /* 该控件需要重绘 */
     bool redraw : 1;
-    /* the widget area has to be cleared and the widget redrawn completely */
+    /* 该控件区域必须被清空，并且整个控件需要完全重绘 */
     bool redrawClear : 1;
-    /* some widget down this widgets branch has to be redrawn */
+    /* 该控件分支下的某个子控件需要进行重绘 */
     bool redrawChild : 1;
 };
 

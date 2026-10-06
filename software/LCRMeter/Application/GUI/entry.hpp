@@ -167,5 +167,3 @@ class Entry : public Widget {
 
 template <>
 void Entry<float>::CreateString();
-
-

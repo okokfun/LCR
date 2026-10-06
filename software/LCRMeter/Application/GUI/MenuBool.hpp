@@ -42,6 +42,4 @@ class MenuBool : public MenuEntry {
     char off[MaxStringLength + 1];
 };
 
-
-
 #endif /* MENUBOOL_HPP_ */

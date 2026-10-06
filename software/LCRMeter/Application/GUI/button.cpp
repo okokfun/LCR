@@ -3,7 +3,7 @@
 Button::Button(const char* name, font_t font, Callback cb,
                void* ptr,
                coords_t minSize) {
-    /* set name and callback */
+    /* 设置名称和回调函数 */
     uint16_t namelength = strlen(name);
     this->name = new char[namelength + 1];
     memcpy(this->name, name, namelength + 1);
@@ -11,30 +11,30 @@ Button::Button(const char* name, font_t font, Callback cb,
     this->ptr = ptr;
     this->font = font;
     pressed = false;
-    /* calculate size based on the font */
+    /* 根据字体计算尺寸 */
     size.y = font.height + 6;
     size.x = font.width * namelength + 5;
     if (minSize.x > size.x)
         size.x = minSize.x;
     if (minSize.y > size.y)
         size.y = minSize.y;
-    /* calculate font start position */
+    /* 计算字体起始位置 */
     fontStart.y = (size.y - font.height) / 2;
     fontStart.x = (size.x - font.width * namelength - 1) / 2;
 }
 
 Button::~Button() {
-    /* Free allocated memory */
+    /* 释放已分配的内存 */
     delete name;
 }
 
 void Button::draw(coords_t offset) {
-    /* calculate corners */
+    /* 计算圆角（或角落坐标） */
     coords_t upperLeft = offset;
     coords_t lowerRight = upperLeft;
     lowerRight.x += size.x - 1;
     lowerRight.y += size.y - 1;
-    /* draw outline */
+    /* 绘制轮廓（或描边） */
     //	if (selected) {
     //		display_SetForeground(COLOR_SELECTED);
     //	} else

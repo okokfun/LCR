@@ -14,8 +14,7 @@ class MenuBack : public MenuEntry {
   public:
     MenuBack() {
         selectable = false;
-    }
-    ;
+    };
 
   private:
     void draw(coords_t offset) override;
@@ -30,7 +29,5 @@ class MenuBack : public MenuEntry {
     static constexpr color_t Background = COLOR_BG_DEFAULT;
     static constexpr color_t Foreground = COLOR_FG_DEFAULT;
 };
-
-
 
 #endif /* MENUBOOL_HPP_ */

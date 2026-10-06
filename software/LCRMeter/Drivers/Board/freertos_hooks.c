@@ -32,21 +32,21 @@ void prvGetRegistersFromStack(uint32_t*
     pc = pulFaultStackAddress[6];
     psr = pulFaultStackAddress[7];
     /* When the following line is hit, the variables contain the register values. */
-    log_force("\r\nHard fault occured:");
+    log_force("\r\n发生硬件故障(Hard Fault):");
     log_force("SCB->HFSR: 0x%08x", SCB->HFSR);
     if (SCB->HFSR & SCB_HFSR_VECTTBL_Msk)
-        log_force("HardFault on vector table read");
+        log_force("读取向量表时发生硬件故障(HardFault on vector table read)");
     else if (SCB->HFSR & SCB_HFSR_FORCED_Msk) {
-        log_force("Forced hardfault, SCB->CFSR: 0x%08x", SCB->CFSR);
+        log_force("强制触发的硬件故障(Forced hardfault), SCB->CFSR: 0x%08x", SCB->CFSR);
         log_force("BFAR: 0x%08x", SCB->BFAR);
         log_force("MMFAR: 0x%08x", SCB->MMFAR);
 #ifdef SCB_CFSR_MLSPERR
         if (SCB->CFSR & SCB_CFSR_M)
-            log_force("Memory manage fault during floating point lazy state preservation");
+            log_force("浮点延迟状态保护期间发生内存管理故障（Memory Manage Fault）");
 #endif
 #ifdef SCB_CFSR_LSPERR
         if (SCB->CFSR & SCB_CFSR_LSPERR)
-            log_force("BusFault during floating point lazy state preservation");
+            log_force("浮点延迟状态保护期间发生总线故障（BusFault）");
 #endif
     }
     log_force(
@@ -511,7 +511,7 @@ int freertos_print_task_overview() {
             TaskStatus_t));
     if (!task_states) {
         LOG(Log_System, LevelError,
-            "Failed to allocate memory for task states");
+            "为任务状态分配内存失败");
         return -1;
     }
     uint32_t total_runtime;
@@ -524,14 +524,14 @@ int freertos_print_task_overview() {
                                         "SUSPEND", "DELETED", "INVALID"
                                       };
         LOG(Log_System, LevelInfo,
-            "Task %d, %.8s: state %.7s, priority %d, runtime %d%%, stack remaining[words] %lu)",
+            "任务 %d, %.8s: 状态 %.7s, 优先级 %d, 运行时间 %d%%, 剩余堆栈[字] %lu",
             task_states[i].xTaskNumber, task_states[i].pcTaskName,
             state_names[task_states[i].eCurrentState],
             task_states[i].uxBasePriority, runtime_percentage,
             task_states[i].usStackHighWaterMark);
     }
     LOG(Log_System, LevelInfo,
-        "Free heap[bytes]: %lu/%lu (minimum ever: %lu)",
+        "空闲堆内存[字节]: %lu/%lu (历史最小剩余: %lu)",
         xPortGetFreeHeapSize(), configTOTAL_HEAP_SIZE,
         xPortGetMinimumEverFreeHeapSize());
     vPortFree(task_states);

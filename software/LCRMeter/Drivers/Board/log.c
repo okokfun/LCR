@@ -8,7 +8,7 @@
 #include "semphr.h"
 #include "freertos_hooks.h"
 
-/* Automatically build register and function names based on USART selection */
+/* 根据所选的 USART(串口)自动构建寄存器名称和函数名称 */
 #define USART_M2(y) 		USART ## y
 #define USART_M1(y)  		USART_M2(y)
 #define USART_BASE			USART_M1(LOG_USART)
@@ -193,7 +193,7 @@ void HANDLER(void) {
 void vApplicationStackOverflowHook(xTaskHandle xTask,
                                    signed char* pcTaskName) {
     log_write("    FreeRTOS", LevelCrit,
-              "Stack overflow in task: %s",
+              "任务 '%s' 发生栈溢出",
               pcTaskName);
     log_flush();
     __BKPT();

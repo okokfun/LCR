@@ -20,6 +20,4 @@ class MenuEntry : public Widget {
   protected:
 };
 
-
-
 #endif /* MENUENTRY_HPP_ */

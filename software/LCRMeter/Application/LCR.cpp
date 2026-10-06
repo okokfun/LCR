@@ -14,13 +14,13 @@ using namespace std;
 #define Log_LCR (LevelDebug|LevelInfo|LevelWarn|LevelError|LevelCrit)
 
 static int32_t measurementFrequency = 1000;
-static int32_t biasVoltage = 0;
-static int32_t excitationVoltage = 100000;
-static bool measurementUpdated = false;
+static int32_t biasVoltage          = 0;
+static int32_t excitationVoltage    = 100000;
+static bool measurementUpdated      = false;
 static uint32_t measurementAverages = 10;
-static bool newMeasurement = false;
+static bool newMeasurement          = false;
 static Frontend::Result measurementResult;
-static TaskHandle_t handle = nullptr;
+static TaskHandle_t handle          = nullptr;
 
 static complex<float> Zopen, Zshort;
 static bool leadCompensation = false;

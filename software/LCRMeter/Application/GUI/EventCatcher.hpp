@@ -36,6 +36,4 @@ class EventCatcher : public Widget {
     void* ptr;
 };
 
-
-
 #endif /* EVENTCATCHER_HPP_ */

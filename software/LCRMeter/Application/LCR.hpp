@@ -4,7 +4,6 @@
 #include <complex>
 
 namespace LCR {
-
     enum class ImpedanceType : uint8_t {
         CAPACITANCE = 0x00,
         INDUCTANCE = 0x01,
@@ -33,12 +32,10 @@ namespace LCR {
         float qualityFactor;
     };
 
-
     constexpr color_t SchematicColor = COLOR_DARKGRAY;
     constexpr color_t MeasurmentValueColor = COLOR_BLACK;
     constexpr color_t BarColor = COLOR(11, 68, 181);
 
     bool Init();
     void Run();
-
 }

@@ -73,7 +73,7 @@ static const ad5940_hstia_gain_factor_t hstia_gain_factors[]
     {AD5940_HSRTIA_20K, 20000},
     {AD5940_HSRTIA_40K, 40000},
     {AD5940_HSRTIA_80K, 80000},
-    {AD5940_HSRTIA_160K, 160000}, // Experiments show that HSTIA isn't able to maintain regulation with highest gain
+    {AD5940_HSRTIA_160K, 160000}, // 实验表明，HSTIA 无法在最高增益下维持调节(或保持稳定控制)
 };
 
 static const uint8_t num_hstia_gain_factors = sizeof(
@@ -226,7 +226,7 @@ ad5940_result_t ad5940_init(ad5940_t* a) {
                                       &a->xMutHardwareAccess);
 #endif
     if (!a->CSport) {
-        LOG(Log_AD5940, LevelCrit, "Null pointer given for CS port");
+        LOG(Log_AD5940, LevelCrit, "为 CS(片选)端口传入了空指针");
         return AD5940_RES_ERROR;
     }
     // initialize CS pin
@@ -237,21 +237,21 @@ ad5940_result_t ad5940_init(ad5940_t* a) {
 #elif defined(GPIO_SPEED_FREQ_HIGH)
     gpio.Speed = GPIO_SPEED_FREQ_HIGH;
 #else
-#error GPIO_SPEED_HIGH not defined, probably slightly different macro name for this mcu
+#error GPIO_SPEED_HIGH 未定义，该 MCU 的宏名称可能略有不同
 #endif
     gpio.Pin = a->CSpin;
     gpio.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(a->CSport, &gpio);
     cs_high(a);
     a->autoranging = true;
-    // check identification registers
+    // 检查设备 ID 寄存器
     ad5940_read_reg(a,
                     AD5940_REG_ADIID); // first SPI read seems to fail, do dummy read
     uint32_t AD_id = ad5940_read_reg(a, AD5940_REG_ADIID);
     uint32_t chip_id = ad5940_read_reg(a, AD5940_REG_CHIPID);
     if (AD_id != AD_IDENT_REGVAL || chip_id != CHIP_ID_REGVAL) {
         LOG(Log_AD5940, LevelError,
-            "Chip identification mismatch: 0x%04x!=0x%04x/0x%04x!=0x%04x",
+            "芯片识别不匹配: 0x%04x!=0x%04x/0x%04x!=0x%04x",
             AD_id, AD_IDENT_REGVAL, chip_id, CHIP_ID_REGVAL);
         return AD5940_RES_ERROR;
     }
@@ -343,7 +343,7 @@ ad5940_result_t ad5940_set_vzero(ad5940_t* a, uint16_t mV) {
     int32_t val = ((int32_t)(mV - 200) * 1000 + 17187) / 34375;
     if (val < 0 || val > 63) {
         LOG(Log_AD5940, LevelWarn,
-            "Unable to set requested Vzero of %dmV (DAC range is 0 to 63, would need %d)",
+            "无法设置请求的 Vzero 为 %dmV(DAC 的取值范围是 0 到 63，需要 %d)",
             mV, val);
         return AD5940_RES_ERROR;
     }
@@ -352,7 +352,7 @@ ad5940_result_t ad5940_set_vzero(ad5940_t* a, uint16_t mV) {
     ad5940_modify_reg(a, AD5940_REG_LPDACDAT0, dac, 0x0003F000);
     uint16_t actual = 200 + 34375 * val / 1000;
     LOG(Log_AD5940, LevelDebug,
-        "Set Vzero to %umV (requested: %u)", actual,
+        "已将 Vzero 设置为 %umV(请求值：%u)", actual,
         mV);
     return AD5940_RES_OK;
 }
@@ -364,14 +364,14 @@ ad5940_result_t ad5940_set_vbias(ad5940_t* a, int16_t mV) {
                   537;
     if (val < 0 || val > 4095) {
         LOG(Log_AD5940, LevelWarn,
-            "Unable to set requested Vbias of %dmV (DAC range is 0 to 4095, would need %d, Vzero should be adjusted)",
+            "无法设置请求的 Vbias 为 %dmV(DAC 的取值范围是 0 到 4095，需要 %d，应调整 Vzero)",
             mV, val);
         return AD5940_RES_ERROR;
     }
     ad5940_modify_reg(a, AD5940_REG_LPDACDAT0, val, 0x00000FFF);
     int16_t actual = 200 + 537 * val / 1000 - vzero;
     LOG(Log_AD5940, LevelDebug,
-        "Set Vbias to %dmV (requested: %d)", actual,
+        "已将 Vbias 设置为 %dmV(请求值：%d)", actual,
         mV);
     return AD5940_RES_OK;
 }
@@ -419,7 +419,7 @@ ad5940_tia_gain_t ad5940_value_to_LPTIA_gain(
             return lptia_gain_factors[i].gain;
     }
     LOG(Log_AD5940, LevelError,
-        "LPTIA gain with factor %lu not available", value);
+        "LPTIA 增益不支持 %lu 倍", value);
     return 0;
 }
 
@@ -480,7 +480,7 @@ ad5940_result_t ad5940_zero_ADC(ad5940_t* a) {
     }
     sum /= N_SAMPLES;
     sum -= 32768;
-    LOG(Log_AD5940, LevelDebug, "Offset LPTIA: %d", sum);
+    LOG(Log_AD5940, LevelDebug, "LPTIA 失调: %d", sum);
     // restore previous settings
     ad5940_clear_bits(a, AD5940_REG_LPTIASW0, 0x02A0);
     ad5940_set_TIA_gain(a, g);
@@ -602,12 +602,12 @@ ad5940_result_t ad5940_measure_current(ad5940_t* a,
             uint8_t fact = LPTIA_gain_index(g);
             if (fact < num_lptia_gain_factors - 1) {
                 fact++;
-                LOG(Log_AD5940, LevelDebug, "Increasing TIA gain to %lu",
+                LOG(Log_AD5940, LevelDebug, "正在将 TIA 增益提高至 %lu",
                     lptia_gain_factors[fact].factor);
                 ad5940_set_TIA_gain(a, lptia_gain_factors[fact].gain);
             } else {
                 LOG(Log_AD5940, LevelDebug,
-                    "Would increase TIA gain but reached limit");
+                    "本应增加 TIA 增益，但已达到上限");
             }
         } else if (abs(raw) > HIGH_THRESHOLD) {
             ad5940_tia_gain_t g;
@@ -615,12 +615,12 @@ ad5940_result_t ad5940_measure_current(ad5940_t* a,
             uint8_t fact = LPTIA_gain_index(g);
             if (fact > 1) {
                 fact--;
-                LOG(Log_AD5940, LevelDebug, "Decreasing TIA gain to %lu",
+                LOG(Log_AD5940, LevelDebug, "正在将 TIA 增益降低至 %lu",
                     lptia_gain_factors[fact].factor);
                 ad5940_set_TIA_gain(a, lptia_gain_factors[fact].gain);
             } else {
                 LOG(Log_AD5940, LevelDebug,
-                    "Would decrease TIA gain but reached limit");
+                    "本应降低 TIA 增益，但已达到下限");
             }
         }
     }
@@ -684,7 +684,7 @@ ad5940_result_t ad5940_generate_waveform(ad5940_t* a,
     switch (w->type) {
         case AD5940_WAVE_SINE: {
                 LOG(Log_AD5940, LevelDebug,
-                    "Setting sinewave generation of %luHz",
+                    "正在设置 %luHz 的正弦波发生",
                     w->sine.frequency / 1000);
                 /*
                  * Calculate frequency word. F_out = F_ACLK(16MHz) * F_CW / 2^30
@@ -693,7 +693,7 @@ ad5940_result_t ad5940_generate_waveform(ad5940_t* a,
                 uint32_t f_cw = (uint64_t) w->sine.frequency * (1UL << 30)
                                 / 16000000000ULL;
                 ad5940_write_reg(a, AD5940_REG_WGFCW, f_cw);
-                LOG(Log_AD5940, LevelDebug, "Frequency control word: 0x%08x",
+                LOG(Log_AD5940, LevelDebug, "频率控制字: 0x%08x",
                     f_cw);
                 /*
                  * Calculate phase offset. offset_reg = (offset/360)*2^30
@@ -707,7 +707,7 @@ ad5940_result_t ad5940_generate_waveform(ad5940_t* a,
                                      (1UL << 30)
                                      / 360000;
                 ad5940_write_reg(a, AD5940_REG_WGPHASE, phase_reg);
-                LOG(Log_AD5940, LevelDebug, "Phase offset register: 0x%08x",
+                LOG(Log_AD5940, LevelDebug, "相位偏移寄存器: 0x%08x",
                     phase_reg);
                 /*
                  * HSDAC has an output range of +/-400mV with the codes 0x200 and 0xE00
@@ -722,7 +722,7 @@ ad5940_result_t ad5940_generate_waveform(ad5940_t* a,
                 const uint32_t DAC_max_voltage = 300000;
                 if (max_voltage > DAC_max_voltage * 2) {
                     LOG(Log_AD5940, LevelError,
-                        "Unable to set requested sine wave, required voltage not in available range (%lu > %lu)",
+                        "无法设置请求的正弦波，所需电压不在可用范围内(%lu > %lu)",
                         max_voltage, DAC_max_voltage * 2);
                     break;
                 } else if (max_voltage >= DAC_max_voltage * 4 / 10) {
@@ -730,28 +730,28 @@ ad5940_result_t ad5940_generate_waveform(ad5940_t* a,
                     hsdaccon = 0x0000;
                     fullscale = DAC_max_voltage * 2;
                     LOG(Log_AD5940, LevelDebug,
-                        "Selected fullscale of %lumV (attenuator = 1, amplifier = 2)",
+                        "已选择 %lumV 的满量程(衰减器 = 1，放大器 = 2)",
                         fullscale);
                 } else if (max_voltage >= DAC_max_voltage / 4) {
                     // requires attenuator = 0.2, amplifier = 2
                     hsdaccon = 0x0001;
                     fullscale = DAC_max_voltage * 4 / 10;
                     LOG(Log_AD5940, LevelDebug,
-                        "Selected fullscale of %lumV (attenuator = 0.2, amplifier = 2)",
+                        "已选择 %lumV 的满量程(衰减器 = 0.2，放大器 = 2)",
                         fullscale);
                 } else if (max_voltage >= DAC_max_voltage / 20) {
                     // requires attenuator = 1, amplifier = 0.25
                     hsdaccon = 0x1000;
                     fullscale = DAC_max_voltage / 4;
                     LOG(Log_AD5940, LevelDebug,
-                        "Selected fullscale of %lumV (attenuator = 1, amplifier = 0.25)",
+                        "已选择 %lumV 的满量程(衰减器 = 1，放大器 = 0.25)",
                         fullscale);
                 } else {
                     // can use attenuator = 0.2, amplifier = 0.25
                     hsdaccon = 0x1001;
                     fullscale = DAC_max_voltage / 20;
                     LOG(Log_AD5940, LevelDebug,
-                        "Selected fullscale of %lumV (attenuator = 0.2, amplifier = 0.25)",
+                        "已选择 %lumV 的满量程(衰减器 = 0.2，放大器 = 0.25)",
                         fullscale);
                 }
                 ad5940_modify_reg(a, AD5940_REG_HSDACCON, hsdaccon, 0x1001);
@@ -764,22 +764,22 @@ ad5940_result_t ad5940_generate_waveform(ad5940_t* a,
                 int16_t amplitude = (int32_t) w->sine.amplitude * dac_range /
                                     fullscale;
                 ad5940_modify_reg(a, AD5940_REG_WGOFFSET, offset, 0x0FFF);
-                LOG(Log_AD5940, LevelDebug, "Voltage offset register: %d",
+                LOG(Log_AD5940, LevelDebug, "电压偏移寄存器: %d",
                     offset);
                 ad5940_modify_reg(a, AD5940_REG_WGAMPLITUDE, amplitude,
                                   0x07FF);
-                LOG(Log_AD5940, LevelDebug, "Amplitude register: %d",
+                LOG(Log_AD5940, LevelDebug, "幅值寄存器: %d",
                     amplitude);
                 // finally, enable the waveform generator and select the sine waveform
                 ad5940_modify_reg(a, AD5940_REG_WGCON, 0x0004, 0x0006);
                 ad5940_set_bits(a, AD5940_REG_AFECON, (1UL << 14));
-                LOG(Log_AD5940, LevelDebug, "Sinewave enabled");
+                LOG(Log_AD5940, LevelDebug, "正弦波已使能");
                 res = AD5940_RES_OK;
             }
             break;
         default:
             LOG(Log_AD5940, LevelWarn,
-                "Ignoring waveform command with unsupported wavetype");
+                "忽略波形命令：不支持的波形类型");
             break;
     }
     ad5940_release_mutex(a);
@@ -802,7 +802,7 @@ ad5940_result_t ad5940_set_excitation_amplifier(ad5940_t* a,
     ad5940_set_bits(a, AD5940_REG_AFECON,
                     (1UL << 20) | (1UL << 10) | (1UL << 9) | (1UL << 6));
     LOG(Log_AD5940, LevelInfo,
-        "Excitation amplifier connected and enabled");
+        "激励放大器已连接并启用");
     ad5940_release_mutex(a);
     return AD5940_RES_OK;
 }
@@ -816,7 +816,7 @@ ad5940_result_t ad5940_disable_excitation_amplifier(
     // open all D switches, close PL and NL for feedback stability once the amplifier is turned on again
     ad5940_clear_bits(a, AD5940_REG_SWCON, 0x0FFF);
     LOG(Log_AD5940, LevelInfo,
-        "High speed excitation amplifier disconnected and disabled");
+        "高速激励放大器已断开并禁用");
     ad5940_release_mutex(a);
     return AD5940_RES_OK;
 }
@@ -896,7 +896,7 @@ ad5940_hsrtia_t ad5940_value_to_HSTIA_gain(uint32_t value) {
             return hstia_gain_factors[i].gain;
     }
     LOG(Log_AD5940, LevelError,
-        "HSTIA gain with factor %lu not available", value);
+        "HSTIA 增益不支持 %lu 倍", value);
     return 0;
 }
 
@@ -940,7 +940,7 @@ ad5940_result_t ad5940_set_dft(ad5940_t* a,
         uint16_t dftnumval = 29 - __builtin_clz(dft->points);
         if (dftnumval > 0x0C) {
             LOG(Log_AD5940, LevelError,
-                "Invalid number of DFT points, %d should be between 4 and 16384");
+                "DFT 点数无效，%d 应在 4 到 16384 之间");
         } else {
             LOG(Log_AD5940, LevelDebug, "DFTNUM: %u, numval: 0x%02x",
                 dft->points, dftnumval);
@@ -949,7 +949,7 @@ ad5940_result_t ad5940_set_dft(ad5940_t* a,
             res = AD5940_RES_OK;
         }
         uint32_t status = ad5940_read_reg(a, AD5940_REG_DFTCON);
-        LOG(Log_AD5940, LevelDebug, "DFTCON status: 0x%08x", status);
+        LOG(Log_AD5940, LevelDebug, "DFTCON 状态: 0x%08x", status);
         // enable interrupt and clear possible old flag
         ad5940_set_bits(a, AD5940_REG_INTCSEL0, 0x02);
         ad5940_write_reg(a, AD5940_REG_INTCCLR, 0x02);
@@ -975,7 +975,7 @@ ad5940_result_t ad5940_get_dft_result(ad5940_t* a,
             portYIELD();
             if (HAL_GetTick() - start > 1000) {
                 LOG(Log_AD5940, LevelWarn,
-                    "Timed out waiting for DFT result");
+                    "等待 DFT 结果超时");
                 ad5940_release_mutex(a);
                 return AD5940_RES_ERROR;
             }
@@ -1003,7 +1003,7 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
                                        ad5940_hstsw_t hstsw, uint16_t rseries) {
     ad5940_take_mutex(a);
     LOG(Log_AD5940, LevelInfo,
-        "Configuring for four wire measurement...");
+        "正在配置四线制测量...");
 #define EX_AMP_MAX_AMPLITUDE		800
     uint16_t amplitude = EX_AMP_MAX_AMPLITUDE;
     // max. expected current in nA
@@ -1013,7 +1013,7 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
         >= 3) {
         amplitude = 3 * (rseries + 1000000000UL / nS_max);
         LOG(Log_AD5940, LevelDebug,
-            "Maximum possible current is too high, reduced amplitude of waveform to %umV",
+            "最大可能电流过高，已将波形幅值降低至 %umV",
             amplitude);
         max_current = 3000000;
     }
@@ -1026,11 +1026,11 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
     // start waveform generation
     ad5940_generate_waveform(a, &wave);
     LOG(Log_AD5940, LevelDebug,
-        "Maximum possible current: %lunA", max_current);
+        "最大可能电流: %lunA", max_current);
     // calculate best fitting RTIA
     // maximum output should be <=900mV
     uint32_t max_gain = 900 * 1000000 / max_current;
-    LOG(Log_AD5940, LevelDebug, "Maximum allowed gain: %lu",
+    LOG(Log_AD5940, LevelDebug, "最大允许增益: %lu",
         max_gain);
     uint8_t i;
     for (i = 0; i < num_hstia_gain_factors; i++) {
@@ -1041,7 +1041,7 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
     i--;
     uint32_t gain_factor = hstia_gain_factors[i].factor;
     a->impedance.rtia = hstia_gain_factors[i].gain;
-    LOG(Log_AD5940, LevelDebug, "Selected gain: %lu",
+    LOG(Log_AD5940, LevelDebug, "已选择增益: %lu",
         gain_factor);
     ad5940_set_HSTIA(a, a->impedance.rtia, 30,
                      AD5940_HSTIA_VBIAS_1V1, false, hstsw);
@@ -1061,7 +1061,7 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
     //	} else {
     //		a->impedance.gain_current = AD5940_PGA_GAIN_1;
     //	}
-    LOG(Log_AD5940, LevelDebug, "Selected current PGA gain: %f",
+    LOG(Log_AD5940, LevelDebug, "已选择电流 PGA 增益: %f",
         (float) ad5940_PGA_gain_to_value10(a->impedance.gain_current)
         / 10);
     // maximum possible voltage occurs with minimal conductivity
@@ -1070,7 +1070,7 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
     if (max_voltage > amplitude)
         max_voltage = amplitude;
     LOG(Log_AD5940, LevelDebug,
-        "Maximum possible voltage: %lumV", max_voltage);
+        "最大可能电压: %lumV", max_voltage);
     // see datasheet page 7 "ADC input voltage ranges" for values
     if (max_voltage <= 133)
         a->impedance.gain_voltage = AD5940_PGA_GAIN_9;
@@ -1082,7 +1082,7 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
         a->impedance.gain_voltage = AD5940_PGA_GAIN_1_5;
     else
         a->impedance.gain_voltage = AD5940_PGA_GAIN_1;
-    LOG(Log_AD5940, LevelDebug, "Selected voltage PGA gain: %f",
+    LOG(Log_AD5940, LevelDebug, "已选择电压 PGA 增益: %f",
         (float) ad5940_PGA_gain_to_value10(a->impedance.gain_voltage)
         / 10);
     // connect and enable excitation amplifier to the selected output
@@ -1090,21 +1090,21 @@ ad5940_result_t ad5940_setup_four_wire(ad5940_t* a,
                                     AD5940_EXAMP_PSW_INT_FEEDBACK,
                                     AD5940_EXAMP_NSW_INT_FEEDBACK, false);
     uint32_t status = ad5940_read_reg(a, AD5940_REG_DSWSTA);
-    LOG(Log_AD5940, LevelDebug, "Switch D status: 0x%08x",
+    LOG(Log_AD5940, LevelDebug, "开关 D 状态: 0x%08x",
         status);
     status = ad5940_read_reg(a, AD5940_REG_PSWSTA);
-    LOG(Log_AD5940, LevelDebug, "Switch P status: 0x%08x",
+    LOG(Log_AD5940, LevelDebug, "开关 P 状态: 0x%08x",
         status);
     status = ad5940_read_reg(a, AD5940_REG_NSWSTA);
-    LOG(Log_AD5940, LevelDebug, "Switch N status: 0x%08x",
+    LOG(Log_AD5940, LevelDebug, "开关 N 状态: 0x%08x",
         status);
     status = ad5940_read_reg(a, AD5940_REG_TSWSTA);
-    LOG(Log_AD5940, LevelDebug, "Switch T status: 0x%08x",
+    LOG(Log_AD5940, LevelDebug, "开关 T 状态: 0x%08x",
         status);
     status = ad5940_read_reg(a, AD5940_REG_AFECON);
-    LOG(Log_AD5940, LevelDebug, "AFECON status: 0x%08x", status);
+    LOG(Log_AD5940, LevelDebug, "AFECON 状态: 0x%08x", status);
     status = ad5940_read_reg(a, AD5940_REG_WGCON);
-    LOG(Log_AD5940, LevelDebug, "WGCON status: 0x%08x", status);
+    LOG(Log_AD5940, LevelDebug, "WGCON 状态: 0x%08x", status);
     ad5940_release_mutex(a);
     return AD5940_RES_OK;
 }

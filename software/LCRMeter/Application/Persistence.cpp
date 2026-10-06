@@ -7,10 +7,10 @@
 
 #define Log_Persistence	(LevelDebug|LevelInfo|LevelWarn|LevelError|LevelCrit)
 
-static constexpr uint32_t maxSize = 2048;
+static constexpr uint32_t maxSize    = 2048;
 static constexpr uint32_t usableSize = maxSize - 4;
-static constexpr uint16_t pagesize = 2048;
-static constexpr uint32_t FLASHend = 0x08080000;
+static constexpr uint16_t pagesize   = 2048;
+static constexpr uint32_t FLASHend   = 0x08080000;
 
 static_assert(maxSize % pagesize == 0);
 

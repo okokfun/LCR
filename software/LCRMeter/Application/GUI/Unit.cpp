@@ -59,25 +59,25 @@ static const Unit::unit m =  {"m", 1000};
 
 static const Unit::unit none = {"", 1};
 
-const Unit::unit* Unit::Current[] = { &uA, &mA, &A, nullptr };
-const Unit::unit* Unit::Voltage[] = { &uV, &mV, &V, nullptr };
-const Unit::unit* Unit::Power[] = { &uW, &mW, &W, nullptr };
+const Unit::unit* Unit::Current[]     = { &uA, &mA, &A, nullptr };
+const Unit::unit* Unit::Voltage[]     = { &uV, &mV, &V, nullptr };
+const Unit::unit* Unit::Power[]       = { &uW, &mW, &W, nullptr };
 const Unit::unit* Unit::Temperature[] = {&C, nullptr };
-const Unit::unit* Unit::Resistance[] = { &uR, &mR, &R, nullptr };
-const Unit::unit* Unit::Energy[] = { &uWh, &mWh, &Wh, nullptr };
-const Unit::unit* Unit::Time[] = {&us, &ms, &s, nullptr };
-const Unit::unit* Unit::Memory[] = { &B, &kB, nullptr };
-const Unit::unit* Unit::Capacity[] = { &uF, &mF, &F, nullptr };
-const Unit::unit* Unit::Percent[] = { &percent, nullptr };
-const Unit::unit* Unit::Charge[] = { &uAh, &mAh, &Ah, nullptr };
-const Unit::unit* Unit::Weight[] = { &mg, &g, &kg, nullptr };
-const Unit::unit* Unit::Force[] = { &uN, &mN, &N, nullptr };
-const Unit::unit* Unit::None[] = {&none, nullptr };
-const Unit::unit* Unit::Hex[] = {nullptr };
-const Unit::unit* Unit::Frequency[] = { &Hz, &kHz, nullptr };
-const Unit::unit* Unit::Distance[] = {&mm, &m, nullptr };
+const Unit::unit* Unit::Resistance[]  = { &uR, &mR, &R, nullptr };
+const Unit::unit* Unit::Energy[]      = { &uWh, &mWh, &Wh, nullptr };
+const Unit::unit* Unit::Time[]        = {&us, &ms, &s, nullptr };
+const Unit::unit* Unit::Memory[]      = { &B, &kB, nullptr };
+const Unit::unit* Unit::Capacity[]    = { &uF, &mF, &F, nullptr };
+const Unit::unit* Unit::Percent[]     = { &percent, nullptr };
+const Unit::unit* Unit::Charge[]      = { &uAh, &mAh, &Ah, nullptr };
+const Unit::unit* Unit::Weight[]      = { &mg, &g, &kg, nullptr };
+const Unit::unit* Unit::Force[]       = { &uN, &mN, &N, nullptr };
+const Unit::unit* Unit::None[]        = {&none, nullptr };
+const Unit::unit* Unit::Hex[]         = {nullptr };
+const Unit::unit* Unit::Frequency[]   = { &Hz, &kHz, nullptr };
+const Unit::unit* Unit::Distance[]    = {&mm, &m, nullptr };
 
-const int32_t Unit::null = 0;
+const int32_t Unit::null       = 0;
 const int32_t Unit::maxPercent = 100000000;
 
 const coords_t operator+(coords_t const& lhs,

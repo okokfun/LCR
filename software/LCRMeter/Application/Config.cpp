@@ -15,18 +15,18 @@ static uint32_t cnt;
 
 void Config::Init() {
     first = nullptr;
-    cnt = 0;
+    cnt   = 0;
 }
 
 int Config::AddParseFunctions(WriteFunc write, ReadFunc read,
                               void* ptr) {
     cnt++;
     ConfigEntry* add = new ConfigEntry;
-    add->write = write;
-    add->read = read;
-    add->ptr = ptr;
-    add->next = nullptr;
-    add->index = cnt;
+    add->write       = write;
+    add->read        = read;
+    add->ptr         = ptr;
+    add->next        = nullptr;
+    add->index       = cnt;
     if (!first)
         first = add;
     else {

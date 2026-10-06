@@ -6,13 +6,11 @@
 #include "events.hpp"
 
 namespace Input {
-
     constexpr uint32_t LongTouchTime = 1500;
 
     bool Init();
     void Calibrate();
     bool LoadCalibration();
 }
-
 
 #endif
